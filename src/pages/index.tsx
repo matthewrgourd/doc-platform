@@ -1,5 +1,5 @@
 import {Redirect} from '@docusaurus/router';
 
-export default function Home(): JSX.Element {
+export default function Home(): React.JSX.Element {
   return <Redirect to="/getting-started" />;
 }
