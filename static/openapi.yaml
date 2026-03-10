@@ -1,0 +1,364 @@
+openapi: 3.0.3
+info:
+  title: Helix API
+  description: |
+    The Helix API lets you accept payments, manage refunds, and onboard merchants.
+
+    ## Authentication
+
+    Authenticate by including your secret key in the `Authorization` header:
+    ```
+    Authorization: Bearer sk_test_your_key_here
+    ```
+
+    ## Environments
+
+    | Environment | Base URL |
+    |---|---|
+    | Test | `https://api.test.helix.dev/v1` |
+    | Production | `https://api.helix.dev/v1` |
+  version: '1.0.0'
+  contact:
+    name: Helix Support
+    email: support@helix.dev
+servers:
+  - url: https://api.helix.dev/v1
+    description: Production
+  - url: https://api.test.helix.dev/v1
+    description: Test
+
+tags:
+  - name: Payments
+    description: Create and manage payments
+  - name: Refunds
+    description: Issue full or partial refunds
+  - name: Accounts
+    description: Manage connected merchant accounts
+
+paths:
+  /payments:
+    post:
+      operationId: createPayment
+      summary: Create a payment
+      description: Creates a new payment. Set `confirm: true` to immediately attempt the charge.
+      tags: [Payments]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentRequest'
+            example:
+              amount: 2000
+              currency: usd
+              payment_method: pm_card_visa
+              confirm: true
+              description: "Order #1234"
+      responses:
+        '200':
+          description: Payment created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      operationId: listPayments
+      summary: List payments
+      description: Returns a paginated list of payments, sorted by creation date (newest first).
+      tags: [Payments]
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+            maximum: 100
+          description: Number of results to return
+        - name: starting_after
+          in: query
+          schema:
+            type: string
+          description: Cursor for pagination (payment ID)
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [succeeded, failed, pending, requires_action]
+          description: Filter by payment status
+      responses:
+        '200':
+          description: A list of payments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Payment'
+                  has_more:
+                    type: boolean
+
+  /payments/{id}:
+    get:
+      operationId: getPayment
+      summary: Retrieve a payment
+      tags: [Payments]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The payment ID
+          example: pay_1a2b3c4d
+      responses:
+        '200':
+          description: The payment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '404':
+          description: Payment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /refunds:
+    post:
+      operationId: createRefund
+      summary: Create a refund
+      description: Issues a full or partial refund on a succeeded payment.
+      tags: [Refunds]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRefundRequest'
+            example:
+              payment: pay_1a2b3c4d
+              amount: 1000
+      responses:
+        '200':
+          description: Refund created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+
+  /accounts:
+    post:
+      operationId: createAccount
+      summary: Create a connected account
+      description: Creates a new merchant account for your platform.
+      tags: [Accounts]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountRequest'
+      responses:
+        '200':
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Use your secret API key as the bearer token
+
+  schemas:
+    CreatePaymentRequest:
+      type: object
+      required: [amount, currency]
+      properties:
+        amount:
+          type: integer
+          description: Amount in the smallest currency unit (e.g., cents)
+          example: 2000
+        currency:
+          type: string
+          description: Three-letter ISO 4217 currency code
+          example: usd
+        payment_method:
+          type: string
+          description: ID of the payment method to charge
+          example: pm_card_visa
+        confirm:
+          type: boolean
+          description: Whether to immediately attempt the charge
+          default: false
+        description:
+          type: string
+          description: Arbitrary description for your records
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Key-value pairs for your own records
+        return_url:
+          type: string
+          format: uri
+          description: URL to redirect to after 3D Secure verification
+
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+          example: pay_1a2b3c4d
+        amount:
+          type: integer
+          example: 2000
+        currency:
+          type: string
+          example: usd
+        status:
+          type: string
+          enum: [succeeded, failed, pending, requires_action]
+          example: succeeded
+        description:
+          type: string
+        payment_method:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        next_action:
+          type: object
+          nullable: true
+          properties:
+            redirect_url:
+              type: string
+              format: uri
+        last_error:
+          type: object
+          nullable: true
+          properties:
+            type:
+              type: string
+            code:
+              type: string
+            message:
+              type: string
+
+    CreateRefundRequest:
+      type: object
+      required: [payment]
+      properties:
+        payment:
+          type: string
+          description: ID of the payment to refund
+          example: pay_1a2b3c4d
+        amount:
+          type: integer
+          description: Amount to refund in smallest currency unit. Omit for full refund.
+
+    Refund:
+      type: object
+      properties:
+        id:
+          type: string
+          example: re_5e6f7g8h
+        payment:
+          type: string
+          example: pay_1a2b3c4d
+        amount:
+          type: integer
+          example: 2000
+        status:
+          type: string
+          enum: [pending, succeeded, failed]
+        created_at:
+          type: string
+          format: date-time
+
+    CreateAccountRequest:
+      type: object
+      required: [type, country, email]
+      properties:
+        type:
+          type: string
+          enum: [standard, express]
+          example: standard
+        country:
+          type: string
+          description: Two-letter ISO 3166-1 country code
+          example: US
+        email:
+          type: string
+          format: email
+          example: merchant@example.com
+        business_profile:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Coffee Corner
+            url:
+              type: string
+              format: uri
+
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+          example: acct_1x2y3z
+        type:
+          type: string
+        country:
+          type: string
+        email:
+          type: string
+        payouts_enabled:
+          type: boolean
+        charges_enabled:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              example: invalid_request_error
+            code:
+              type: string
+              example: parameter_missing
+            message:
+              type: string
+              example: "Required parameter 'amount' is missing"
+            param:
+              type: string
+            request_id:
+              type: string
+              example: req_abc123
+
+security:
+  - bearerAuth: []
