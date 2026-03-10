@@ -38,5 +38,5 @@ Connect handles the complexity of multi-party payments:
 
 ## Guides
 
-- [**Merchant Onboarding**](./onboarding)  - Verify and activate merchant accounts
-- [**Payouts**](./payouts)  - Configure automatic fund distribution
+- [**Merchant Onboarding**](/connect/onboarding)  - Verify and activate merchant accounts
+- [**Payouts**](/connect/payouts)  - Configure automatic fund distribution
