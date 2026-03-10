@@ -13,6 +13,48 @@ services:
       retries: 3
       start_period: 5s
 
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:1.4
+    command: ["--nginx.scrape-uri=http://docs:80/stub_status"]
+    ports:
+      - "9113:9113"
+    depends_on:
+      - docs
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus:v3.2.1
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    depends_on:
+      - nginx-exporter
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:11.5.2
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
   docs-dev:
     build:
       context: .
@@ -28,3 +70,7 @@ services:
       - ./sidebars.ts:/app/sidebars.ts
     profiles:
       - dev
+
+volumes:
+  prometheus-data:
+  grafana-data:

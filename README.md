@@ -15,6 +15,7 @@ Demonstrates a multi-product documentation site with interactive API playground,
 - **Containerised** - multi-stage Docker build with nginx, health checks, and gzip compression
 - **CI/CD** - GitHub Actions pipeline with lint, build, Docker push, and staging deploy
 - **PR previews** - every pull request gets a preview deployment with a comment link
+- **Monitoring** - Prometheus + Grafana stack with nginx metrics dashboard
 
 ## Quick start
 
@@ -45,6 +46,27 @@ make docker-compose-dev    # dev server with hot reload
 make docker-compose-down   # stop everything
 ```
 
+## Monitoring
+
+Launch the full observability stack (Prometheus + Grafana) alongside the docs site:
+
+```bash
+make monitoring-up
+```
+
+| Service | URL |
+|---|---|
+| Docs site | http://localhost:8080 |
+| Prometheus | http://localhost:9090 |
+| Grafana | http://localhost:3001 (admin / admin) |
+
+Grafana comes pre-configured with a Prometheus datasource and an nginx dashboard showing active connections, request rates, and connection states.
+
+```bash
+make monitoring-logs    # tail all logs
+make monitoring-down    # tear everything down
+```
+
 ## Available commands
 
 Run `make help` to see all commands:
@@ -63,6 +85,9 @@ docker-stop          Stop Docker container
 docker-compose-up    Run production build via docker compose
 docker-compose-dev   Run dev server via docker compose (hot reload)
 docker-compose-down  Stop all docker compose services
+monitoring-up        Start docs + Prometheus + Grafana stack
+monitoring-down      Stop monitoring stack
+monitoring-logs      Tail logs from monitoring stack
 clean                Remove build artifacts and caches
 ```
 
@@ -96,6 +121,9 @@ Dockerfile               Multi-stage build (node + nginx)
 docker-compose.yml       Local production and dev containers
 nginx.conf               Production nginx config with caching and gzip
 Makefile                 Common DevOps commands
+monitoring/
+  prometheus/            Prometheus scrape config
+  grafana/               Datasource, dashboard provisioning, and nginx dashboard
 ```
 
 ## Stack
@@ -107,6 +135,7 @@ Makefile                 Common DevOps commands
 | Diagrams | [Mermaid](https://mermaid.js.org/) |
 | Container | Docker + nginx |
 | CI/CD | GitHub Actions |
+| Monitoring | [Prometheus](https://prometheus.io/) + [Grafana](https://grafana.com/) |
 | Registry | GitHub Container Registry (GHCR) |
 
 ## License
