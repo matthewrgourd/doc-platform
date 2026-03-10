@@ -131,6 +131,7 @@ monitoring/
 | Component | Technology |
 |---|---|
 | Docs framework | [Docusaurus 3.9](https://docusaurus.io/) |
+| Typography | [Inter](https://fonts.google.com/specimen/Inter) + [Fira Code](https://fonts.google.com/specimen/Fira+Code) |
 | API reference | [Scalar](https://scalar.com/) |
 | Diagrams | [Mermaid](https://mermaid.js.org/) |
 | Container | Docker + nginx |
