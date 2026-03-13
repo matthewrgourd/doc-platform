@@ -7,7 +7,7 @@ Demonstrates a multi-product documentation site with interactive API playground,
 ## Features
 
 - **Multi-product navigation** - separate doc sections for Payments, Connect, and Getting Started
-- **Interactive API playground** - powered by Scalar, with "Try It" request builder and code samples
+- **Interactive API playground** - powered by Scalar, with "Try it" request builder; includes Helix API (demo) and TfL Unified API (live)
 - **OpenAPI 3.0 reference** - auto-generated from a spec file, always in sync
 - **Mermaid diagrams** - sequence diagrams, state machines, and flowcharts rendered natively
 - **Tabbed code samples** - Node.js, Python, Go across all guides

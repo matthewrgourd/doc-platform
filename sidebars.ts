@@ -20,7 +20,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'doc',
       id: 'getting-started/error-handling',
-      label: 'Error Handling',
+      label: 'Error handling',
     },
   ],
 
@@ -33,7 +33,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'doc',
       id: 'payments/accept-a-payment',
-      label: 'Accept a Payment',
+      label: 'Accept a payment',
     },
     {
       type: 'doc',
@@ -56,7 +56,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'doc',
       id: 'connect/onboarding',
-      label: 'Merchant Onboarding',
+      label: 'Merchant onboarding',
     },
     {
       type: 'doc',

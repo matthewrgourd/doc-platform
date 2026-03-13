@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
 slug: /getting-started
-title: Getting Started
+title: Getting started
 ---
 
-# Getting Started with Helix
+# Getting started with Helix
 
 Helix provides APIs and SDKs to accept payments, manage payouts, and onboard merchants  - all through a single integration.
 
@@ -15,7 +15,7 @@ Helix provides APIs and SDKs to accept payments, manage payouts, and onboard mer
 | Path | Description | Time |
 |---|---|---|
 | [**Quickstart**](/getting-started/quickstart) | Process your first test payment in under 5 minutes | ~5 min |
-| [**Accept a Payment**](/payments/accept-a-payment) | Build a complete checkout flow with error handling | ~30 min |
+| [**Accept a payment**](/payments/accept-a-payment) | Build a complete checkout flow with error handling | ~30 min |
 | [**Connect merchants**](/connect/onboarding) | Set up multi-party payments with merchant onboarding | ~1 hour |
 
 </div>

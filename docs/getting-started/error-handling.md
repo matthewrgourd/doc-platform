@@ -1,9 +1,9 @@
 ---
 sidebar_position: 4
-title: Error Handling
+title: Error handling
 ---
 
-# Error Handling
+# Error handling
 
 The Helix API uses conventional HTTP status codes to indicate success or failure. Codes in the `2xx` range indicate success, `4xx` indicate a client error, and `5xx` indicate a server error.
 

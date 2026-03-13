@@ -9,7 +9,7 @@ Process your first test payment in under 5 minutes.
 
 ## Prerequisites
 
-- An Helix account ([sign up](https://dashboard.helix.dev))
+- A Helix account ([sign up](https://dashboard.helix.dev))
 - Your test API key (available in the Dashboard under **Developers → API keys**)
 
 ## 1. Install the SDK

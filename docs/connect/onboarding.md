@@ -1,9 +1,9 @@
 ---
 sidebar_position: 2
-title: Merchant Onboarding
+title: Merchant onboarding
 ---
 
-# Merchant Onboarding
+# Merchant onboarding
 
 Before a merchant can receive payments through your platform, they need to complete Helix's KYC (Know Your Customer) verification. Connect provides a hosted onboarding flow that handles identity verification, document collection, and bank account setup.
 

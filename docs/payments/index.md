@@ -32,6 +32,6 @@ stateDiagram-v2
 
 ## Guides
 
-- [**Accept a Payment**](/payments/accept-a-payment)  - Process a card payment from start to finish
+- [**Accept a payment**](/payments/accept-a-payment)  - Process a card payment from start to finish
 - [**Refunds**](/payments/refunds)  - Issue full or partial refunds
 - [**Webhooks**](/payments/webhooks)  - Get notified about payment events in real time

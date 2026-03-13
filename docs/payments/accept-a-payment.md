@@ -1,9 +1,9 @@
 ---
 sidebar_position: 2
-title: Accept a Payment
+title: Accept a payment
 ---
 
-# Accept a Payment
+# Accept a payment
 
 Build a server-side integration that creates and confirms a payment. This guide covers the full flow including parameter validation, 3D Secure handling, and error recovery.
 

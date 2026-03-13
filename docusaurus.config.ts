@@ -15,10 +15,12 @@ const config: Config = {
   baseUrl: '/',
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
 
   markdown: {
     mermaid: true,
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
   },
 
   themes: ['@docusaurus/theme-mermaid'],
@@ -48,12 +50,12 @@ const config: Config = {
     [
       '@scalar/docusaurus',
       {
-        label: 'API Reference',
+        id: 'api-reference',
+        label: 'API reference',
         route: '/api-reference',
+        showNavLink: false,
         configuration: {
-          spec: {
-            url: '/openapi.yaml',
-          },
+          url: 'https://petstore3.swagger.io/api/v3/openapi.json',
           hideModels: false,
         },
       },
@@ -72,7 +74,7 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'gettingStartedSidebar',
           position: 'left',
-          label: 'Getting Started',
+          label: 'Getting started',
         },
         {
           type: 'docSidebar',
@@ -88,7 +90,7 @@ const config: Config = {
         },
         {
           to: '/api-reference',
-          label: 'API Reference',
+          label: 'API reference',
           position: 'left',
         },
         {
@@ -104,10 +106,10 @@ const config: Config = {
         {
           title: 'Documentation',
           items: [
-            {label: 'Getting Started', to: '/getting-started'},
+            {label: 'Getting started', to: '/getting-started'},
             {label: 'Payments', to: '/payments'},
             {label: 'Connect', to: '/connect'},
-            {label: 'API Reference', to: '/api-reference'},
+            {label: 'API reference', to: '/api-reference'},
           ],
         },
         {
