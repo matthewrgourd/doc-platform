@@ -1,6 +1,6 @@
 # Petstore API Docs
 
-A reference implementation of an enterprise developer documentation portal, built with [Docusaurus](https://docusaurus.io/) and [Scalar](https://scalar.com/). Product/service name: **devdocify**.
+A reference implementation of an enterprise developer documentation portal, built with [Docusaurus](https://docusaurus.io/) and [Scalar](https://scalar.com/).
 
 Demonstrates a multi-product documentation site with interactive API playground, containerised deployment, and CI/CD pipeline. Content is aligned with the [Swagger Petstore](https://petstore3.swagger.io/) OpenAPI 3.0 spec.
 

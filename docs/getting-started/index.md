@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
 slug: /getting-started
-title: Getting started
+title: Overview
 ---
 
-# Getting started with Petstore
+# Overview
 
 The Swagger Petstore API lets you manage pets, place orders, and work with user accounts. It is a sample API for learning and testing.
 
