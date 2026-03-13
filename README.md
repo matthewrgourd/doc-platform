@@ -33,6 +33,19 @@ npm run serve
 
 Serves at `http://localhost:3000` (or the next available port).
 
+## Deploy to Vercel
+
+1. Push your repo to GitHub (if not already).
+2. Go to [vercel.com](https://vercel.com) and sign in with GitHub.
+3. Click **Add New** → **Project** and import your `doc-platform` repo.
+4. Vercel auto-detects Docusaurus. Confirm:
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `build`
+   - **Install Command:** `npm install --legacy-peer-deps`
+5. Click **Deploy**. The site will be live at `https://your-project.vercel.app`.
+
+Each push to `main` triggers a new deployment. PRs get preview URLs automatically.
+
 ## Optional: self-hosted deployment
 
 For containerised or on-prem deployments, the repo includes Docker, nginx, and a monitoring stack.
@@ -90,6 +103,7 @@ src/
   pages/index.tsx        Homepage redirect
 .github/workflows/
   ci.yml                 Build, test, optional Docker push
+vercel.json              Vercel build config (install, output dir)
 Dockerfile               Optional: multi-stage build (node + nginx)
 docker-compose.yml       Optional: local containers and monitoring
 Makefile                 Commands (core + optional Docker/monitoring)
