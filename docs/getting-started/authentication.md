@@ -5,49 +5,44 @@ title: Authentication
 
 # Authentication
 
-The Helix API uses API keys to authenticate requests. You can manage your keys in the [Dashboard](https://dashboard.helix.dev/developers).
+Some Petstore endpoints require authentication. The API supports two methods: OAuth2 and API key.
 
-## API key types
+## OAuth2 (pet operations)
 
-| Key type | Prefix | Use case |
-|---|---|---|
-| **Secret key** | `sk_test_` / `sk_live_` | Server-side API calls (never expose to clients) |
-| **Publishable key** | `pk_test_` / `pk_live_` | Client-side SDKs and Helix.js |
+For pet endpoints that require `write:pets` or `read:pets` scopes, use OAuth2 implicit flow:
 
-:::danger Keep secret keys safe
-Your secret key can perform any API operation. Never expose it in client-side code, commit it to version control, or share it in plain text.
-:::
-
-## Authenticating requests
-
-Include your secret key in the `Authorization` header as a Bearer token:
+1. Redirect users to the authorization URL with your client ID and scopes
+2. The user approves access
+3. Your app receives an access token in the callback
+4. Include the token in the `Authorization` header as a Bearer token
 
 ```bash
-curl https://api.helix.dev/v1/payments \
-  -H "Authorization: Bearer sk_test_your_key_here" \
-  -H "Content-Type: application/json"
+curl "https://petstore3.swagger.io/api/v3/pet/1" \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
-## Test mode vs live mode
+## API key (store inventory)
 
-Every account has separate test and live credentials. Test mode uses `sk_test_` and `pk_test_` prefixes and processes simulated transactions. No real money moves in test mode.
+The store inventory endpoint uses an API key in the header:
 
-Switch to live mode by replacing your test keys with live keys. No other code changes are required.
-
-```mermaid
-graph LR
-    A[Test mode] -->|Replace API keys| B[Live mode]
-    A -->|sk_test_xxx| C[Simulated transactions]
-    B -->|sk_live_xxx| D[Real transactions]
+```bash
+curl "https://petstore3.swagger.io/api/v3/store/inventory" \
+  -H "api_key: YOUR_API_KEY"
 ```
 
-## Key rotation
+:::tip Try it in the playground
+The [API reference](/api-reference) includes an interactive playground. Click "Authorize" to add your credentials and try authenticated requests.
+:::
 
-To rotate a key without downtime:
+## Public endpoints
 
-1. Generate a new key in the Dashboard
-2. Update your application to use the new key
-3. Verify transactions succeed with the new key
-4. Revoke the old key
+Many endpoints work without authentication:
 
-Both keys remain valid until you explicitly revoke the old one.
+- `GET /pet/findByStatus` - Find pets by status
+- `GET /pet/{petId}` - Get pet by ID (some servers allow unauthenticated access)
+- `POST /store/order` - Place an order
+- `GET /store/order/{orderId}` - Get order by ID
+- `GET /user/login` - Log in
+- `GET /user/{username}` - Get user by username
+
+Check the API reference for each endpoint's requirements.

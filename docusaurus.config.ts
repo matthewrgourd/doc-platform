@@ -3,15 +3,15 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'Helix Developer Docs',
-  tagline: 'Everything you need to integrate Helix into your application',
+  title: 'Petstore API Docs',
+  tagline: 'Everything you need to integrate with the Swagger Petstore API',
   favicon: 'img/favicon.ico',
 
   future: {
     v4: true,
   },
 
-  url: 'https://docs.helix.dev',
+  url: 'https://petstore3.swagger.io',
   baseUrl: '/',
 
   onBrokenLinks: 'throw',
@@ -68,7 +68,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Helix',
+      title: 'Petstore',
       items: [
         {
           type: 'docSidebar',
@@ -78,15 +78,21 @@ const config: Config = {
         },
         {
           type: 'docSidebar',
-          sidebarId: 'paymentsSidebar',
+          sidebarId: 'petsSidebar',
           position: 'left',
-          label: 'Payments',
+          label: 'Pets',
         },
         {
           type: 'docSidebar',
-          sidebarId: 'connectSidebar',
+          sidebarId: 'storeSidebar',
           position: 'left',
-          label: 'Connect',
+          label: 'Store',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'usersSidebar',
+          position: 'left',
+          label: 'Users',
         },
         {
           to: '/api-reference',
@@ -94,7 +100,7 @@ const config: Config = {
           position: 'left',
         },
         {
-          href: 'https://github.com',
+          href: 'https://github.com/swagger-api/swagger-petstore',
           label: 'GitHub',
           position: 'right',
         },
@@ -107,8 +113,9 @@ const config: Config = {
           title: 'Documentation',
           items: [
             {label: 'Getting started', to: '/getting-started'},
-            {label: 'Payments', to: '/payments'},
-            {label: 'Connect', to: '/connect'},
+            {label: 'Pets', to: '/pets'},
+            {label: 'Store', to: '/store'},
+            {label: 'Users', to: '/users'},
             {label: 'API reference', to: '/api-reference'},
           ],
         },
@@ -128,7 +135,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `© ${new Date().getFullYear()} Helix, Inc.`,
+      copyright: `© ${new Date().getFullYear()} Swagger Petstore`,
     },
     prism: {
       theme: prismThemes.github,

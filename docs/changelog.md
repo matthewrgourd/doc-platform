@@ -6,39 +6,25 @@ sidebar_class_name: hidden
 
 # Changelog
 
-## v1.2.0  - 2026-03-01
+## v1.0.27 - 2026-03-08
 
-### New
-- Added SEPA Direct Debit as a payment method
-- Webhook retry policy now configurable per endpoint
+### API reference
+- Documentation site now uses the Swagger Petstore OpenAPI 3.0 spec
+- Interactive API playground powered by Scalar
 
-### Improved
-- 3D Secure redirects now complete 40% faster
-- Error messages include `request_id` for easier debugging
-
-### Fixed
-- Partial refunds on AMEX cards now process correctly
-
----
-
-## v1.1.0  - 2026-02-01
-
-### New
-- Connect: merchant payout schedules (daily, weekly, monthly, manual)
-- Added `metadata` field to refund objects
-
-### Improved
-- List endpoints now support `starting_after` cursor pagination
-- SDK error types are more specific (e.g., `CardError` vs generic `HelixError`)
+### Documentation
+- Getting started guides for pets, store, and users
+- Pet management: add, find, update, delete, upload image
+- Store: place order, get order, cancel order, inventory
+- Users: create, login, manage
 
 ---
 
-## v1.0.0  - 2026-01-15
+## v1.0.0 - Sample release
 
-Initial release.
+Initial Petstore API documentation.
 
-- Payments API (create, retrieve, list)
-- Refunds API (full and partial)
-- Connect: merchant onboarding and payouts
-- Webhooks with signature verification
-- SDKs for Node.js, Python, Go, Java, Ruby, PHP
+- Pets API (add, find, update, delete, upload)
+- Store API (orders, inventory)
+- Users API (create, login, get, update, delete)
+- OAuth2 and API key authentication

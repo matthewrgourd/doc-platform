@@ -4,9 +4,9 @@ slug: /getting-started
 title: Getting started
 ---
 
-# Getting started with Helix
+# Getting started with Petstore
 
-Helix provides APIs and SDKs to accept payments, manage payouts, and onboard merchants  - all through a single integration.
+The Swagger Petstore API lets you manage pets, place orders, and work with user accounts. It is a sample API for learning and testing.
 
 ## Choose your path
 
@@ -14,27 +14,27 @@ Helix provides APIs and SDKs to accept payments, manage payouts, and onboard mer
 
 | Path | Description | Time |
 |---|---|---|
-| [**Quickstart**](/getting-started/quickstart) | Process your first test payment in under 5 minutes | ~5 min |
-| [**Accept a payment**](/payments/accept-a-payment) | Build a complete checkout flow with error handling | ~30 min |
-| [**Connect merchants**](/connect/onboarding) | Set up multi-party payments with merchant onboarding | ~1 hour |
+| [**Quickstart**](/getting-started/quickstart) | Add your first pet in under 5 minutes | ~5 min |
+| [**Add a pet**](/pets/add-pet) | Create a pet with name, photo URLs, and status | ~15 min |
+| [**Place an order**](/store/place-order) | Order a pet from the store | ~15 min |
 
 </div>
 
-## How Helix works
+## How the API works
 
 ```mermaid
 sequenceDiagram
-    participant Customer
     participant Your App
-    participant Helix API
-    participant Bank
+    participant Petstore API
 
-    Customer->>Your App: Initiates payment
-    Your App->>Helix API: POST /v1/payments
-    Helix API->>Bank: Authorise transaction
-    Bank-->>Helix API: Approved
-    Helix API-->>Your App: Payment confirmed
-    Your App-->>Customer: Order complete
+    Your App->>Petstore API: POST /pet (add pet)
+    Petstore API-->>Your App: Pet created
+
+    Your App->>Petstore API: POST /store/order (place order)
+    Petstore API-->>Your App: Order confirmed
+
+    Your App->>Petstore API: GET /user/{username} (get user)
+    Petstore API-->>Your App: User details
 ```
 
 ## Base URL
@@ -42,20 +42,11 @@ sequenceDiagram
 All API requests are made to:
 
 ```
-https://api.helix.dev/v1
+https://petstore3.swagger.io/api/v3
 ```
 
-The API accepts JSON request bodies and returns JSON responses. All requests must be authenticated with your API key.
+The API accepts JSON and XML request bodies and returns JSON or XML responses. Some endpoints require authentication via OAuth2 or an API key.
 
-## SDKs
+## API reference
 
-Official SDKs are available for all major languages:
-
-| Language | Package | Install |
-|---|---|---|
-| Node.js | `@helix/node` | `npm install @helix/node` |
-| Python | `helix-python` | `pip install helix-python` |
-| Go | `helix-go` | `go get github.com/helix/helix-go` |
-| Java | `helix-java` | Maven / Gradle |
-| Ruby | `helix-ruby` | `gem install helix-ruby` |
-| PHP | `helix/helix-php` | `composer require helix/helix-php` |
+Use the [API reference](/api-reference) to explore all endpoints, try requests in the browser, and view request and response schemas.

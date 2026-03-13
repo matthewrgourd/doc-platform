@@ -24,44 +24,87 @@ const sidebars: SidebarsConfig = {
     },
   ],
 
-  paymentsSidebar: [
+  petsSidebar: [
     {
       type: 'doc',
-      id: 'payments/index',
+      id: 'pets/index',
       label: 'Overview',
     },
     {
       type: 'doc',
-      id: 'payments/accept-a-payment',
-      label: 'Accept a payment',
+      id: 'pets/add-pet',
+      label: 'Add a pet',
     },
     {
       type: 'doc',
-      id: 'payments/refunds',
-      label: 'Refunds',
+      id: 'pets/find-pets',
+      label: 'Find pets',
     },
     {
       type: 'doc',
-      id: 'payments/webhooks',
-      label: 'Webhooks',
+      id: 'pets/update-pet',
+      label: 'Update a pet',
+    },
+    {
+      type: 'doc',
+      id: 'pets/delete-pet',
+      label: 'Delete a pet',
+    },
+    {
+      type: 'doc',
+      id: 'pets/upload-image',
+      label: 'Upload an image',
     },
   ],
 
-  connectSidebar: [
+  storeSidebar: [
     {
       type: 'doc',
-      id: 'connect/index',
+      id: 'store/index',
       label: 'Overview',
     },
     {
       type: 'doc',
-      id: 'connect/onboarding',
-      label: 'Merchant onboarding',
+      id: 'store/place-order',
+      label: 'Place an order',
     },
     {
       type: 'doc',
-      id: 'connect/payouts',
-      label: 'Payouts',
+      id: 'store/get-order',
+      label: 'Get order by ID',
+    },
+    {
+      type: 'doc',
+      id: 'store/cancel-order',
+      label: 'Cancel an order',
+    },
+    {
+      type: 'doc',
+      id: 'store/inventory',
+      label: 'Inventory',
+    },
+  ],
+
+  usersSidebar: [
+    {
+      type: 'doc',
+      id: 'users/index',
+      label: 'Overview',
+    },
+    {
+      type: 'doc',
+      id: 'users/create-user',
+      label: 'Create a user',
+    },
+    {
+      type: 'doc',
+      id: 'users/login',
+      label: 'Login and logout',
+    },
+    {
+      type: 'doc',
+      id: 'users/manage-user',
+      label: 'Manage users',
     },
   ],
 };

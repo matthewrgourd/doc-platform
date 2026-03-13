@@ -5,45 +5,36 @@ title: Error handling
 
 # Error handling
 
-The Helix API uses conventional HTTP status codes to indicate success or failure. Codes in the `2xx` range indicate success, `4xx` indicate a client error, and `5xx` indicate a server error.
-
-## Error response format
-
-All errors return a JSON body with a consistent structure:
-
-```json
-{
-  "error": {
-    "type": "card_error",
-    "code": "card_declined",
-    "message": "Your card was declined. Please try a different payment method.",
-    "param": "payment_method",
-    "request_id": "req_abc123"
-  }
-}
-```
-
-## Error types
-
-| Type | Description |
-|---|---|
-| `api_error` | An unexpected error on Helix's servers (rare) |
-| `authentication_error` | Invalid or missing API key |
-| `card_error` | The card was declined or failed verification |
-| `invalid_request_error` | The request had invalid parameters |
-| `rate_limit_error` | Too many requests in a short period |
+The Petstore API uses conventional HTTP status codes. Codes in the `2xx` range indicate success, `4xx` indicate a client error, and `5xx` indicate a server error.
 
 ## HTTP status codes
 
 | Code | Meaning |
 |---|---|
 | `200` | Success |
-| `400` | Bad request  - check your parameters |
-| `401` | Unauthorized  - invalid API key |
-| `402` | Payment failed (card declined, insufficient funds) |
-| `404` | Resource not found |
-| `429` | Rate limited  - back off and retry |
-| `500` | Server error  - retry with exponential backoff |
+| `400` | Bad request - check your parameters |
+| `401` | Unauthorized - invalid or missing credentials |
+| `404` | Resource not found (pet, order, or user) |
+| `422` | Validation exception - invalid input |
+| `500` | Server error - retry with exponential backoff |
+
+## Validation errors
+
+Invalid input returns a 400 or 422 with details about the problem:
+
+```json
+{
+  "code": 400,
+  "type": "error",
+  "message": "Invalid ID supplied"
+}
+```
+
+## Special cases
+
+- **Get order by ID**: Use IDs `<= 5` or `> 10` for valid responses. Other values may generate exceptions.
+- **Delete order**: Use IDs `< 1000`. Values `>= 1000` or non-integers generate errors.
+- **Find pets by tags**: Deprecated in OpenAPI 3.0 but may still work. Prefer `findByStatus`.
 
 ## Handling errors in code
 
@@ -54,20 +45,13 @@ import TabItem from '@theme/TabItem';
 <TabItem value="node" label="Node.js">
 
 ```javascript
-try {
-  const payment = await helix.payments.create({
-    amount: 2000,
-    currency: 'usd',
-    payment_method: 'pm_card_visa',
-    confirm: true,
-  });
-} catch (err) {
-  if (err.type === 'card_error') {
-    console.log(`Card declined: ${err.message}`);
-  } else if (err.type === 'rate_limit_error') {
-    // Retry after a delay
-  } else {
-    console.error(`Unexpected error: ${err.message}`);
+const res = await fetch('https://petstore3.swagger.io/api/v3/pet/99999');
+if (!res.ok) {
+  if (res.status === 404) {
+    console.log('Pet not found');
+  } else if (res.status === 400) {
+    const err = await res.json();
+    console.log(`Bad request: ${err.message}`);
   }
 }
 ```
@@ -76,34 +60,22 @@ try {
 <TabItem value="python" label="Python">
 
 ```python
-try:
-    payment = helix.Payment.create(
-        amount=2000,
-        currency="usd",
-        payment_method="pm_card_visa",
-        confirm=True,
-    )
-except helix.CardError as e:
-    print(f"Card declined: {e.user_message}")
-except helix.RateLimitError:
-    # Retry after a delay
-    pass
-except helix.HelixError as e:
-    print(f"Unexpected error: {e}")
+import requests
+
+r = requests.get('https://petstore3.swagger.io/api/v3/pet/99999')
+if not r.ok:
+    if r.status_code == 404:
+        print('Pet not found')
+    elif r.status_code == 400:
+        print(f"Bad request: {r.json().get('message', '')}")
+```
+
+</TabItem>
+<TabItem value="curl" label="curl">
+
+```bash
+curl -w "\nHTTP %{http_code}\n" "https://petstore3.swagger.io/api/v3/pet/99999"
 ```
 
 </TabItem>
 </Tabs>
-
-## Idempotency
-
-To safely retry requests without risking duplicate operations, include an `Idempotency-Key` header:
-
-```bash
-curl https://api.helix.dev/v1/payments \
-  -H "Authorization: Bearer sk_test_your_key_here" \
-  -H "Idempotency-Key: unique-request-id-123" \
-  -d '{"amount": 2000, "currency": "usd"}'
-```
-
-Helix stores the result of the original request and returns it for any subsequent requests with the same key, for up to 24 hours.

@@ -5,130 +5,45 @@ title: Quickstart
 
 # Quickstart
 
-Process your first test payment in under 5 minutes.
+Add your first pet to the store in under 5 minutes.
 
 ## Prerequisites
 
-- A Helix account ([sign up](https://dashboard.helix.dev))
-- Your test API key (available in the Dashboard under **Developers → API keys**)
+- A tool to make HTTP requests (curl, Postman, or the [API playground](/api-reference))
+- No account required for basic operations
 
-## 1. Install the SDK
+## 1. Add a pet
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-<Tabs groupId="language">
-<TabItem value="node" label="Node.js">
+Send a POST request to create a new pet:
 
 ```bash
-npm install @helix/node
+curl -X POST "https://petstore3.swagger.io/api/v3/pet" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "doggie",
+    "photoUrls": ["https://example.com/photo.jpg"],
+    "status": "available"
+  }'
 ```
 
-</TabItem>
-<TabItem value="python" label="Python">
+## 2. Find pets by status
+
+Retrieve pets with a given status (`available`, `pending`, or `sold`):
 
 ```bash
-pip install helix-python
+curl "https://petstore3.swagger.io/api/v3/pet/findByStatus?status=available"
 ```
 
-</TabItem>
-<TabItem value="go" label="Go">
+## 3. Get a pet by ID
+
+Use the pet ID from the create response:
 
 ```bash
-go get github.com/helix/helix-go
+curl "https://petstore3.swagger.io/api/v3/pet/1"
 ```
-
-</TabItem>
-</Tabs>
-
-## 2. Create a payment
-
-<Tabs groupId="language">
-<TabItem value="node" label="Node.js">
-
-```javascript
-import Helix from '@helix/node';
-
-const helix = new Helix('sk_test_your_key_here');
-
-const payment = await helix.payments.create({
-  amount: 2000,
-  currency: 'usd',
-  description: 'Order #1234',
-  payment_method: 'pm_card_visa',
-  confirm: true,
-});
-
-console.log(payment.id);     // pay_1a2b3c4d
-console.log(payment.status); // "succeeded"
-```
-
-</TabItem>
-<TabItem value="python" label="Python">
-
-```python
-import helix
-
-helix.api_key = "sk_test_your_key_here"
-
-payment = helix.Payment.create(
-    amount=2000,
-    currency="usd",
-    description="Order #1234",
-    payment_method="pm_card_visa",
-    confirm=True,
-)
-
-print(payment.id)      # pay_1a2b3c4d
-print(payment.status)  # "succeeded"
-```
-
-</TabItem>
-<TabItem value="go" label="Go">
-
-```go
-package main
-
-import (
-    "fmt"
-    "github.com/helix/helix-go"
-)
-
-func main() {
-    client := helix.NewClient("sk_test_your_key_here")
-
-    payment, _ := client.Payments.Create(&helix.PaymentParams{
-        Amount:        helix.Int64(2000),
-        Currency:      helix.String("usd"),
-        Description:   helix.String("Order #1234"),
-        PaymentMethod: helix.String("pm_card_visa"),
-        Confirm:       helix.Bool(true),
-    })
-
-    fmt.Println(payment.ID)     // pay_1a2b3c4d
-    fmt.Println(payment.Status) // "succeeded"
-}
-```
-
-</TabItem>
-</Tabs>
-
-## 3. Verify the result
-
-A successful payment returns a `Payment` object with `status: "succeeded"`. You'll also receive a `payment.succeeded` webhook if you've [configured webhooks](/payments/webhooks).
-
-:::tip Test cards
-Use these card numbers in test mode:
-
-| Card | Number | Behaviour |
-|---|---|---|
-| Visa (success) | `4242 4242 4242 4242` | Always succeeds |
-| Visa (decline) | `4000 0000 0000 0002` | Always declines |
-| 3D Secure | `4000 0027 6000 3184` | Requires authentication |
-:::
 
 ## Next steps
 
-- [Accept a Payment](/payments/accept-a-payment)  - Build a complete server-side payment flow
-- [Error Handling](./error-handling)  - Handle declines and failures gracefully
-- [Webhooks](/payments/webhooks)  - Receive real-time payment notifications
+- [Add a pet](/pets/add-pet) - Full guide with categories and tags
+- [Authentication](./authentication) - OAuth2 and API key for protected endpoints
+- [Error handling](./error-handling) - Handle failures gracefully

@@ -1,14 +1,14 @@
-# Helix Developer Docs
+# Petstore API Docs
 
 A reference implementation of an enterprise developer documentation portal, built with [Docusaurus](https://docusaurus.io/) and [Scalar](https://scalar.com/). Product/service name: **devdocify**.
 
-Demonstrates a multi-product documentation site with interactive API playground, containerised deployment, and CI/CD pipeline - the kind of developer portal used by companies like Stripe, Adyen, and Twilio.
+Demonstrates a multi-product documentation site with interactive API playground, containerised deployment, and CI/CD pipeline. Content is aligned with the [Swagger Petstore](https://petstore3.swagger.io/) OpenAPI 3.0 spec.
 
 ## Features
 
-- **Multi-product navigation** - separate doc sections for Payments, Connect, and Getting Started
-- **Interactive API playground** - powered by Scalar, with "Try it" request builder; includes Helix API (demo) and TfL Unified API (live)
-- **OpenAPI 3.0 reference** - auto-generated from a spec file, always in sync
+- **Multi-product navigation** - separate doc sections for Pets, Store, Users, and Getting Started
+- **Interactive API playground** - powered by Scalar, with "Try it" request builder; uses the live Petstore API
+- **OpenAPI 3.0 reference** - loaded from [Petstore spec](https://petstore3.swagger.io/api/v3/openapi.json), always in sync
 - **Mermaid diagrams** - sequence diagrams, state machines, and flowcharts rendered natively
 - **Tabbed code samples** - Node.js, Python, Go across all guides
 - **Dark mode** - automatic, respects system preferences
@@ -106,14 +106,13 @@ Pull requests also trigger a preview deployment (`preview.yml`) that posts the p
 ```
 docs/
   getting-started/       Onboarding guides (quickstart, auth, errors)
-  payments/              Payments product area (accept, refund, webhooks)
-  connect/               Connect product area (onboarding, payouts)
+  pets/                  Pet management (add, find, update, delete, upload)
+  store/                 Store orders and inventory
+  users/                 User management (create, login, manage)
   changelog.md           Release notes
 src/
   css/custom.css         Custom theme (Stripe-inspired)
   pages/index.tsx        Homepage redirect
-static/
-  openapi.yaml           OpenAPI 3.0 spec (powers Scalar playground)
 .github/workflows/
   ci.yml                 Build, test, Docker push, staging deploy
   preview.yml            PR preview deployments
