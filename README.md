@@ -1,6 +1,6 @@
 # Helix Developer Docs
 
-A reference implementation of an enterprise developer documentation portal, built with [Docusaurus](https://docusaurus.io/) and [Scalar](https://scalar.com/).
+A reference implementation of an enterprise developer documentation portal, built with [Docusaurus](https://docusaurus.io/) and [Scalar](https://scalar.com/). Product/service name: **devdocify**.
 
 Demonstrates a multi-product documentation site with interactive API playground, containerised deployment, and CI/CD pipeline - the kind of developer portal used by companies like Stripe, Adyen, and Twilio.
 
