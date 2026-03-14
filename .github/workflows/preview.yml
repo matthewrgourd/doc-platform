@@ -32,10 +32,9 @@ jobs:
       - name: Get Vercel preview URL
         id: deploy
         uses: thomasheyenbrock/vercel-deployment-url@v2
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
           project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           search-retries: 6
           ready-retries: 20
