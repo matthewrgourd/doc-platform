@@ -14,9 +14,9 @@ The Swagger Petstore API lets you manage pets, place orders, and work with user 
 
 | Path | Description | Time |
 |---|---|---|
-| [**Quickstart**](/getting-started/quickstart) | Add your first pet in under 5 minutes | ~5 min |
-| [**Add a pet**](/pets/add-pet) | Create a pet with name, photo URLs, and status | ~15 min |
-| [**Place an order**](/store/place-order) | Order a pet from the store | ~15 min |
+| [**Quickstart**](/petstore/getting-started/quickstart) | Add your first pet in under 5 minutes | ~5 min |
+| [**Add a pet**](/petstore/pets/add-pet) | Create a pet with name, photo URLs, and status | ~15 min |
+| [**Place an order**](/petstore/store/place-order) | Order a pet from the store | ~15 min |
 
 </div>
 
@@ -49,4 +49,4 @@ The API accepts JSON and XML request bodies and returns JSON or XML responses. S
 
 ## API reference
 
-Use the [API reference](/api-reference) to explore all endpoints, try requests in the browser, and view request and response schemas.
+Use the [API reference](/petstore/api-reference) to explore all endpoints, try requests in the browser, and view request and response schemas.

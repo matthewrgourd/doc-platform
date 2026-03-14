@@ -1,14 +1,13 @@
-# Petstore API Docs
+# API Documentation Platform
 
-A reference implementation of an enterprise developer documentation portal, built with [Docusaurus](https://docusaurus.io/) and [Scalar](https://scalar.com/).
-
-Demonstrates a multi-product documentation site with interactive API playground and CI/CD pipeline. Content is aligned with the [Swagger Petstore](https://petstore3.swagger.io/) OpenAPI 3.0 spec.
+A reference implementation demonstrating the **Docusaurus**, **Scalar**, and **Vercel** tech stack for multi-product API documentation. Shows how to structure a site with multiple products, each with its own docs and interactive API playground.
 
 ## Features
 
-- **Multi-product navigation** - separate doc sections for Pets, Store, Users, and Getting Started
-- **Interactive API playground** - powered by Scalar, with "Try it" request builder; uses the live Petstore API
-- **OpenAPI 3.0 reference** - loaded from [Petstore spec](https://petstore3.swagger.io/api/v3/openapi.json), always in sync
+- **Multi-product site** - Petstore and TfL as selectable products with separate doc sections and API references
+- **Site overview homepage** - explains the tech stack and links to each product
+- **Interactive API playground** - powered by Scalar, with "Try it" request builder; Petstore uses the live API, TfL uses the [TfL Unified API](https://api.tfl.gov.uk)
+- **OpenAPI / Swagger reference** - Petstore (OpenAPI 3.0), TfL (Swagger 2.0), always in sync
 - **Mermaid diagrams** - sequence diagrams, state machines, and flowcharts rendered natively
 - **Tabbed code samples** - Node.js, Python, Go across all guides
 - **Dark mode** - automatic, respects system preferences
@@ -46,6 +45,11 @@ Serves at `http://localhost:3000` (or the next available port).
 
 Each push to `main` triggers a new deployment. PRs get preview URLs automatically.
 
+**PR preview comments:** To post the Vercel preview URL as a comment on each PR, add these [GitHub repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets):
+
+- `VERCEL_TOKEN` – create at [vercel.com/account/tokens](https://vercel.com/account/tokens)
+- `VERCEL_PROJECT_ID` – from your Vercel project **Settings → General** (or from `.vercel/project.json` after `vercel link`)
+
 ## Optional: self-hosted deployment
 
 For containerised or on-prem deployments, the repo includes Docker, nginx, and a monitoring stack.
@@ -81,28 +85,41 @@ Run `make help` to see all commands. Core workflow: `dev`, `build`, `serve`. Doc
 
 ## CI/CD pipeline
 
-The GitHub Actions pipeline (`ci.yml`) runs on every push and PR:
+**CI** (`ci.yml`) runs on every push and PR to `main`:
 
 ```
-lint-and-typecheck --> build --> docker (push to GHCR) --> deploy-staging
+lint-and-typecheck --> build
 ```
 
-Docker push and deploy run only on `main`. For static hosting (Vercel, Netlify, GitHub Pages), use the `build` output directly and skip the Docker job if desired.
+**Deploy** (`deploy.yml`) runs only on push to `main`:
+
+```
+docker (push to GHCR) --> deploy-staging
+```
+
+PRs and feature branches only run lint and build. Docker and deploy run exclusively when merging to `main`. For static hosting (Vercel, Netlify, GitHub Pages), use the `build` output directly and skip the Docker job if desired.
 
 ## Project structure
 
 ```
 docs/
-  getting-started/       Onboarding guides (quickstart, auth, errors)
-  pets/                  Pet management (add, find, update, delete, upload)
-  store/                 Store orders and inventory
-  users/                 User management (create, login, manage)
-  changelog.md           Release notes
+  petstore/              Petstore product
+    getting-started/     Onboarding guides (quickstart, auth, errors)
+    pets/                Pet management (add, find, update, delete, upload)
+    store/               Store orders and inventory
+    users/               User management (create, login, manage)
+  tfl/                   TfL API product
+    getting-started/     Overview, quickstart, auth, error handling
+    lines/               Line status and routes
+    stoppoints/          Stop search and arrivals
+    journey/              Journey planning
 src/
   css/custom.css         Custom theme (Stripe-inspired)
-  pages/index.tsx        Homepage redirect
+  pages/index.tsx        Site overview homepage
 .github/workflows/
-  ci.yml                 Build, test, optional Docker push
+  ci.yml                 Lint, typecheck, build (all branches/PRs)
+  deploy.yml             Docker push and deploy (main only)
+  preview.yml             PR preview (posts Vercel deployment URL)
 vercel.json              Vercel build config (install, output dir)
 Dockerfile               Optional: multi-stage build (node + nginx)
 docker-compose.yml       Optional: local containers and monitoring
@@ -116,6 +133,7 @@ Makefile                 Commands (core + optional Docker/monitoring)
 | Docs framework | [Docusaurus 3.9](https://docusaurus.io/) |
 | Typography | [Inter](https://fonts.google.com/specimen/Inter) + [Fira Code](https://fonts.google.com/specimen/Fira+Code) |
 | API reference | [Scalar](https://scalar.com/) |
+| Hosting | [Vercel](https://vercel.com/) |
 | Diagrams | [Mermaid](https://mermaid.js.org/) |
 | CI/CD | GitHub Actions |
 | Optional | Docker, nginx, Prometheus, Grafana, GHCR |

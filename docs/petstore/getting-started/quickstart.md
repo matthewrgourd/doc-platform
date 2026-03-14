@@ -9,7 +9,7 @@ Add your first pet to the store in under 5 minutes.
 
 ## Prerequisites
 
-- A tool to make HTTP requests (curl, Postman, or the [API playground](/api-reference))
+- A tool to make HTTP requests (curl, Postman, or the [API playground](/petstore/api-reference))
 - No account required for basic operations
 
 ## 1. Add a pet
@@ -44,6 +44,6 @@ curl "https://petstore3.swagger.io/api/v3/pet/1"
 
 ## Next steps
 
-- [Add a pet](/pets/add-pet) - Full guide with categories and tags
+- [Add a pet](/petstore/pets/add-pet) - Full guide with categories and tags
 - [Authentication](./authentication) - OAuth2 and API key for protected endpoints
 - [Error handling](./error-handling) - Handle failures gracefully

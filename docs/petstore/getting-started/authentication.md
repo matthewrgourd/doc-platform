@@ -31,7 +31,7 @@ curl "https://petstore3.swagger.io/api/v3/store/inventory" \
 ```
 
 :::tip Try it in the playground
-The [API reference](/api-reference) includes an interactive playground. Click "Authorize" to add your credentials and try authenticated requests.
+The [API reference](/petstore/api-reference) includes an interactive playground. Click "Authorize" to add your credentials and try authenticated requests.
 :::
 
 ## Public endpoints

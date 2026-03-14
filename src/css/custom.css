@@ -130,6 +130,13 @@ table tbody tr:nth-child(even) {
   border-radius: 0.375rem 0.375rem 0 0;
 }
 
+/* Home page */
+.padding-vert--xl .hero__subtitle {
+  font-size: 1.125rem;
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.7;
+}
+
 /* Footer */
 .footer__title {
   text-transform: uppercase;
