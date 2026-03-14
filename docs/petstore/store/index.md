@@ -28,7 +28,7 @@ stateDiagram-v2
 
 ## Guides
 
-- [**Place an order**](/store/place-order) - Create a new order
-- [**Get order by ID**](/store/get-order) - Retrieve order details
-- [**Cancel an order**](/store/cancel-order) - Delete an order
-- [**Inventory**](/store/inventory) - View pet inventory by status
+- [**Place an order**](/petstore/store/place-order) - Create a new order
+- [**Get order by ID**](/petstore/store/get-order) - Retrieve order details
+- [**Cancel an order**](/petstore/store/cancel-order) - Delete an order
+- [**Inventory**](/petstore/store/inventory) - View pet inventory by status

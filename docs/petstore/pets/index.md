@@ -41,8 +41,8 @@ stateDiagram-v2
 
 ## Guides
 
-- [**Add a pet**](/pets/add-pet) - Create a new pet in the store
-- [**Find pets**](/pets/find-pets) - Find pets by status or tags
-- [**Update a pet**](/pets/update-pet) - Update pet details
-- [**Delete a pet**](/pets/delete-pet) - Remove a pet from the store
-- [**Upload an image**](/pets/upload-image) - Add a photo to a pet
+- [**Add a pet**](/petstore/pets/add-pet) - Create a new pet in the store
+- [**Find pets**](/petstore/pets/find-pets) - Find pets by status or tags
+- [**Update a pet**](/petstore/pets/update-pet) - Update pet details
+- [**Delete a pet**](/petstore/pets/delete-pet) - Remove a pet from the store
+- [**Upload an image**](/petstore/pets/upload-image) - Add a photo to a pet

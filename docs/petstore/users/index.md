@@ -23,6 +23,6 @@ Create and manage user accounts. Users can log in to access the store.
 
 ## Guides
 
-- [**Create a user**](/users/create-user) - Add a new user
-- [**Login and logout**](/users/login) - Authenticate users
-- [**Manage users**](/users/manage-user) - Get, update, and delete users
+- [**Create a user**](/petstore/users/create-user) - Add a new user
+- [**Login and logout**](/petstore/users/login) - Authenticate users
+- [**Manage users**](/petstore/users/manage-user) - Get, update, and delete users
