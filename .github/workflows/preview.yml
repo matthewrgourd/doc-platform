@@ -29,11 +29,16 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy preview
+      - name: Get Vercel preview URL
         id: deploy
-        run: |
-          echo "Replace with your preview deployment (Vercel, Netlify, Cloudflare Pages, etc.)"
-          echo "preview_url=https://pr-${{ github.event.pull_request.number }}.preview.devdocify.com" >> "$GITHUB_OUTPUT"
+        uses: thomasheyenbrock/vercel-deployment-url@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        with:
+          project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          search-retries: 6
+          ready-retries: 20
 
       - name: Comment preview URL on PR
         uses: actions/github-script@v7
@@ -43,7 +48,7 @@ jobs:
 
             | Status | URL |
             |---|---|
-            | Ready | [${{ steps.deploy.outputs.preview_url }}](${{ steps.deploy.outputs.preview_url }}) |
+            | Ready | [${{ steps.deploy.outputs.url }}](${{ steps.deploy.outputs.url }}) |
 
             Built from commit ${{ github.sha }}`;
 
