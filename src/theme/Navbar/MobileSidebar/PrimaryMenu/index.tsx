@@ -1,67 +1,54 @@
 import React, {type ReactNode} from 'react';
 import Link from '@docusaurus/Link';
-import {useThemeConfig} from '@docusaurus/theme-common';
 import {useNavbarMobileSidebar} from '@docusaurus/theme-common/internal';
-import type {Props as NavbarItemConfig} from '@theme/NavbarItem';
 
-function useNavbarItems() {
-  return useThemeConfig().navbar.items as NavbarItemConfig[];
-}
-
-type MobileLinkItem = {
-  label: string;
-  to?: string;
-  href?: string;
+type MenuSection = {
+  heading: string;
+  items: Array<{label: string; to: string}>;
 };
 
-function toMobileLinkItem(item: NavbarItemConfig): MobileLinkItem | null {
-  if (!('label' in item) || typeof item.label !== 'string') {
-    return null;
-  }
-
-  if ('to' in item && typeof item.to === 'string') {
-    return {label: item.label, to: item.to};
-  }
-
-  if ('href' in item && typeof item.href === 'string') {
-    return {label: item.label, href: item.href};
-  }
-
-  if ('items' in item && Array.isArray(item.items)) {
-    const firstLinkChild = item.items.find(
-      (child) =>
-        ('to' in child && typeof child.to === 'string') ||
-        ('href' in child && typeof child.href === 'string'),
-    );
-
-    if (firstLinkChild) {
-      if ('to' in firstLinkChild && typeof firstLinkChild.to === 'string') {
-        return {label: item.label, to: firstLinkChild.to};
-      }
-      if ('href' in firstLinkChild && typeof firstLinkChild.href === 'string') {
-        return {label: item.label, href: firstLinkChild.href};
-      }
-    }
-  }
-
-  return null;
-}
+const sections: MenuSection[] = [
+  {
+    heading: 'Petstore',
+    items: [
+      {label: 'Getting started', to: '/petstore/getting-started'},
+      {label: 'Pets', to: '/petstore/pets'},
+      {label: 'Store', to: '/petstore/store'},
+      {label: 'Users', to: '/petstore/users'},
+      {label: 'API reference', to: '/petstore/api-reference'},
+    ],
+  },
+  {
+    heading: 'TfL',
+    items: [
+      {label: 'Getting started', to: '/tfl/getting-started'},
+      {label: 'Lines', to: '/tfl/lines'},
+      {label: 'StopPoints', to: '/tfl/stoppoints'},
+      {label: 'Journey', to: '/tfl/journey'},
+      {label: 'API reference', to: '/tfl/api-reference'},
+    ],
+  },
+];
 
 export default function NavbarMobilePrimaryMenu(): ReactNode {
   const mobileSidebar = useNavbarMobileSidebar();
-  const items = useNavbarItems().map(toMobileLinkItem).filter(Boolean) as MobileLinkItem[];
 
   return (
     <ul className="menu__list">
-      {items.map((item, i) => (
-        <li className="menu__list-item" key={i}>
-          <Link
-            className="menu__link"
-            to={item.to}
-            href={item.href}
-            onClick={() => mobileSidebar.toggle()}>
-            {item.label}
-          </Link>
+      {sections.map((section) => (
+        <li className="menu__list-item" key={section.heading}>
+          <span className="menu__link menu__link--sublist menu__link--active">
+            {section.heading}
+          </span>
+          <ul className="menu__list">
+            {section.items.map((item) => (
+              <li className="menu__list-item" key={item.to}>
+                <Link className="menu__link" to={item.to} onClick={() => mobileSidebar.toggle()}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </li>
       ))}
     </ul>
