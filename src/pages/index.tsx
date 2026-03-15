@@ -35,7 +35,7 @@ export default function Home(): React.JSX.Element {
 
             <h2>Products</h2>
             <p>
-              Each product has its own docs and API playground. Use the navbar to switch between
+              Each product has its own docs and API playground. Use the navbar or buttons below to switch between
               them.
             </p>
             <div className="margin-top--lg" style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
