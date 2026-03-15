@@ -52,6 +52,16 @@
   backdrop-filter: blur(12px);
 }
 
+/* Mintlify-style theme toggle - sun left, moon right, top right */
+.navbar__items--right .toggle {
+  margin-left: 0.5rem;
+}
+
+/* Mobile sidebar: same Mintlify-style toggle in burger menu header */
+.navbar-sidebar__brand .toggle {
+  margin-right: 0.5rem;
+}
+
 .navbar__title {
   font-weight: 700;
   font-size: 1.1rem;
