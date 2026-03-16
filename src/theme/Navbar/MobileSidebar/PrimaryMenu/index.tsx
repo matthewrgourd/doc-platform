@@ -10,16 +10,6 @@ type MenuSection = {
 
 const sections: MenuSection[] = [
   {
-    heading: 'Petstore',
-    items: [
-      {label: 'Getting started', to: '/petstore/getting-started'},
-      {label: 'Pets', to: '/petstore/pets'},
-      {label: 'Store', to: '/petstore/store'},
-      {label: 'Users', to: '/petstore/users'},
-      {label: 'API reference', to: '/petstore/api-reference'},
-    ],
-  },
-  {
     heading: 'TfL',
     items: [
       {label: 'Getting started', to: '/tfl/getting-started'},
@@ -27,6 +17,16 @@ const sections: MenuSection[] = [
       {label: 'StopPoints', to: '/tfl/stoppoints'},
       {label: 'Journey', to: '/tfl/journey'},
       {label: 'API reference', to: '/tfl/api-reference'},
+    ],
+  },
+  {
+    heading: 'Petstore',
+    items: [
+      {label: 'Getting started', to: '/petstore/getting-started'},
+      {label: 'Pets', to: '/petstore/pets'},
+      {label: 'Store', to: '/petstore/store'},
+      {label: 'Users', to: '/petstore/users'},
+      {label: 'API reference', to: '/petstore/api-reference'},
     ],
   },
 ];
@@ -37,9 +37,9 @@ export default function NavbarMobilePrimaryMenu(): ReactNode {
   const pathname = location.pathname.replace(/\/$/, '');
   const downloadSpecHref =
     pathname === '/petstore/api-reference'
-      ? 'https://petstore3.swagger.io/api/v3/openapi.json'
+      ? '/openapi/petstore-playground.json'
       : pathname === '/tfl/api-reference'
-        ? 'https://api.tfl.gov.uk/swagger/docs/v1'
+        ? '/openapi/tfl-playground.json'
         : null;
 
   return (

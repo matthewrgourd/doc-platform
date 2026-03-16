@@ -1,0 +1,109 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "TfL demo API",
+    "version": "1.0.0",
+    "description": "Curated unauthenticated GET endpoints for demo playground use."
+  },
+  "servers": [
+    {
+      "url": "https://api.tfl.gov.uk"
+    }
+  ],
+  "paths": {
+    "/Line/Mode/{modes}/Status": {
+      "get": {
+        "summary": "Get line status by mode",
+        "parameters": [
+          {
+            "name": "modes",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "tube"
+            },
+            "example": "tube"
+          },
+          {
+            "name": "detail",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "example": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/StopPoint/Search/{query}": {
+      "get": {
+        "summary": "Search stop points",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "waterloo"
+            },
+            "example": "waterloo"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/BikePoint": {
+      "get": {
+        "summary": "Get bike points",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

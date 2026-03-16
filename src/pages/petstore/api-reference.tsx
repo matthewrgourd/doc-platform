@@ -6,10 +6,10 @@ export default function PetstoreApiReferencePage(): React.JSX.Element {
   return (
     <Layout title="Petstore API reference">
       <ApiReferenceClient
-        specUrl="https://petstore3.swagger.io/api/v3/openapi.json"
+        specUrl="/openapi/petstore-playground.json"
         profile="petstore"
-        downloadUrl="https://petstore3.swagger.io/api/v3/openapi.json"
-        specLabel="Petstore OpenAPI JSON"
+        downloadUrl="/openapi/petstore-playground.json"
+        specLabel="Petstore demo OpenAPI JSON"
       />
     </Layout>
   );

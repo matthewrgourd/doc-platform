@@ -81,9 +81,9 @@ export default function NavbarContent(): ReactNode {
   const pathname = location.pathname.replace(/\/$/, '');
   const downloadSpecHref =
     pathname === '/petstore/api-reference'
-      ? 'https://petstore3.swagger.io/api/v3/openapi.json'
+      ? '/openapi/petstore-playground.json'
       : pathname === '/tfl/api-reference'
-        ? 'https://api.tfl.gov.uk/swagger/docs/v1'
+        ? '/openapi/tfl-playground.json'
         : null;
 
   const items = useNavbarItems();

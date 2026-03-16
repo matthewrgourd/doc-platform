@@ -29,24 +29,18 @@ function setParamDefault(parameter: JsonObject, value: any): void {
 function applyPetstorePlaygroundDefaults(spec: JsonObject): JsonObject {
   const paths = spec.paths ?? {};
 
-  const petById = paths['/pet/{petId}']?.get?.parameters;
-  if (Array.isArray(petById)) {
-    const petId = petById.find((p: JsonObject) => p.name === 'petId');
-    if (petId) setParamDefault(petId, 1);
-  }
-
-  const orderById = paths['/store/order/{orderId}']?.get?.parameters;
-  if (Array.isArray(orderById)) {
-    const orderId = orderById.find((p: JsonObject) => p.name === 'orderId');
-    if (orderId) setParamDefault(orderId, 1);
+  const byStatus = paths['/pet/findByStatus']?.get?.parameters;
+  if (Array.isArray(byStatus)) {
+    const status = byStatus.find((p: JsonObject) => p.name === 'status');
+    if (status) setParamDefault(status, 'available');
   }
 
   const userLogin = paths['/user/login']?.get?.parameters;
   if (Array.isArray(userLogin)) {
     const username = userLogin.find((p: JsonObject) => p.name === 'username');
     const password = userLogin.find((p: JsonObject) => p.name === 'password');
-    if (username) setParamDefault(username, 'demo-user');
-    if (password) setParamDefault(password, 'demo-pass');
+    if (username) setParamDefault(username, 'theUser');
+    if (password) setParamDefault(password, '12345');
   }
 
   return spec;
@@ -63,30 +57,10 @@ function applyTflPlaygroundDefaults(spec: JsonObject): JsonObject {
     if (detail) setParamDefault(detail, false);
   }
 
-  const lineRoutes = paths['/Line/Route/{ids}']?.get?.parameters;
-  if (Array.isArray(lineRoutes)) {
-    const ids = lineRoutes.find((p: JsonObject) => p.name === 'ids');
-    if (ids) setParamDefault(ids, 'victoria');
-  }
-
-  const stopArrivals = paths['/StopPoint/{id}/Arrivals']?.get?.parameters;
-  if (Array.isArray(stopArrivals)) {
-    const id = stopArrivals.find((p: JsonObject) => p.name === 'id');
-    if (id) setParamDefault(id, '490008660N');
-  }
-
   const stopSearch = paths['/StopPoint/Search/{query}']?.get?.parameters;
   if (Array.isArray(stopSearch)) {
     const query = stopSearch.find((p: JsonObject) => p.name === 'query');
     if (query) setParamDefault(query, 'waterloo');
-  }
-
-  const journey = paths['/Journey/JourneyResults/{from}/to/{to}']?.get?.parameters;
-  if (Array.isArray(journey)) {
-    const from = journey.find((p: JsonObject) => p.name === 'from');
-    const to = journey.find((p: JsonObject) => p.name === 'to');
-    if (from) setParamDefault(from, '940GZZLUKSX');
-    if (to) setParamDefault(to, '940GZZLUOXC');
   }
 
   return spec;
@@ -97,19 +71,6 @@ function applyPlaygroundDefaults(spec: JsonObject, profile: 'petstore' | 'tfl'):
     return applyPetstorePlaygroundDefaults(spec);
   }
   return applyTflPlaygroundDefaults(spec);
-}
-
-function getAuthentication(profile: 'petstore' | 'tfl'): JsonObject | undefined {
-  if (profile === 'tfl') {
-    return {
-      preferredSecurityScheme: ['apiKey', 'appId'],
-      securitySchemes: {
-        apiKey: {value: 'YOUR_TFL_APP_KEY'},
-        appId: {value: 'YOUR_TFL_APP_ID'},
-      },
-    };
-  }
-  return undefined;
 }
 
 function ApiReferenceRenderer({
@@ -178,7 +139,6 @@ function ApiReferenceRenderer({
         _integration: 'docusaurus',
         content: spec,
         hideModels: false,
-        authentication: getAuthentication(profile),
       }}
     />
   );
