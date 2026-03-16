@@ -69,16 +69,26 @@ const config: Config = {
       title: 'Devdocify',
       items: [
         {
-          to: '/tfl/getting-started',
           label: 'TfL',
-          activeBasePath: '/tfl',
           position: 'left',
+          items: [
+            {label: 'Getting started', to: '/tfl/getting-started'},
+            {label: 'Lines', to: '/tfl/lines'},
+            {label: 'Stop points', to: '/tfl/stoppoints'},
+            {label: 'Journey', to: '/tfl/journey'},
+            {label: 'API reference', to: '/tfl/api-reference'},
+          ],
         },
         {
-          to: '/petstore/getting-started',
           label: 'Petstore',
-          activeBasePath: '/petstore',
           position: 'left',
+          items: [
+            {label: 'Getting started', to: '/petstore/getting-started'},
+            {label: 'Pets', to: '/petstore/pets'},
+            {label: 'Store', to: '/petstore/store'},
+            {label: 'Users', to: '/petstore/users'},
+            {label: 'API reference', to: '/petstore/api-reference'},
+          ],
         },
       ],
     },

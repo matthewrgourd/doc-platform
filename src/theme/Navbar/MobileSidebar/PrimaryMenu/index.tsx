@@ -14,7 +14,7 @@ const sections: MenuSection[] = [
     items: [
       {label: 'Getting started', to: '/tfl/getting-started'},
       {label: 'Lines', to: '/tfl/lines'},
-      {label: 'StopPoints', to: '/tfl/stoppoints'},
+      {label: 'Stop points', to: '/tfl/stoppoints'},
       {label: 'Journey', to: '/tfl/journey'},
       {label: 'API reference', to: '/tfl/api-reference'},
     ],
