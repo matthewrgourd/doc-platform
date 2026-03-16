@@ -16,7 +16,7 @@ const sections: MenuSection[] = [
       {label: 'Lines', to: '/tfl/lines'},
       {label: 'Stop points', to: '/tfl/stoppoints'},
       {label: 'Journey', to: '/tfl/journey'},
-      {label: 'API reference', to: '/tfl/api-reference'},
+      {label: 'API playground', to: '/tfl/api-playground'},
     ],
   },
   {
@@ -26,7 +26,7 @@ const sections: MenuSection[] = [
       {label: 'Pets', to: '/petstore/pets'},
       {label: 'Store', to: '/petstore/store'},
       {label: 'Users', to: '/petstore/users'},
-      {label: 'API reference', to: '/petstore/api-reference'},
+      {label: 'API playground', to: '/petstore/api-playground'},
     ],
   },
 ];
@@ -36,9 +36,9 @@ export default function NavbarMobilePrimaryMenu(): ReactNode {
   const location = useLocation();
   const pathname = location.pathname.replace(/\/$/, '');
   const downloadSpecHref =
-    pathname === '/petstore/api-reference'
+    pathname === '/petstore/api-playground'
       ? '/openapi/petstore-playground.json'
-      : pathname === '/tfl/api-reference'
+      : pathname === '/tfl/api-playground'
         ? '/openapi/tfl-playground.json'
         : null;
 

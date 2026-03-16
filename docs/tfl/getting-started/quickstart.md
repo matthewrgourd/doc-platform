@@ -9,7 +9,7 @@ Get your first TfL API response in under 5 minutes.
 
 ## Prerequisites
 
-- A tool to make HTTP requests (curl, Postman, or the [API playground](/tfl/api-reference))
+- A tool to make HTTP requests (curl, Postman, or the [API playground](/tfl/api-playground))
 - No account required for these demo operations
 
 ## 1. Get line status

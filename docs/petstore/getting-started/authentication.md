@@ -9,7 +9,7 @@ The Petstore demo playground doesn't require authentication. It uses public GET 
 
 ## Playground behavior
 
-The [API reference](/petstore/api-reference) includes these unauthenticated demo endpoints:
+The [API playground](/petstore/api-playground) includes these unauthenticated demo endpoints:
 
 - `GET /pet/findByStatus`
 - `GET /user/login`

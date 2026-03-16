@@ -9,7 +9,7 @@ Add your first pet to the store in under 5 minutes.
 
 ## Prerequisites
 
-- A tool to make HTTP requests (curl, Postman, or the [API playground](/petstore/api-reference))
+- A tool to make HTTP requests (curl, Postman, or the [API playground](/petstore/api-playground))
 - No account required for these demo operations
 
 ## 1. Add a pet

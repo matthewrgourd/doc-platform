@@ -1,14 +1,14 @@
 # Devdocify
 
-Devdocify is a reference implementation demonstrating the **Docusaurus**, **Scalar**, and **Vercel** stack for multi-product developer documentation. It shows how to structure a portal with multiple products, each with guides and interactive API reference pages.
+Devdocify is a reference implementation demonstrating the **Docusaurus**, **Scalar**, and **Vercel** stack for multi-product developer documentation. It shows how to structure a portal with multiple products, each with guides and interactive API playground pages.
 
 ## Features
 
-- **Multi-product site** - Petstore and TfL as selectable products with separate doc sections and API references
+- **Multi-product site** - Petstore and TfL as selectable products with separate doc sections and API playgrounds
 - **Site overview homepage** - explains the tech stack and links to each product
 - **Interactive API playground** - powered by Scalar, with "Try it" request builder and curated unauthenticated examples
-- **Curated demo specs** - each API reference page exposes 3 GET endpoints designed to return valid responses without authentication
-- **Context-aware spec download links** - "Download API spec" appears only on API reference routes and points to the corresponding local demo spec
+- **Curated demo specs** - each API playground page exposes 3 GET endpoints designed to return valid responses without authentication
+- **Context-aware spec download links** - "Download API spec" appears only on API playground routes and points to the corresponding local demo spec
 - **Mermaid diagrams** - sequence diagrams, state machines, and flowcharts rendered natively
 - **Tabbed code samples** - Node.js, Python, Go across all guides
 - **Dark mode** - automatic, respects system preferences
@@ -116,11 +116,11 @@ docs/
     journey/              Journey planning
 src/
   components/
-    ApiReferenceClient.tsx  Scalar renderer used by API reference routes
+    ApiReferenceClient.tsx  Scalar renderer used by API playground routes
   css/custom.css         Custom theme (Stripe-inspired)
   pages/index.tsx        Site overview homepage
-  pages/petstore/api-reference.tsx  Petstore API reference page route
-  pages/tfl/api-reference.tsx       TfL API reference page route
+  pages/petstore/api-playground.tsx  Petstore API playground page route
+  pages/tfl/api-playground.tsx       TfL API playground page route
   pages/status.mdx       Service status page
   pages/support.mdx      Support page
   pages/privacy.mdx      Privacy notice page
@@ -146,7 +146,7 @@ Makefile                 Commands (core + optional Docker/monitoring)
 |---|---|
 | Docs framework | [Docusaurus 3.9](https://docusaurus.io/) |
 | Typography | [Inter](https://fonts.google.com/specimen/Inter) + [Fira Code](https://fonts.google.com/specimen/Fira+Code) |
-| API reference | [Scalar](https://scalar.com/) |
+| API playground | [Scalar](https://scalar.com/) |
 | Hosting | [Vercel](https://vercel.com/) |
 | Diagrams | [Mermaid](https://mermaid.js.org/) |
 | CI/CD | GitHub Actions |

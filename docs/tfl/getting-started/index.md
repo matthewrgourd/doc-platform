@@ -48,9 +48,9 @@ https://api.tfl.gov.uk
 
 For this demo site, playground examples use public endpoints that don't require credentials.
 
-## API reference
+## API playground
 
-Use the [API reference](/tfl/api-reference) to run three curated demo endpoints in the browser:
+Use the [API playground](/tfl/api-playground) to run three curated demo endpoints in the browser:
 
 - `GET /Line/Mode/{modes}/Status`
 - `GET /StopPoint/Search/{query}`

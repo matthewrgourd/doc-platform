@@ -80,9 +80,9 @@ export default function NavbarContent(): ReactNode {
   const location = useLocation();
   const pathname = location.pathname.replace(/\/$/, '');
   const downloadSpecHref =
-    pathname === '/petstore/api-reference'
+    pathname === '/petstore/api-playground'
       ? '/openapi/petstore-playground.json'
-      : pathname === '/tfl/api-reference'
+      : pathname === '/tfl/api-playground'
         ? '/openapi/tfl-playground.json'
         : null;
 

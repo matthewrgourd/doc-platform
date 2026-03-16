@@ -9,7 +9,7 @@ The demo playground on this site doesn't require authentication. It uses public 
 
 ## Playground behavior
 
-The [API reference](/tfl/api-reference) includes these unauthenticated demo endpoints:
+The [API playground](/tfl/api-playground) includes these unauthenticated demo endpoints:
 
 - `GET /Line/Mode/{modes}/Status`
 - `GET /StopPoint/Search/{query}`

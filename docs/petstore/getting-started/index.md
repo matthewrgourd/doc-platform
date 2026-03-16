@@ -47,9 +47,9 @@ https://petstore3.swagger.io/api/v3
 
 The API accepts JSON and XML request bodies and returns JSON or XML responses. Some endpoints can require authentication, depending on your environment.
 
-## API reference
+## API playground
 
-Use the [API reference](/petstore/api-reference) to run three curated demo endpoints in the browser:
+Use the [API playground](/petstore/api-playground) to run three curated demo endpoints in the browser:
 
 - `GET /pet/findByStatus`
 - `GET /user/login`

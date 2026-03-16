@@ -2,9 +2,9 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import ApiReferenceClient from '@site/src/components/ApiReferenceClient';
 
-export default function PetstoreApiReferencePage(): React.JSX.Element {
+export default function PetstoreApiPlaygroundPage(): React.JSX.Element {
   return (
-    <Layout title="Petstore API reference">
+    <Layout title="Petstore API playground">
       <ApiReferenceClient
         specUrl="/openapi/petstore-playground.json"
         profile="petstore"

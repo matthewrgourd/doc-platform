@@ -69,26 +69,16 @@ const config: Config = {
       title: 'Devdocify',
       items: [
         {
+          to: '/tfl/getting-started',
           label: 'TfL',
           position: 'left',
-          items: [
-            {label: 'Getting started', to: '/tfl/getting-started'},
-            {label: 'Lines', to: '/tfl/lines'},
-            {label: 'Stop points', to: '/tfl/stoppoints'},
-            {label: 'Journey', to: '/tfl/journey'},
-            {label: 'API reference', to: '/tfl/api-reference'},
-          ],
+          activeBasePath: '/tfl',
         },
         {
+          to: '/petstore/getting-started',
           label: 'Petstore',
           position: 'left',
-          items: [
-            {label: 'Getting started', to: '/petstore/getting-started'},
-            {label: 'Pets', to: '/petstore/pets'},
-            {label: 'Store', to: '/petstore/store'},
-            {label: 'Users', to: '/petstore/users'},
-            {label: 'API reference', to: '/petstore/api-reference'},
-          ],
+          activeBasePath: '/petstore',
         },
       ],
     },
@@ -99,14 +89,14 @@ const config: Config = {
           title: 'Petstore',
           items: [
             {label: 'Getting started', to: '/petstore/getting-started'},
-            {label: 'API reference', to: '/petstore/api-reference'},
+            {label: 'API playground', to: '/petstore/api-playground'},
           ],
         },
         {
           title: 'TfL',
           items: [
             {label: 'Getting started', to: '/tfl/getting-started'},
-            {label: 'API reference', to: '/tfl/api-reference'},
+            {label: 'API playground', to: '/tfl/api-playground'},
           ],
         },
         {
