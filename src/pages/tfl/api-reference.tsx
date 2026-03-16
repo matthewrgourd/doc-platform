@@ -7,6 +7,7 @@ export default function TflApiReferencePage(): React.JSX.Element {
     <Layout title="TfL API reference">
       <ApiReferenceClient
         specUrl="https://api.tfl.gov.uk/swagger/docs/v1"
+        profile="tfl"
         downloadUrl="https://api.tfl.gov.uk/swagger/docs/v1"
         specLabel="TfL Swagger JSON"
       />
