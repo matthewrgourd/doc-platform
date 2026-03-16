@@ -58,32 +58,6 @@ const config: Config = {
         sidebarPath: './sidebarsTfl.ts',
       },
     ],
-    [
-      '@scalar/docusaurus',
-      {
-        id: 'petstore-api',
-        label: 'API reference',
-        route: '/petstore/api-reference',
-        showNavLink: false,
-        configuration: {
-          url: 'https://petstore3.swagger.io/api/v3/openapi.json',
-          hideModels: false,
-        },
-      },
-    ],
-    [
-      '@scalar/docusaurus',
-      {
-        id: 'tfl-api',
-        label: 'API reference',
-        route: '/tfl/api-reference',
-        showNavLink: false,
-        configuration: {
-          url: 'https://api.tfl.gov.uk/swagger/docs/v1',
-          hideModels: false,
-        },
-      },
-    ],
   ],
 
   themeConfig: {
@@ -92,7 +66,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'API Docs',
+      title: 'Devdocify',
       items: [
         {
           to: '/petstore/getting-started',
@@ -105,11 +79,6 @@ const config: Config = {
           label: 'TfL',
           activeBasePath: '/tfl',
           position: 'left',
-        },
-        {
-          href: 'https://github.com/swagger-api/swagger-petstore',
-          label: 'GitHub',
-          position: 'right',
         },
       ],
     },
@@ -133,15 +102,15 @@ const config: Config = {
         {
           title: 'Resources',
           items: [
-            {label: 'Status', href: 'https://status.example.com'},
-            {label: 'Support', href: 'mailto:support@example.com'},
+            {label: 'Status', to: '/status'},
+            {label: 'Support', to: '/support'},
           ],
         },
         {
           title: 'Legal',
           items: [
-            {label: 'Privacy', href: '#'},
-            {label: 'Terms', href: '#'},
+            {label: 'Privacy', to: '/privacy'},
+            {label: 'Terms', to: '/terms'},
           ],
         },
       ],

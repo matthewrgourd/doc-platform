@@ -19,6 +19,7 @@ import SearchBar from '@theme/SearchBar';
 import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
 import NavbarLogo from '@theme/Navbar/Logo';
 import NavbarSearch from '@theme/Navbar/Search';
+import {useLocation} from '@docusaurus/router';
 
 import styles from './styles.module.css';
 
@@ -76,6 +77,14 @@ function NavbarContentLayout({
 
 export default function NavbarContent(): ReactNode {
   const mobileSidebar = useNavbarMobileSidebar();
+  const location = useLocation();
+  const pathname = location.pathname.replace(/\/$/, '');
+  const downloadSpecHref =
+    pathname === '/petstore/api-reference'
+      ? 'https://petstore3.swagger.io/api/v3/openapi.json'
+      : pathname === '/tfl/api-reference'
+        ? 'https://api.tfl.gov.uk/swagger/docs/v1'
+        : null;
 
   const items = useNavbarItems();
   const [leftItems, rightItems] = splitNavbarItems(items);
@@ -94,6 +103,11 @@ export default function NavbarContent(): ReactNode {
       right={
         <>
           <NavbarItems items={rightItems} />
+          {downloadSpecHref && (
+            <a className="navbar__item navbar__link" href={downloadSpecHref} target="_blank" rel="noreferrer">
+              Download API spec
+            </a>
+          )}
           {!searchBarItem && (
             <NavbarSearch>
               <SearchBar />
