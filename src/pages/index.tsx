@@ -41,15 +41,15 @@ export default function Home(): React.JSX.Element {
             <div className="margin-top--lg" style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
               <Link
                 className="button button--primary button--lg"
-                to="/petstore/getting-started"
-              >
-                Petstore →
-              </Link>
-              <Link
-                className="button button--secondary button--lg"
                 to="/tfl/getting-started"
               >
                 TfL API →
+              </Link>
+              <Link
+                className="button button--secondary button--lg"
+                to="/petstore/getting-started"
+              >
+                Petstore →
               </Link>
             </div>
           </div>

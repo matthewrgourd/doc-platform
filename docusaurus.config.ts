@@ -69,15 +69,15 @@ const config: Config = {
       title: 'Devdocify',
       items: [
         {
-          to: '/petstore/getting-started',
-          label: 'Petstore',
-          activeBasePath: '/petstore',
-          position: 'left',
-        },
-        {
           to: '/tfl/getting-started',
           label: 'TfL',
           activeBasePath: '/tfl',
+          position: 'left',
+        },
+        {
+          to: '/petstore/getting-started',
+          label: 'Petstore',
+          activeBasePath: '/petstore',
           position: 'left',
         },
       ],

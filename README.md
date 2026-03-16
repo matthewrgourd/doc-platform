@@ -6,9 +6,9 @@ Devdocify is a reference implementation demonstrating the **Docusaurus**, **Scal
 
 - **Multi-product site** - Petstore and TfL as selectable products with separate doc sections and API references
 - **Site overview homepage** - explains the tech stack and links to each product
-- **Interactive API playground** - powered by Scalar, with "Try it" request builder; Petstore uses the live API, TfL uses the [TfL Unified API](https://api.tfl.gov.uk)
-- **OpenAPI / Swagger reference** - Petstore (OpenAPI 3.0), TfL (Swagger 2.0), always in sync
-- **Context-aware spec download links** - "Download API spec" appears only on API reference routes and points to the correct source spec
+- **Interactive API playground** - powered by Scalar, with "Try it" request builder and curated unauthenticated examples
+- **Curated demo specs** - each API reference page exposes 3 GET endpoints designed to return valid responses without authentication
+- **Context-aware spec download links** - "Download API spec" appears only on API reference routes and points to the corresponding local demo spec
 - **Mermaid diagrams** - sequence diagrams, state machines, and flowcharts rendered natively
 - **Tabbed code samples** - Node.js, Python, Go across all guides
 - **Dark mode** - automatic, respects system preferences
@@ -126,6 +126,10 @@ src/
   pages/privacy.mdx      Privacy notice page
   pages/terms.mdx        Terms of use page
   theme/Navbar/...       Swizzled navbar and mobile menu behavior
+static/
+  openapi/
+    petstore-playground.json  Curated Petstore demo spec (3 GET endpoints)
+    tfl-playground.json       Curated TfL demo spec (3 GET endpoints)
 .github/workflows/
   ci.yml                 Lint, typecheck, build (all branches/PRs)
   deploy.yml             Docker push and deploy (main only)
