@@ -10,7 +10,7 @@ Get the current status of one or more lines.
 ## Request
 
 ```bash
-curl "https://api.tfl.gov.uk/Line/victoria/Status?app_id=YOUR_APP_ID&app_key=YOUR_APP_KEY"
+curl "https://api.tfl.gov.uk/Line/victoria/Status"
 ```
 
 ## Multiple lines
@@ -18,7 +18,7 @@ curl "https://api.tfl.gov.uk/Line/victoria/Status?app_id=YOUR_APP_ID&app_key=YOU
 Use comma-separated IDs:
 
 ```bash
-curl "https://api.tfl.gov.uk/Line/victoria,central,jubilee/Status?app_id=YOUR_APP_ID&app_key=YOUR_APP_KEY"
+curl "https://api.tfl.gov.uk/Line/victoria,central,jubilee/Status"
 ```
 
 ## Response

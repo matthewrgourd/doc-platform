@@ -5,44 +5,32 @@ title: Authentication
 
 # Authentication
 
-Some Petstore endpoints require authentication. The API supports two methods: OAuth2 and API key.
+The Petstore demo playground doesn't require authentication. It uses public GET examples with prefilled values.
 
-## OAuth2 (pet operations)
+## Playground behavior
 
-For pet endpoints that require `write:pets` or `read:pets` scopes, use OAuth2 implicit flow:
+The [API reference](/petstore/api-reference) includes these unauthenticated demo endpoints:
 
-1. Redirect users to the authorization URL with your client ID and scopes
-2. The user approves access
-3. Your app receives an access token in the callback
-4. Include the token in the `Authorization` header as a Bearer token
+- `GET /pet/findByStatus`
+- `GET /user/login`
+- `GET /user/logout`
+
+## Authentication for extended usage
+
+If you expand beyond the demo endpoints, your Petstore environment can use OAuth2 or API keys.
+
+For endpoints that require `write:pets` or `read:pets`, send a bearer token:
 
 ```bash
 curl "https://petstore3.swagger.io/api/v3/pet/1" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
-## API key (store inventory)
-
-The store inventory endpoint uses an API key in the header:
+For inventory operations that require an API key, send it in the header:
 
 ```bash
 curl "https://petstore3.swagger.io/api/v3/store/inventory" \
   -H "api_key: YOUR_API_KEY"
 ```
 
-:::tip Try it in the playground
-The [API reference](/petstore/api-reference) includes an interactive playground. Click "Authorize" to add your credentials and try authenticated requests.
-:::
-
-## Public endpoints
-
-Many endpoints work without authentication:
-
-- `GET /pet/findByStatus` - Find pets by status
-- `GET /pet/{petId}` - Get pet by ID (some servers allow unauthenticated access)
-- `POST /store/order` - Place an order
-- `GET /store/order/{orderId}` - Get order by ID
-- `GET /user/login` - Log in
-- `GET /user/{username}` - Get user by username
-
-Check the API reference for each endpoint's requirements.
+Check your environment settings to confirm which endpoints require authentication.

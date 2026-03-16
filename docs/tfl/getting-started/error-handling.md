@@ -13,11 +13,11 @@ The TfL API uses conventional HTTP status codes. Codes in the `2xx` range indica
 |---|---|
 | `200` | Success |
 | `400` | Bad request - check your parameters |
-| `401` | Unauthorized - invalid or missing app_id/app_key |
+| `401` | Unauthorized - invalid or missing credentials (secured environments) |
 | `404` | Resource not found |
 | `429` | Rate limited - reduce request frequency |
 | `500` | Server error - retry later |
 
-## Missing credentials
+## Authentication errors
 
-If you omit `app_id` or `app_key`, the API returns an error. Ensure both parameters are included in every request.
+In this demo, curated playground endpoints are configured for unauthenticated use. If you call secured endpoints in your own environment, include valid credentials to avoid `401` responses.

@@ -10,7 +10,7 @@ Retrieve the route and stop sequence for a line.
 ## Request
 
 ```bash
-curl "https://api.tfl.gov.uk/Line/victoria/Route?app_id=YOUR_APP_ID&app_key=YOUR_APP_KEY"
+curl "https://api.tfl.gov.uk/Line/victoria/Route"
 ```
 
 ## Response

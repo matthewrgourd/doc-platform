@@ -9,15 +9,15 @@ Get your first TfL API response in under 5 minutes.
 
 ## Prerequisites
 
-- Register at [TfL API](https://api.tfl.gov.uk) for an Application ID and Key
 - A tool to make HTTP requests (curl, Postman, or the [API playground](/tfl/api-reference))
+- No account required for these demo operations
 
 ## 1. Get line status
 
-Fetch the status of the Victoria line:
+Fetch tube line status:
 
 ```bash
-curl "https://api.tfl.gov.uk/Line/victoria/Status?app_id=YOUR_APP_ID&app_key=YOUR_APP_KEY"
+curl "https://api.tfl.gov.uk/Line/Mode/tube/Status"
 ```
 
 ## 2. Search for stops
@@ -25,7 +25,7 @@ curl "https://api.tfl.gov.uk/Line/victoria/Status?app_id=YOUR_APP_ID&app_key=YOU
 Find stops by name:
 
 ```bash
-curl "https://api.tfl.gov.uk/StopPoint/Search/oxford%20circus?app_id=YOUR_APP_ID&app_key=YOUR_APP_KEY"
+curl "https://api.tfl.gov.uk/StopPoint/Search/waterloo"
 ```
 
 ## 3. Get bike point data
@@ -33,11 +33,11 @@ curl "https://api.tfl.gov.uk/StopPoint/Search/oxford%20circus?app_id=YOUR_APP_ID
 List cycle hire docking stations:
 
 ```bash
-curl "https://api.tfl.gov.uk/BikePoint?app_id=YOUR_APP_ID&app_key=YOUR_APP_KEY"
+curl "https://api.tfl.gov.uk/BikePoint"
 ```
 
 ## Next steps
 
 - [Lines](/tfl/lines) - Line status, routes, and disruptions
-- [StopPoints](/tfl/stoppoints) - Search stops and get arrivals
+- [Stop points](/tfl/stoppoints) - Search stops and get arrivals
 - [Journey](/tfl/journey) - Plan routes between locations

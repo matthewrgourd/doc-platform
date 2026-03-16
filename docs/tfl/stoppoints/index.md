@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
 slug: /stoppoints
-title: StopPoints
+title: Stop points
 ---
 
-# StopPoints
+# Stop points
 
 Search for stops and stations, and get real-time arrivals.
 

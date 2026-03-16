@@ -6,7 +6,7 @@ title: Overview
 
 # Overview
 
-The Swagger Petstore API lets you manage pets, place orders, and work with user accounts. It is a sample API for learning and testing.
+Petstore is a sample API that helps you test common API workflows, including finding pets, managing user sessions, and placing orders.
 
 ## Choose your path
 
@@ -45,8 +45,14 @@ All API requests are made to:
 https://petstore3.swagger.io/api/v3
 ```
 
-The API accepts JSON and XML request bodies and returns JSON or XML responses. Some endpoints require authentication via OAuth2 or an API key.
+The API accepts JSON and XML request bodies and returns JSON or XML responses. Some endpoints can require authentication, depending on your environment.
 
 ## API reference
 
-Use the [API reference](/petstore/api-reference) to explore all endpoints, try requests in the browser, and view request and response schemas.
+Use the [API reference](/petstore/api-reference) to run three curated demo endpoints in the browser:
+
+- `GET /pet/findByStatus`
+- `GET /user/login`
+- `GET /user/logout`
+
+These playground examples are configured with sample values and don't require authentication.

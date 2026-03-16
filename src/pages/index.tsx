@@ -4,13 +4,13 @@ import Link from '@docusaurus/Link';
 export default function Home(): React.JSX.Element {
   return (
     <Layout
-      title="API Documentation"
+      title="API documentation"
       description="A reference implementation demonstrating multi-product API documentation with Docusaurus, Scalar, and Vercel"
     >
       <main className="container padding-vert--xl">
         <div className="row">
           <div className="col col--8 col--offset-2">
-            <h1>API Documentation</h1>
+            <h1>API documentation</h1>
             <p className="hero__subtitle">
               This site demonstrates the <strong>Docusaurus</strong>, <strong>Scalar</strong>, and{' '}
               <strong>Vercel</strong> tech stack for building modern API documentation. It serves as a
