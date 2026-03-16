@@ -7,6 +7,8 @@ import '@scalar/docusaurus/dist/theme.css';
 type ApiReferenceClientProps = {
   specUrl: string;
   profile: 'petstore' | 'tfl';
+  downloadUrl: string;
+  specLabel: string;
 };
 
 type JsonObject = Record<string, any>;
@@ -110,7 +112,12 @@ function getAuthentication(profile: 'petstore' | 'tfl'): JsonObject | undefined 
   return undefined;
 }
 
-function ApiReferenceRenderer({specUrl, profile}: ApiReferenceClientProps): React.JSX.Element {
+function ApiReferenceRenderer({
+  specUrl,
+  profile,
+  downloadUrl,
+  specLabel,
+}: ApiReferenceClientProps): React.JSX.Element {
   const [spec, setSpec] = React.useState<JsonObject | null>(null);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -156,7 +163,11 @@ function ApiReferenceRenderer({specUrl, profile}: ApiReferenceClientProps): Reac
     return (
       <section className="container padding-vert--lg">
         <h2>Loading API playground</h2>
-        <p>The interactive reference is loading.</p>
+        <p>The interactive reference is loading. This can take a few seconds on first load.</p>
+        <p>
+          If loading fails, use the header link or download the spec directly:{' '}
+          <a href={downloadUrl}>{specLabel}</a>.
+        </p>
       </section>
     );
   }
@@ -173,10 +184,6 @@ function ApiReferenceRenderer({specUrl, profile}: ApiReferenceClientProps): Reac
   );
 }
 
-export default function ApiReferenceClient({specUrl, profile}: ApiReferenceClientProps): React.JSX.Element {
-  return (
-    <BrowserOnly>
-      {() => <ApiReferenceRenderer specUrl={specUrl} profile={profile} />}
-    </BrowserOnly>
-  );
-};
+export default function ApiReferenceClient(props: ApiReferenceClientProps): React.JSX.Element {
+  return <BrowserOnly>{() => <ApiReferenceRenderer {...props} />}</BrowserOnly>;
+}

@@ -1,6 +1,6 @@
-# API Documentation Platform
+# Devdocify
 
-A reference implementation demonstrating the **Docusaurus**, **Scalar**, and **Vercel** tech stack for multi-product API documentation. Shows how to structure a site with multiple products, each with its own docs and interactive API playground.
+Devdocify is a reference implementation demonstrating the **Docusaurus**, **Scalar**, and **Vercel** stack for multi-product developer documentation. It shows how to structure a portal with multiple products, each with guides and interactive API reference pages.
 
 ## Features
 
@@ -8,6 +8,7 @@ A reference implementation demonstrating the **Docusaurus**, **Scalar**, and **V
 - **Site overview homepage** - explains the tech stack and links to each product
 - **Interactive API playground** - powered by Scalar, with "Try it" request builder; Petstore uses the live API, TfL uses the [TfL Unified API](https://api.tfl.gov.uk)
 - **OpenAPI / Swagger reference** - Petstore (OpenAPI 3.0), TfL (Swagger 2.0), always in sync
+- **Context-aware spec download links** - "Download API spec" appears only on API reference routes and points to the correct source spec
 - **Mermaid diagrams** - sequence diagrams, state machines, and flowcharts rendered natively
 - **Tabbed code samples** - Node.js, Python, Go across all guides
 - **Dark mode** - automatic, respects system preferences
@@ -114,8 +115,17 @@ docs/
     stoppoints/          Stop search and arrivals
     journey/              Journey planning
 src/
+  components/
+    ApiReferenceClient.tsx  Scalar renderer used by API reference routes
   css/custom.css         Custom theme (Stripe-inspired)
   pages/index.tsx        Site overview homepage
+  pages/petstore/api-reference.tsx  Petstore API reference page route
+  pages/tfl/api-reference.tsx       TfL API reference page route
+  pages/status.mdx       Service status page
+  pages/support.mdx      Support page
+  pages/privacy.mdx      Privacy notice page
+  pages/terms.mdx        Terms of use page
+  theme/Navbar/...       Swizzled navbar and mobile menu behavior
 .github/workflows/
   ci.yml                 Lint, typecheck, build (all branches/PRs)
   deploy.yml             Docker push and deploy (main only)
@@ -137,6 +147,10 @@ Makefile                 Commands (core + optional Docker/monitoring)
 | Diagrams | [Mermaid](https://mermaid.js.org/) |
 | CI/CD | GitHub Actions |
 | Optional | Docker, nginx, Prometheus, Grafana, GHCR |
+
+## Brand
+
+The site navbar brand is configured as `Devdocify` in `docusaurus.config.ts`.
 
 ## License
 
