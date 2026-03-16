@@ -1,6 +1,7 @@
 import React, {type ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import {useNavbarMobileSidebar} from '@docusaurus/theme-common/internal';
+import {useLocation} from '@docusaurus/router';
 
 type MenuSection = {
   heading: string;
@@ -32,6 +33,14 @@ const sections: MenuSection[] = [
 
 export default function NavbarMobilePrimaryMenu(): ReactNode {
   const mobileSidebar = useNavbarMobileSidebar();
+  const location = useLocation();
+  const pathname = location.pathname.replace(/\/$/, '');
+  const downloadSpecHref =
+    pathname === '/petstore/api-reference'
+      ? 'https://petstore3.swagger.io/api/v3/openapi.json'
+      : pathname === '/tfl/api-reference'
+        ? 'https://api.tfl.gov.uk/swagger/docs/v1'
+        : null;
 
   return (
     <ul className="menu__list">
@@ -51,6 +60,18 @@ export default function NavbarMobilePrimaryMenu(): ReactNode {
           </ul>
         </li>
       ))}
+      {downloadSpecHref && (
+        <li className="menu__list-item">
+          <a
+            className="menu__link"
+            href={downloadSpecHref}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => mobileSidebar.toggle()}>
+            Download API spec
+          </a>
+        </li>
+      )}
     </ul>
   );
 }
