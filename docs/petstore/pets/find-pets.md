@@ -48,4 +48,4 @@ Fetch a single pet by its ID:
 curl "https://petstore3.swagger.io/api/v3/pet/1"
 ```
 
-Returns 404 if the pet is not found.
+Returns 404 if the pet isn't found.

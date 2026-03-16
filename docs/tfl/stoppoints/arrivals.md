@@ -10,7 +10,7 @@ Get the next arrivals at a stop.
 ## Request
 
 ```bash
-curl "https://api.tfl.gov.uk/StopPoint/490000077G/Arrivals?app_id=YOUR_APP_ID&app_key=YOUR_APP_KEY"
+curl "https://api.tfl.gov.uk/StopPoint/490000077G/Arrivals"
 ```
 
 Use the stop `id` from a search or line route response.

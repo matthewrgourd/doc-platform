@@ -3,7 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'API Documentation',
+  title: 'API documentation',
   tagline: 'API documentation for Petstore and TfL',
   favicon: 'img/favicon.ico',
 

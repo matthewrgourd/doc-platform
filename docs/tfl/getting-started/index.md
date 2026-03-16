@@ -6,7 +6,7 @@ title: Overview
 
 # Overview
 
-The Transport for London (TfL) Unified API provides real-time data for London's transport network: Tube, bus, cycle hire, roads, and more.
+The Transport for London (TfL) Unified API provides real-time transport data, including line status, stop search, and cycle hire locations.
 
 ## Choose your path
 
@@ -16,7 +16,7 @@ The Transport for London (TfL) Unified API provides real-time data for London's 
 |---|---|---|
 | [**Quickstart**](/tfl/getting-started/quickstart) | Get your first API response in under 5 minutes | ~5 min |
 | [**Lines**](/tfl/lines) | Explore Tube and rail line data | ~15 min |
-| [**StopPoints**](/tfl/stoppoints) | Find stops and stations | ~15 min |
+| [**Stop points**](/tfl/stoppoints) | Find stops and stations | ~15 min |
 | [**Journey**](/tfl/journey) | Plan routes between locations | ~20 min |
 
 </div>
@@ -28,14 +28,14 @@ sequenceDiagram
     participant Your App
     participant TfL API
 
-    Your App->>TfL API: GET /Line/{ids} (with app_id & app_key)
+    Your App->>TfL API: GET /Line/Mode/{modes}/Status
     TfL API-->>Your App: Line status
 
-    Your App->>TfL API: GET /StopPoint/Search
+    Your App->>TfL API: GET /StopPoint/Search/{query}
     TfL API-->>Your App: Stop results
 
-    Your App->>TfL API: GET /Journey/JourneyResults
-    TfL API-->>Your App: Route options
+    Your App->>TfL API: GET /BikePoint
+    TfL API-->>Your App: Bike point results
 ```
 
 ## Base URL
@@ -46,8 +46,14 @@ All API requests are made to:
 https://api.tfl.gov.uk
 ```
 
-You must register for an Application ID and Key and append them as query parameters: `app_id` and `app_key`.
+For this demo site, playground examples use public endpoints that don't require credentials.
 
 ## API reference
 
-Use the [API reference](/tfl/api-reference) to explore all endpoints, try requests in the browser, and view response schemas.
+Use the [API reference](/tfl/api-reference) to run three curated demo endpoints in the browser:
+
+- `GET /Line/Mode/{modes}/Status`
+- `GET /StopPoint/Search/{query}`
+- `GET /BikePoint`
+
+These playground examples are configured with sample values and don't require authentication.

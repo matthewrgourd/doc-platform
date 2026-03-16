@@ -13,7 +13,7 @@ Get, update, and delete users by username.
 curl "https://petstore3.swagger.io/api/v3/user/user1"
 ```
 
-Use `user1` for testing. Returns 404 if the user is not found.
+Use `user1` for testing. Returns 404 if the user isn't found.
 
 ## Update user
 
