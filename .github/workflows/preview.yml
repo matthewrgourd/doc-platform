@@ -10,25 +10,12 @@ concurrency:
 
 jobs:
   preview:
-    name: Build and deploy preview
+    name: Vercel preview URL
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-
-      - name: Build
-        run: npm run build
-
       - name: Get Vercel preview URL
         id: deploy
         uses: thomasheyenbrock/vercel-deployment-url@v2
