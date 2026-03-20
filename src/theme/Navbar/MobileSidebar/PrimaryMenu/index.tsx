@@ -14,6 +14,22 @@ type MenuSection = {
 
 const sections: MenuSection[] = [
   {
+    heading: 'Docs',
+    groups: [
+      {
+        label: 'Devdocify docs',
+        items: [
+          {label: 'Overview', to: '/docs'},
+          {label: 'Tutorials', to: '/docs/tutorials'},
+          {label: 'How-to', to: '/docs/how-to'},
+          {label: 'Reference', to: '/docs/reference'},
+          {label: 'Explanation', to: '/docs/explanation'},
+        ],
+      },
+    ],
+    apiPlaygroundPath: '',
+  },
+  {
     heading: 'TfL',
     groups: [
       {
@@ -98,10 +114,22 @@ const sections: MenuSection[] = [
   },
 ];
 
+function normalizePath(route: string): string {
+  if (!route) return '/';
+  return route.endsWith('/') && route !== '/' ? route.slice(0, -1) : route;
+}
+
+function isActivePath(currentPath: string, targetPath: string): boolean {
+  const current = normalizePath(currentPath);
+  const target = normalizePath(targetPath);
+  if (target === '/') return current === '/';
+  return current === target || current.startsWith(`${target}/`);
+}
+
 export default function NavbarMobilePrimaryMenu(): ReactNode {
   const mobileSidebar = useNavbarMobileSidebar();
   const location = useLocation();
-  const pathname = location.pathname.replace(/\/$/, '');
+  const pathname = normalizePath(location.pathname);
   const downloadSpecHref =
     pathname === '/petstore/api-playground'
       ? '/openapi/petstore-playground.json'
@@ -112,7 +140,9 @@ export default function NavbarMobilePrimaryMenu(): ReactNode {
   return (
     <ul className="menu__list">
       {sections.map((section) => (
-        <li className="menu__list-item menu__list-item--show" key={section.heading}>
+        <li
+          className="menu__list-item menu__list-item--show"
+          key={section.heading}>
           <span className="menu__link">
             {section.heading}
           </span>
@@ -123,7 +153,11 @@ export default function NavbarMobilePrimaryMenu(): ReactNode {
                 <ul className="menu__list" style={{height: 'auto', overflow: 'visible'}}>
                   {group.items.map((item) => (
                     <li className="menu__list-item" key={item.to}>
-                      <Link className="menu__link" to={item.to} onClick={() => mobileSidebar.toggle()}>
+                      <Link
+                        className={`menu__link${isActivePath(pathname, item.to) ? ' menu__link--active' : ''}`}
+                        to={item.to}
+                        aria-current={isActivePath(pathname, item.to) ? 'page' : undefined}
+                        onClick={() => mobileSidebar.toggle()}>
                         {item.label}
                       </Link>
                     </li>
@@ -131,14 +165,40 @@ export default function NavbarMobilePrimaryMenu(): ReactNode {
                 </ul>
               </li>
             ))}
-            <li className="menu__list-item">
-              <Link className="menu__link" to={section.apiPlaygroundPath} onClick={() => mobileSidebar.toggle()}>
-                API playground
-              </Link>
-            </li>
+            {section.apiPlaygroundPath && (
+              <li className="menu__list-item">
+                <Link
+                  className={`menu__link${isActivePath(pathname, section.apiPlaygroundPath) ? ' menu__link--active' : ''}`}
+                  to={section.apiPlaygroundPath}
+                  aria-current={isActivePath(pathname, section.apiPlaygroundPath) ? 'page' : undefined}
+                  onClick={() => mobileSidebar.toggle()}>
+                  API playground
+                </Link>
+              </li>
+            )}
           </ul>
         </li>
       ))}
+      <li className="menu__list-item menu__list-item--show">
+        <span className="menu__link">Planned</span>
+        <ul className="menu__list" style={{height: 'auto', overflow: 'visible'}}>
+          {[
+            {label: 'Customers', to: '/customers'},
+            {label: 'Blog', to: '/blog'},
+            {label: 'Pricing', to: '/pricing'},
+          ].map((item) => (
+            <li className="menu__list-item" key={item.to}>
+              <Link
+                className={`menu__link${isActivePath(pathname, item.to) ? ' menu__link--active' : ''}`}
+                to={item.to}
+                aria-current={isActivePath(pathname, item.to) ? 'page' : undefined}
+                onClick={() => mobileSidebar.toggle()}>
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </li>
       {downloadSpecHref && (
         <li className="menu__list-item">
           <a
