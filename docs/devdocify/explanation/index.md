@@ -8,6 +8,14 @@ title: Explanation
 
 Use explanation pages to understand platform design choices and trade-offs.
 
+<div className="docs-hero-block">
+  <p className="docs-eyebrow">Rationale</p>
+  <p className="docs-hero-copy">
+    These decisions prioritize clarity for readers and maintainable delivery workflows for the
+    team.
+  </p>
+</div>
+
 ## Why root and docs are split
 
 - `devdocify.com` serves marketing intent and product positioning.

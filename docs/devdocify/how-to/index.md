@@ -8,6 +8,14 @@ title: How-to guides
 
 Use how-to guides when you need to complete a specific job quickly.
 
+<div className="docs-hero-block">
+  <p className="docs-eyebrow">Execution guides</p>
+  <p className="docs-hero-copy">
+    Use these pages for operational work: editing docs safely, preserving route boundaries, and
+    validating output before merge.
+  </p>
+</div>
+
 ## How to add documentation content safely
 
 1. Add or update docs content in the correct docset path:
@@ -31,6 +39,8 @@ These checks protect the information architecture agreed in Story 7.1.
 
 ## API playground explanation guides
 
-- [Playground explanation template](/docs/how-to/playground-overview)
-- [Petstore playground guide](/docs/how-to/petstore-playground)
-- [TfL playground guide](/docs/how-to/tfl-playground)
+<div className="docs-link-grid">
+  <a href="/docs/how-to/playground-overview">Playground explanation template</a>
+  <a href="/docs/how-to/petstore-playground">Petstore playground guide</a>
+  <a href="/docs/how-to/tfl-playground">TfL playground guide</a>
+</div>

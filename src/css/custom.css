@@ -280,6 +280,112 @@ table tbody tr:nth-child(even) {
   background: rgba(15, 23, 42, 0.6);
 }
 
+/* Docs landing + Diataxis hubs */
+.docs-hero-block {
+  border: 1px solid rgba(99, 91, 255, 0.2);
+  border-radius: 0.8rem;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.1rem;
+  background: linear-gradient(180deg, rgba(99, 91, 255, 0.05), rgba(99, 91, 255, 0.02));
+}
+
+.docs-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.73rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: var(--ifm-color-primary-dark);
+}
+
+.docs-hero-copy {
+  margin: 0;
+  color: var(--ifm-color-emphasis-800);
+}
+
+.docs-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.docs-card {
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.docs-card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.docs-card p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.docs-tag-row {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
+}
+
+.docs-tag {
+  border: 1px solid rgba(99, 91, 255, 0.3);
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary-dark);
+  background: rgba(99, 91, 255, 0.08);
+}
+
+.docs-link-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.docs-link-grid a {
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 0.65rem;
+  padding: 0.65rem 0.75rem;
+  text-decoration: none;
+  font-weight: 600;
+  color: inherit;
+  background: var(--ifm-background-surface-color);
+  transition: border-color 0.16s ease, transform 0.16s ease;
+}
+
+.docs-link-grid a:hover {
+  border-color: var(--ifm-color-primary);
+  transform: translateY(-1px);
+}
+
+.docs-route-list p {
+  margin: 0 0 0.45rem;
+}
+
+[data-theme='dark'] .docs-eyebrow {
+  color: var(--ifm-color-primary-light);
+}
+
+[data-theme='dark'] .docs-hero-copy,
+[data-theme='dark'] .docs-card p {
+  color: var(--ifm-color-emphasis-300);
+}
+
+[data-theme='dark'] .docs-tag {
+  background: rgba(99, 91, 255, 0.2);
+  color: var(--ifm-color-primary-light);
+  border-color: rgba(165, 180, 252, 0.45);
+}
+
 /* Footer */
 .footer__title {
   text-transform: uppercase;
@@ -323,7 +429,9 @@ table tbody tr:nth-child(even) {
   }
 
   .home-proof-grid,
-  .home-route-grid {
+  .home-route-grid,
+  .docs-card-grid,
+  .docs-link-grid {
     grid-template-columns: 1fr;
   }
 

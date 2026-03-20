@@ -8,6 +8,14 @@ title: Tutorials
 
 Use tutorials for end-to-end learning paths where each step builds on the previous one.
 
+<div className="docs-hero-block">
+  <p className="docs-eyebrow">Learning journey</p>
+  <p className="docs-hero-copy">
+    Follow this sequence to get from local setup to first validated preview with working
+    playgrounds.
+  </p>
+</div>
+
 ## Tutorial path: first successful preview
 
 Use this sequence to go from clone to validated preview:

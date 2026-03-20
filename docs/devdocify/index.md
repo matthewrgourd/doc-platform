@@ -8,22 +8,52 @@ title: Devdocify docs
 
 This documentation explains how to use Devdocify and demonstrates the platform through its own implementation.
 
-## Diataxis structure
+<div className="docs-hero-block">
+  <p className="docs-eyebrow">Technical documentation surface</p>
+  <p className="docs-hero-copy">
+    `/docs` is the primary technical surface for product guidance, operational patterns, and
+    implementation examples.
+  </p>
+</div>
 
-- **Tutorials**: guided learning journeys.
-- **How-to**: practical task-focused instructions.
-- **Reference**: factual contracts, options, and technical details.
-- **Explanation**: concepts, trade-offs, and design rationale.
+## Diataxis lanes
+
+<div className="docs-card-grid">
+  <div className="docs-card">
+    <h3>Tutorials</h3>
+    <p>Guided learning journeys that build confidence step by step.</p>
+  </div>
+  <div className="docs-card">
+    <h3>How-to</h3>
+    <p>Task-oriented instructions optimized for fast execution.</p>
+  </div>
+  <div className="docs-card">
+    <h3>Reference</h3>
+    <p>Stable factual contracts, routes, and command surfaces.</p>
+  </div>
+  <div className="docs-card">
+    <h3>Explanation</h3>
+    <p>Rationale and architecture context behind key decisions.</p>
+  </div>
+</div>
 
 ## What is live today
 
-- Multi-product docs surfaces at [TfL](/tfl/getting-started) and [Petstore](/petstore/getting-started).
-- Interactive API playground routes at [TfL playground](/tfl/api-playground) and [Petstore playground](/petstore/api-playground).
-- CI/CD workflow with build, preview, and deployment gates.
+<div className="docs-tag-row">
+  <span className="docs-tag">Multi-docset docs</span>
+  <span className="docs-tag">API playground demos</span>
+  <span className="docs-tag">Preview + build gates</span>
+</div>
 
-## Start points
+- Product docsets: [TfL](/tfl/getting-started), [Petstore](/petstore/getting-started)
+- Playground routes: [TfL playground](/tfl/api-playground), [Petstore playground](/petstore/api-playground)
+- Delivery model: CI build gates + preview-first validation
 
-- New to the platform: start with [Tutorials](/docs/tutorials).
-- Need to complete a task: open [How-to guides](/docs/how-to).
-- Looking for exact behavior: check [Reference](/docs/reference).
-- Need context and rationale: read [Explanation](/docs/explanation).
+## Start here
+
+<div className="docs-link-grid">
+  <a href="/docs/tutorials">New here -> Tutorials</a>
+  <a href="/docs/how-to">Need a task guide -> How-to</a>
+  <a href="/docs/reference">Need exact details -> Reference</a>
+  <a href="/docs/explanation">Need rationale -> Explanation</a>
+</div>
