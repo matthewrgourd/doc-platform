@@ -8,6 +8,9 @@
 .docusaurus
 .cache-loader
 
+# Local-only documentation (not published)
+docs/tool-delegation-strategy.md
+
 # Internal planning and AI tooling
 _planning/
 _bmad/
