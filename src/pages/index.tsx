@@ -56,6 +56,23 @@ export default function Home(): React.JSX.Element {
                 Petstore →
               </Link>
             </div>
+
+            <h2 className="margin-top--xl">Planned next surfaces</h2>
+            <p>
+              These routes are intentionally present as placeholders while docs delivery remains the
+              primary focus.
+            </p>
+            <ul>
+              <li>
+                <Link to="/customers">Customers</Link>
+              </li>
+              <li>
+                <Link to="/blog">Blog</Link>
+              </li>
+              <li>
+                <Link to="/pricing">Pricing</Link>
+              </li>
+            </ul>
           </div>
         </div>
       </main>

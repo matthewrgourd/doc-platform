@@ -122,6 +122,14 @@ const config: Config = {
           ],
         },
         {
+          title: 'Planned',
+          items: [
+            {label: 'Customers', to: '/customers'},
+            {label: 'Blog', to: '/blog'},
+            {label: 'Pricing', to: '/pricing'},
+          ],
+        },
+        {
           title: 'Legal',
           items: [
             {label: 'Privacy', to: '/privacy'},
