@@ -4,77 +4,76 @@ import Link from '@docusaurus/Link';
 export default function Home(): React.JSX.Element {
   return (
     <Layout
-      title="API documentation"
-      description="A reference implementation demonstrating multi-product API documentation with Docusaurus, Scalar, and Vercel"
+      title="Devdocify"
+      description="Marketing at root, technical docs at /docs, with a first-party implementation of the Devdocify platform."
     >
-      <main className="container padding-vert--xl">
-        <div className="row">
-          <div className="col col--8 col--offset-2">
-            <h1>Devdocify</h1>
-            <p className="hero__subtitle">
-              Marketing site at root, technical product docs at <strong>/docs</strong>. This project
-              demonstrates the <strong>Docusaurus</strong>, <strong>Scalar</strong>, and{' '}
-              <strong>Vercel</strong> stack in a first-party implementation.
+      <main className="home-shell">
+        <section className="home-hero">
+          <div className="container">
+            <p className="home-eyebrow">Developer documentation platform</p>
+            <h1>Build and ship first-class docs experiences</h1>
+            <p className="home-subtitle">
+              Devdocify separates marketing at root from technical documentation at{' '}
+              <strong>/docs</strong>, then proves the model with working multi-docset demos and
+              API playground flows.
             </p>
 
-            <h2>Tech stack</h2>
-            <ul>
-              <li>
-                <strong>Docusaurus</strong> – Static site generator for documentation, with
-                multi-instance docs support for separate product sections
-              </li>
-              <li>
-                <strong>Scalar</strong> – Interactive API playground and reference, embedded per
-                product
-              </li>
-              <li>
-                <strong>Vercel</strong> – Deployment and hosting
-              </li>
-            </ul>
-
-            <h2>Explore</h2>
-            <p>
-              Start with product documentation, then drill into demo API products and playgrounds.
-            </p>
-            <div className="margin-top--lg" style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
-              <Link
-                className="button button--primary button--lg"
-                to="/docs"
-              >
-                Product docs →
+            <div className="home-actions">
+              <Link className="button button--primary button--lg" to="/docs">
+                Open product docs
               </Link>
-              <Link
-                className="button button--secondary button--lg"
-                to="/tfl/getting-started"
-              >
-                TfL API →
-              </Link>
-              <Link
-                className="button button--secondary button--lg"
-                to="/petstore/getting-started"
-              >
-                Petstore →
+              <Link className="button button--secondary button--lg" to="/tfl/getting-started">
+                Explore demo APIs
               </Link>
             </div>
 
-            <h2 className="margin-top--xl">Planned next surfaces</h2>
-            <p>
-              These routes are intentionally present as placeholders while docs delivery remains the
-              primary focus.
-            </p>
-            <ul>
-              <li>
-                <Link to="/customers">Customers</Link>
-              </li>
-              <li>
-                <Link to="/blog">Blog</Link>
-              </li>
-              <li>
-                <Link to="/pricing">Pricing</Link>
-              </li>
-            </ul>
+            <div className="home-proof-grid">
+              <div className="home-proof-card">
+                <h2>Diataxis docs at /docs</h2>
+                <p>Tutorials, how-to guides, reference, and explanation in one coherent IA.</p>
+              </div>
+              <div className="home-proof-card">
+                <h2>Interactive API demos</h2>
+                <p>TfL and Petstore playgrounds are live with explanatory context and defaults.</p>
+              </div>
+              <div className="home-proof-card">
+                <h2>Preview-first delivery</h2>
+                <p>Build and quality gates keep documentation releases stable and reviewable.</p>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
+
+        <section className="home-routes container padding-vert--xl">
+          <h2>Explore surfaces</h2>
+          <div className="home-route-grid">
+            <Link className="home-route-card" to="/docs">
+              <strong>Product docs</strong>
+              <span>Primary technical documentation surface</span>
+            </Link>
+            <Link className="home-route-card" to="/tfl/getting-started">
+              <strong>TfL demo docs</strong>
+              <span>Transport-focused demo docset and playground</span>
+            </Link>
+            <Link className="home-route-card" to="/petstore/getting-started">
+              <strong>Petstore demo docs</strong>
+              <span>Sample API docset and playground routes</span>
+            </Link>
+          </div>
+        </section>
+
+        <section className="home-planned container padding-bottom--xl">
+          <h2>Planned next surfaces</h2>
+          <p>
+            These routes are intentionally present as placeholders while `/docs` remains the active
+            delivery focus.
+          </p>
+          <div className="home-planned-links">
+            <Link to="/customers">Customers</Link>
+            <Link to="/blog">Blog</Link>
+            <Link to="/pricing">Pricing</Link>
+          </div>
+        </section>
       </main>
     </Layout>
   );
