@@ -35,10 +35,10 @@ const config: Config = {
       'classic',
       {
         docs: {
-          id: 'petstore',
-          path: 'docs/petstore',
-          routeBasePath: 'petstore',
-          sidebarPath: './sidebarsPetstore.ts',
+          id: 'devdocify',
+          path: 'docs/devdocify',
+          routeBasePath: 'docs',
+          sidebarPath: './sidebarsDevdocify.ts',
         },
         blog: false,
         theme: {
@@ -58,6 +58,15 @@ const config: Config = {
         sidebarPath: './sidebarsTfl.ts',
       },
     ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'petstore',
+        path: 'docs/petstore',
+        routeBasePath: 'petstore',
+        sidebarPath: './sidebarsPetstore.ts',
+      },
+    ],
   ],
 
   themeConfig: {
@@ -68,6 +77,12 @@ const config: Config = {
     navbar: {
       title: 'Devdocify',
       items: [
+        {
+          to: '/docs',
+          label: 'Docs',
+          position: 'left',
+          activeBasePath: '/docs',
+        },
         {
           to: '/tfl/getting-started',
           label: 'TfL',

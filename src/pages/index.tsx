@@ -10,12 +10,11 @@ export default function Home(): React.JSX.Element {
       <main className="container padding-vert--xl">
         <div className="row">
           <div className="col col--8 col--offset-2">
-            <h1>API documentation</h1>
+            <h1>Devdocify</h1>
             <p className="hero__subtitle">
-              This site demonstrates the <strong>Docusaurus</strong>, <strong>Scalar</strong>, and{' '}
-              <strong>Vercel</strong> tech stack for building modern API documentation. It serves as a
-              reference implementation showing how a multi-product documentation site can be
-              structured.
+              Marketing site at root, technical product docs at <strong>/docs</strong>. This project
+              demonstrates the <strong>Docusaurus</strong>, <strong>Scalar</strong>, and{' '}
+              <strong>Vercel</strong> stack in a first-party implementation.
             </p>
 
             <h2>Tech stack</h2>
@@ -33,14 +32,19 @@ export default function Home(): React.JSX.Element {
               </li>
             </ul>
 
-            <h2>Products</h2>
+            <h2>Explore</h2>
             <p>
-              Each product has its own docs and API playground. Use the navbar or buttons below to switch between
-              them.
+              Start with product documentation, then drill into demo API products and playgrounds.
             </p>
             <div className="margin-top--lg" style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
               <Link
                 className="button button--primary button--lg"
+                to="/docs"
+              >
+                Product docs →
+              </Link>
+              <Link
+                className="button button--secondary button--lg"
                 to="/tfl/getting-started"
               >
                 TfL API →
