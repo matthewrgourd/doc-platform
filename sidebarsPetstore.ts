@@ -1,52 +1,8 @@
-import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
+import {loadNavigationSidebar} from './navigation-contract';
 
-const sidebars: SidebarsConfig = {
-  petstoreSidebar: [
-    {
-      type: 'category',
-      label: 'Getting started',
-      items: [
-        {type: 'doc', id: 'getting-started/index', label: 'Overview'},
-        {type: 'doc', id: 'getting-started/quickstart', label: 'Quickstart'},
-        {type: 'doc', id: 'getting-started/authentication', label: 'Authentication'},
-        {type: 'doc', id: 'getting-started/error-handling', label: 'Error handling'},
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Pets',
-      items: [
-        {type: 'doc', id: 'pets/index', label: 'Overview'},
-        {type: 'doc', id: 'pets/add-pet', label: 'Add a pet'},
-        {type: 'doc', id: 'pets/find-pets', label: 'Find pets'},
-        {type: 'doc', id: 'pets/update-pet', label: 'Update a pet'},
-        {type: 'doc', id: 'pets/delete-pet', label: 'Delete a pet'},
-        {type: 'doc', id: 'pets/upload-image', label: 'Upload an image'},
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Store',
-      items: [
-        {type: 'doc', id: 'store/index', label: 'Overview'},
-        {type: 'doc', id: 'store/place-order', label: 'Place an order'},
-        {type: 'doc', id: 'store/get-order', label: 'Get order by ID'},
-        {type: 'doc', id: 'store/cancel-order', label: 'Cancel an order'},
-        {type: 'doc', id: 'store/inventory', label: 'Inventory'},
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Users',
-      items: [
-        {type: 'doc', id: 'users/index', label: 'Overview'},
-        {type: 'doc', id: 'users/create-user', label: 'Create a user'},
-        {type: 'doc', id: 'users/login', label: 'Login and logout'},
-        {type: 'doc', id: 'users/manage-user', label: 'Manage users'},
-      ],
-    },
-    {type: 'link', label: 'API playground', href: '/petstore/api-playground'},
-  ],
-};
+const sidebars = loadNavigationSidebar({
+  filePath: 'docs/petstore/navigation.json',
+  sidebarId: 'petstoreSidebar',
+});
 
 export default sidebars;

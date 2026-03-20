@@ -36,4 +36,13 @@ Use reference pages when you need exact facts, supported options, and stable tec
 
 - Site config: `docusaurus.config.ts`
 - Sidebars: `sidebarsDevdocify.ts`, `sidebarsTfl.ts`, `sidebarsPetstore.ts`
+- Navigation contract loader: `navigation-contract.ts`
+- One-file navigation definitions:
+  - `docs/devdocify/navigation.json`
+  - `docs/tfl/navigation.json`
+  - `docs/petstore/navigation.json`
 - Workflows: `.github/workflows/ci.yml`, `.github/workflows/deploy.yml`, `.github/workflows/preview.yml`
+
+## Navigation contract
+
+See [Navigation contract](/docs/reference/navigation-contract) for schema, validation rules, and failure behavior.

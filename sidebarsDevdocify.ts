@@ -1,34 +1,8 @@
-import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
+import {loadNavigationSidebar} from './navigation-contract';
 
-const sidebars: SidebarsConfig = {
-  devdocifySidebar: [
-    {type: 'doc', id: 'index', label: 'Overview'},
-    {
-      type: 'category',
-      label: 'Tutorials',
-      items: [{type: 'doc', id: 'tutorials/index', label: 'Start here'}],
-    },
-    {
-      type: 'category',
-      label: 'How-to',
-      items: [
-        {type: 'doc', id: 'how-to/index', label: 'Task guides'},
-        {type: 'doc', id: 'how-to/playground-overview', label: 'Playground explanation template'},
-        {type: 'doc', id: 'how-to/petstore-playground', label: 'Petstore playground guide'},
-        {type: 'doc', id: 'how-to/tfl-playground', label: 'TfL playground guide'},
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Reference',
-      items: [{type: 'doc', id: 'reference/index', label: 'Reference hub'}],
-    },
-    {
-      type: 'category',
-      label: 'Explanation',
-      items: [{type: 'doc', id: 'explanation/index', label: 'Concepts'}],
-    },
-  ],
-};
+const sidebars = loadNavigationSidebar({
+  filePath: 'docs/devdocify/navigation.json',
+  sidebarId: 'devdocifySidebar',
+});
 
 export default sidebars;
