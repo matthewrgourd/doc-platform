@@ -89,6 +89,11 @@
   margin-bottom: 0.5rem;
 }
 
+/* Keep anchored headings visible under fixed navbar when opening #hash links */
+.theme-doc-markdown :is(h1, h2, h3, h4, h5, h6)[id] {
+  scroll-margin-top: calc(var(--ifm-navbar-height) + 1rem);
+}
+
 .markdown > p:first-of-type {
   font-size: 1.125rem;
   color: var(--ifm-color-emphasis-700);
