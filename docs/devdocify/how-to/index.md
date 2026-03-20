@@ -28,3 +28,9 @@ Use how-to guides when you need to complete a specific job quickly.
 3. Confirm product demos remain scoped to `/tfl` and `/petstore`.
 
 These checks protect the information architecture agreed in Story 7.1.
+
+## API playground explanation guides
+
+- [Playground explanation template](/docs/how-to/playground-overview)
+- [Petstore playground guide](/docs/how-to/petstore-playground)
+- [TfL playground guide](/docs/how-to/tfl-playground)

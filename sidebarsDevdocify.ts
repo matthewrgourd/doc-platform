@@ -11,7 +11,12 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'How-to',
-      items: [{type: 'doc', id: 'how-to/index', label: 'Task guides'}],
+      items: [
+        {type: 'doc', id: 'how-to/index', label: 'Task guides'},
+        {type: 'doc', id: 'how-to/playground-overview', label: 'Playground explanation template'},
+        {type: 'doc', id: 'how-to/petstore-playground', label: 'Petstore playground guide'},
+        {type: 'doc', id: 'how-to/tfl-playground', label: 'TfL playground guide'},
+      ],
     },
     {
       type: 'category',
