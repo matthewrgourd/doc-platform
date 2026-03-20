@@ -1,25 +1,39 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Petstore demo API",
-    "version": "1.0.0",
-    "description": "Curated unauthenticated GET endpoints for demo playground use."
+    "title": "Swagger Petstore — Devdocify playground (GET subset)",
+    "version": "playground-1.0.0",
+    "description": "OpenAPI description for the three **unauthenticated GET** operations exposed in the Devdocify Petstore API playground.\n\n**Scope:** This file documents only `GET /pet/findByStatus`, `GET /user/login`, and `GET /user/logout`. It is the canonical machine-readable contract for the curated demo. The public sample server at `petstore3.swagger.io` implements many additional operations (POST, PUT, DELETE, and other GETs); those are **not** listed here.\n\n**Audience:** Technical writers, client developers, and tooling. Use it to generate snippets, mocks, or contract tests for the demo surface only.\n\n**Encoding:** Requests and responses use UTF-8. Successful JSON responses use `application/json` unless noted."
   },
   "servers": [
     {
-      "url": "https://petstore3.swagger.io/api/v3"
+      "url": "https://petstore3.swagger.io/api/v3",
+      "description": "Swagger Petstore public sample (OpenAPI 3.0)."
+    }
+  ],
+  "tags": [
+    {
+      "name": "Pets",
+      "description": "Read-only pet catalog queries included in the playground."
+    },
+    {
+      "name": "User session",
+      "description": "Sample user session flow (login and logout) using GET for demo purposes. Do not treat this as a production authentication pattern."
     }
   ],
   "paths": {
     "/pet/findByStatus": {
       "get": {
-        "summary": "Find pets by status",
-        "description": "Returns pets with a requested status.",
+        "tags": ["Pets"],
+        "summary": "Find pets by inventory status",
+        "description": "Returns an array of **Pet** resources whose `status` field matches the required query parameter.\n\nUse this operation to retrieve a slice of the store catalog (for example all pets currently `available`). The demo server returns synthetic data; IDs and fields may vary between calls.\n\n**Security:** This GET is unauthenticated on the public sample server.",
+        "operationId": "findPetsByStatus",
         "parameters": [
           {
             "name": "status",
             "in": "query",
             "required": true,
+            "description": "Inventory state to filter by. Must be one of the allowed enum values.",
             "schema": {
               "type": "string",
               "enum": ["available", "pending", "sold"],
@@ -30,31 +44,59 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Success. Response body is a JSON array of pets (may be empty if no pets match).",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "additionalProperties": true
+                    "$ref": "#/components/schemas/Pet"
                   }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "doggie",
+                    "photoUrls": ["https://example.com/photo.jpg"],
+                    "status": "available"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Typically returned when `status` is missing or not a valid enum value.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "code": 400,
+                  "type": "error",
+                  "message": "Invalid status value"
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server error. Retry with backoff; do not assume idempotency for repeated reads if the server is unhealthy."
           }
         }
       }
     },
     "/user/login": {
       "get": {
-        "summary": "Log in user",
-        "description": "Logs in a user and returns a session token string.",
+        "tags": ["User session"],
+        "summary": "Log in with username and password (sample)",
+        "description": "Returns a **plain-text session token** in the response body for the supplied credentials.\n\n**Warning:** Credentials are passed as **query parameters**, which appear in logs and browser history. This matches the upstream Swagger Petstore sample for teaching only—**do not** copy this pattern for production APIs.\n\n**Response headers:** On success, the sample server may include rate-limit and session expiry hints (see response `headers` below).",
+        "operationId": "loginUser",
         "parameters": [
           {
             "name": "username",
             "in": "query",
             "required": true,
+            "description": "User name registered with the sample server.",
             "schema": {
               "type": "string",
               "default": "theUser"
@@ -65,6 +107,7 @@
             "name": "password",
             "in": "query",
             "required": true,
+            "description": "Password for the sample user.",
             "schema": {
               "type": "string",
               "default": "12345"
@@ -74,11 +117,43 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Login accepted. Body is a string (often prefixed with `logged in user session:` followed by a token).",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "Maximum number of calls per hour allowed for this client (sample server).",
+                "schema": {
+                  "type": "integer",
+                  "example": 1000
+                }
+              },
+              "X-Expires-After": {
+                "description": "UTC date/time after which the session may be treated as expired (format depends on server).",
+                "schema": {
+                  "type": "string",
+                  "example": "Wed, 20 Mar 2024 12:00:00 GMT"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "logged in user session:1234567890"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username or password supplied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "code": 400,
+                  "type": "error",
+                  "message": "Invalid username/password supplied"
                 }
               }
             }
@@ -88,18 +163,87 @@
     },
     "/user/logout": {
       "get": {
-        "summary": "Log out current user",
-        "description": "Ends the current user session.",
+        "tags": ["User session"],
+        "summary": "Log out current session (sample)",
+        "description": "Ends the current session on the sample server. The public demo typically returns a short confirmation message.\n\n**Note:** Session behavior depends on server-side state; for the playground, this call is safe to run without prior login for demonstration.",
+        "operationId": "logoutUser",
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Logout acknowledged. Body format is a string on the sample server.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "ok"
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server error while processing logout."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64", "example": 1 },
+          "name": { "type": "string", "example": "Dogs" }
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" }
+        }
+      },
+      "Pet": {
+        "type": "object",
+        "description": "Pet resource as returned by the sample store.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Server-assigned identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the pet."
+          },
+          "category": {
+            "$ref": "#/components/schemas/Category"
+          },
+          "photoUrls": {
+            "type": "array",
+            "items": { "type": "string", "format": "uri" },
+            "description": "URLs of photos associated with the pet."
+          },
+          "tags": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Tag" }
+          },
+          "status": {
+            "type": "string",
+            "description": "Inventory status.",
+            "enum": ["available", "pending", "sold"]
+          }
+        },
+        "required": ["name", "photoUrls"]
+      },
+      "ApiError": {
+        "type": "object",
+        "description": "Typical error envelope returned by the sample server for failed requests (shape may vary slightly by endpoint).",
+        "properties": {
+          "code": { "type": "integer", "example": 400 },
+          "type": { "type": "string", "example": "error" },
+          "message": {
+            "type": "string",
+            "description": "Human-readable explanation safe to show to integrators (no stack traces in normal operation)."
           }
         }
       }

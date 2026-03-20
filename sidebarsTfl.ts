@@ -8,6 +8,7 @@ const sidebars: SidebarsConfig = {
       items: [
         {type: 'doc', id: 'getting-started/index', label: 'Overview'},
         {type: 'doc', id: 'getting-started/quickstart', label: 'Quickstart'},
+        {type: 'doc', id: 'getting-started/bike-point', label: 'Bike points'},
         {type: 'doc', id: 'getting-started/authentication', label: 'Authentication'},
         {type: 'doc', id: 'getting-started/error-handling', label: 'Error handling'},
       ],

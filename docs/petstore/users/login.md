@@ -5,37 +5,82 @@ title: Login and logout
 
 # Login and logout
 
-Authenticate users with the login endpoint. Use logout to end the session.
+The playground documents two **session-style GET** operations on the public Swagger Petstore sample. They are useful for trying query parameters and response headers without API keys.
 
-## Login
+:::warning
+Sending passwords in the query string is **not** a production pattern. The Swagger sample does this for teaching only.
+:::
 
-Send a GET request with username and password as query parameters:
+## OpenAPI description (playground scope)
+
+**[Download `petstore-playground.json`](/openapi/petstore-playground.json)** — includes `GET /user/login`, `GET /user/logout`, and `GET /pet/findByStatus` only.
+
+## Log in
+
+| | |
+|---|---|
+| **Method** | `GET` |
+| **Path** | `/user/login` |
+| **Base URL** | `https://petstore3.swagger.io/api/v3` |
+
+### Parameters
+
+| Name | In | Required | Description |
+|---|---|---:|---|
+| `username` | Query | Yes | Sample default `theUser`. |
+| `password` | Query | Yes | Sample default `12345`. |
+
+### Responses
+
+| Code | Description |
+|---|---|
+| `200` | Session string returned (JSON string body). Check response headers for rate-limit hints. |
+| `400` | Invalid username or password (JSON error body possible). |
+
+### Response headers (success)
+
+| Header | Description |
+|---|---|
+| `X-Rate-Limit` | Calls per hour allowed (sample server). |
+| `X-Expires-After` | UTC date/time after which the session may expire. |
+
+### Example
 
 ```bash
 curl "https://petstore3.swagger.io/api/v3/user/login?username=theUser&password=12345"
 ```
 
-## Response
-
-Returns a session token (string):
+### Example body
 
 ```json
 "logged in user session:1234567890"
 ```
 
-Response headers include:
+## Log out
 
-| Header | Description |
+| | |
 |---|---|
-| `X-Rate-Limit` | Calls per hour allowed |
-| `X-Expires-After` | UTC date when token expires |
+| **Method** | `GET` |
+| **Path** | `/user/logout` |
+| **Base URL** | `https://petstore3.swagger.io/api/v3` |
 
-## Logout
+### Parameters
 
-End the current session:
+None.
+
+### Responses
+
+| Code | Description |
+|---|---|
+| `200` | Logout acknowledged (string body on sample server). |
+| `500` | Server error. |
+
+### Example
 
 ```bash
 curl "https://petstore3.swagger.io/api/v3/user/logout"
 ```
 
-Returns 200 on success.
+## Related
+
+- [Find pets by status](/petstore/pets/find-pets) — companion playground **GET** on pets.

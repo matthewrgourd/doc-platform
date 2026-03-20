@@ -6,7 +6,7 @@ title: Lines
 
 # Lines
 
-Query Tube, rail, and other line data. Get real-time status, routes, and disruption information.
+Query Tube, rail, and other line data. The [API playground](/tfl/api-playground) highlights **line status by mode** (`GET /Line/Mode/{modes}/Status`).
 
 ## Line modes
 
@@ -19,13 +19,19 @@ Query Tube, rail, and other line data. Get real-time status, routes, and disrupt
 | national-rail | National Rail |
 | tram | Tramlink |
 
-## Key endpoints
+## Playground endpoint (documented in this site’s OpenAPI)
 
-- **Line status** - `GET /Line/{ids}/Status` - Current status and disruptions
-- **Line routes** - `GET /Line/{ids}/Route` - Route geometry and stops
-- **All lines** - `GET /Line/Mode/{modes}` - Lines by mode
+- **Line status by mode** — `GET /Line/Mode/{modes}/Status` — [Guide](/tfl/lines/status) — included in **[tfl-playground.json](/openapi/tfl-playground.json)**
+
+## Other endpoints on the live API
+
+These are common on `api.tfl.gov.uk` but **not** part of the downloadable playground spec:
+
+- `GET /Line/{ids}/Status` — status for specific line IDs
+- `GET /Line/{ids}/Route` — route geometry and stops
+- `GET /Line/Mode/{modes}` — line metadata by mode
 
 ## Guides
 
-- [**Line status**](/tfl/lines/status) - Get real-time line status
-- [**Line routes**](/tfl/lines/routes) - Retrieve route and stop sequences
+- [**Line status by mode**](/tfl/lines/status) — playground **GET** with full reference
+- [**Line routes**](/tfl/lines/routes) — additional TfL route examples (outside playground spec)

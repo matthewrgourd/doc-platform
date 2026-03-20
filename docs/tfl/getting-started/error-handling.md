@@ -1,11 +1,13 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 title: Error handling
 ---
 
 # Error handling
 
 The TfL API uses conventional HTTP status codes. Codes in the `2xx` range indicate success, `4xx` indicate a client error, and `5xx` indicate a server error.
+
+For the three playground **GET** operations, see response codes in **[tfl-playground.json](/openapi/tfl-playground.json)**.
 
 ## HTTP status codes
 
@@ -20,4 +22,8 @@ The TfL API uses conventional HTTP status codes. Codes in the `2xx` range indica
 
 ## Authentication errors
 
-In this demo, curated playground endpoints are configured for unauthenticated use. If you call secured endpoints in your own environment, include valid credentials to avoid `401` responses.
+This demo uses public, unauthenticated **GET** requests only. A `401` response would mean the upstream service changed policy for your request path; it is not expected for the three playground operations documented on this site.
+
+## Rate limiting
+
+If you receive `429`, slow down and cache results where possible. See [Authentication](./authentication).

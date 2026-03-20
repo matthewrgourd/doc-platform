@@ -14,15 +14,21 @@ The TfL playground demonstrates interactive API exploration with practical trans
 
 ## Scope and limits
 
-- This is a curated subset of TfL endpoints.
+- The playground and its OpenAPI file describe **three GET operations** only.
 - Defaults are tuned for fast successful responses.
 - The demo is intended for onboarding and platform evaluation.
+
+## OpenAPI description
+
+Download the canonical spec bundled with this site:
+
+**[tfl-playground.json](/openapi/tfl-playground.json)**
 
 ## Included demo operations
 
 - `GET /Line/Mode/{modes}/Status`
 - `GET /StopPoint/Search/{query}`
-- `GET /Line/{ids}/Route/Sequence/{direction}`
+- `GET /BikePoint`
 
 ## Try-it defaults
 

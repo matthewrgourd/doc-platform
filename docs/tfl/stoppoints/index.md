@@ -6,15 +6,22 @@ title: Stop points
 
 # Stop points
 
-Search for stops and stations, and get real-time arrivals.
+Search for stops and stations, and get real-time arrivals. The [API playground](/tfl/api-playground) includes **stop search** only.
 
-## Key endpoints
+## Playground endpoint (in this site’s OpenAPI)
 
-- **Search** - `GET /StopPoint/Search/{query}` - Find stops by name
-- **Arrivals** - `GET /StopPoint/{ids}/Arrivals` - Next arrivals at a stop
-- **By ID** - `GET /StopPoint/{ids}` - Stop details
+- **Search** — `GET /StopPoint/Search/{query}` — [Guide](/tfl/stoppoints/search) — **[tfl-playground.json](/openapi/tfl-playground.json)**
+
+## Other endpoints on the live API
+
+These are not in the downloadable playground spec:
+
+- **Arrivals** — `GET /StopPoint/{ids}/Arrivals` — [Arrivals guide](/tfl/stoppoints/arrivals)
+- **By ID** — `GET /StopPoint/{ids}` — stop details
+
+Cycle hire listing for the demo is documented under [Bike points](/tfl/getting-started/bike-point) (`GET /BikePoint`).
 
 ## Guides
 
-- [**Search stops**](/tfl/stoppoints/search) - Find stops by name or location
-- [**Arrivals**](/tfl/stoppoints/arrivals) - Get next departures
+- [**Search stops**](/tfl/stoppoints/search) — playground **GET** with full reference
+- [**Arrivals**](/tfl/stoppoints/arrivals) — next departures (outside playground spec)

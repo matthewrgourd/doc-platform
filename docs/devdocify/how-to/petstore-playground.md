@@ -14,9 +14,15 @@ The Petstore playground demonstrates a low-friction "try API now" flow with no-a
 
 ## Scope and limits
 
-- This is a curated demo spec, not the full Petstore API surface.
+- The playground and its OpenAPI file describe **three GET operations** only.
 - The page is designed to return successful responses quickly.
 - Behavior is intentionally optimized for onboarding and documentation evaluation.
+
+## OpenAPI description
+
+Download the canonical spec bundled with this site (not the upstream full API):
+
+**[petstore-playground.json](/openapi/petstore-playground.json)**
 
 ## Included demo operations
 

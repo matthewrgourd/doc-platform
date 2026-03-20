@@ -14,9 +14,9 @@ Petstore is a sample API that helps you test common API workflows, including fin
 
 | Path | Description | Time |
 |---|---|---|
-| [**Quickstart**](/petstore/getting-started/quickstart) | Add your first pet in under 5 minutes | ~5 min |
-| [**Add a pet**](/petstore/pets/add-pet) | Create a pet with name, photo URLs, and status | ~15 min |
-| [**Place an order**](/petstore/store/place-order) | Order a pet from the store | ~15 min |
+| [**Quickstart**](/petstore/getting-started/quickstart) | Run the three playground **GET** calls | ~5 min |
+| [**Find pets by status**](/petstore/pets/find-pets) | Reference for `GET /pet/findByStatus` | ~10 min |
+| [**Login and logout**](/petstore/users/login) | Reference for `GET /user/login` and `GET /user/logout` | ~10 min |
 
 </div>
 
@@ -27,14 +27,14 @@ sequenceDiagram
     participant Your App
     participant Petstore API
 
-    Your App->>Petstore API: POST /pet (add pet)
-    Petstore API-->>Your App: Pet created
+    Your App->>Petstore API: GET /pet/findByStatus
+    Petstore API-->>Your App: Pet array
 
-    Your App->>Petstore API: POST /store/order (place order)
-    Petstore API-->>Your App: Order confirmed
+    Your App->>Petstore API: GET /user/login
+    Petstore API-->>Your App: Session string
 
-    Your App->>Petstore API: GET /user/{username} (get user)
-    Petstore API-->>Your App: User details
+    Your App->>Petstore API: GET /user/logout
+    Petstore API-->>Your App: OK
 ```
 
 ## Base URL
@@ -56,3 +56,7 @@ Use the [API playground](/petstore/api-playground) to run three curated demo end
 - `GET /user/logout`
 
 These playground examples are configured with sample values and don't require authentication.
+
+## Downloadable OpenAPI (playground only)
+
+The canonical machine-readable description for those three **GET** operations is **[petstore-playground.json](/openapi/petstore-playground.json)**. It does not describe POST, PUT, DELETE, or other paths on the public sample server.

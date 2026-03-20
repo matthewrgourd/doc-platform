@@ -1,24 +1,43 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "TfL demo API",
-    "version": "1.0.0",
-    "description": "Curated unauthenticated GET endpoints for demo playground use."
+    "title": "Transport for London Unified API — Devdocify playground (GET subset)",
+    "version": "playground-1.0.0",
+    "description": "OpenAPI description for three **unauthenticated GET** operations used in the Devdocify TfL API playground.\n\n**Scope:** Only `GET /Line/Mode/{modes}/Status`, `GET /StopPoint/Search/{query}`, and `GET /BikePoint` are described. The live TfL Unified API offers many more paths and query options; they are **not** included in this file.\n\n**Audience:** Integrators validating the demo surface, and technical writers maintaining the portal. Prefer this file when you need a single artifact that matches the playground exactly.\n\n**Transport:** HTTPS only (`TLS 1.2+` on `api.tfl.gov.uk`). Responses are UTF-8 JSON unless otherwise negotiated.\n\n**Rate limiting:** Production use may receive `429 Too Many Requests`. Respect `Retry-After` when present and reduce concurrency."
   },
   "servers": [
     {
-      "url": "https://api.tfl.gov.uk"
+      "url": "https://api.tfl.gov.uk",
+      "description": "TfL Unified API (public)."
+    }
+  ],
+  "tags": [
+    {
+      "name": "Lines",
+      "description": "Line-level status aggregated by mode (for example tube, bus, dlr)."
+    },
+    {
+      "name": "Stop points",
+      "description": "Search and resolution of stops and stations."
+    },
+    {
+      "name": "Cycle hire",
+      "description": "Santander Cycles (bike point) availability and locations."
     }
   ],
   "paths": {
     "/Line/Mode/{modes}/Status": {
       "get": {
-        "summary": "Get line status by mode",
+        "tags": ["Lines"],
+        "summary": "Line status by mode",
+        "description": "Returns an array of **line status** objects for every line that belongs to the comma-separated **modes** path segment (for example `tube` for London Underground).\n\nEach item typically includes line identifiers, human-readable names, and `lineStatuses` (disruptions, severity, and reason text). Use the optional `detail` query parameter when you need expanded disruption detail from the upstream API.\n\n**Authentication:** This playground documents anonymous requests only. No API keys or tokens are required for the operations in this file.",
+        "operationId": "lineModeStatus",
         "parameters": [
           {
             "name": "modes",
             "in": "path",
             "required": true,
+            "description": "One or more mode identifiers, comma-separated (no spaces). Examples: `tube`, `bus`, `dlr`, `overground`, `tram`, `national-rail`.",
             "schema": {
               "type": "string",
               "default": "tube"
@@ -29,6 +48,7 @@
             "name": "detail",
             "in": "query",
             "required": false,
+            "description": "When `true`, the API returns richer disruption detail where supported.",
             "schema": {
               "type": "boolean",
               "default": false
@@ -38,30 +58,45 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Success. JSON array of line status objects.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "additionalProperties": true
+                    "$ref": "#/components/schemas/TflLineStatus"
                   }
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad request. The `modes` value may be unknown or malformed."
+          },
+          "404": {
+            "description": "No data found for the requested mode combination."
+          },
+          "429": {
+            "description": "Rate limited. Slow down and retry after a delay; respect `Retry-After` when the server sends it."
+          },
+          "500": {
+            "description": "TfL server error. Retry with exponential backoff."
           }
         }
       }
     },
     "/StopPoint/Search/{query}": {
       "get": {
-        "summary": "Search stop points",
+        "tags": ["Stop points"],
+        "summary": "Search stops and stations by name",
+        "description": "Returns a **search payload** matching the free-text `query` (for example a station name like `waterloo`).\n\nTypical matches include stop point identifiers, display names, modes served, and coordinates. Exact JSON shape is defined by the live API; consumers should tolerate additional properties.\n\n**Tip:** Combine with journey planning by taking `id` or `icsCode` from a match and using it as an endpoint in other TfL journey APIs (outside this playground spec).",
+        "operationId": "stopPointSearch",
         "parameters": [
           {
             "name": "query",
             "in": "path",
             "required": true,
+            "description": "Case-insensitive search string (URL-encoded when special characters appear).",
             "schema": {
               "type": "string",
               "default": "waterloo"
@@ -71,36 +106,131 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Success. JSON object containing matches and metadata (structure varies; see live response).",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": true
+                  "$ref": "#/components/schemas/TflSearchResponse"
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad request. The query may be empty or invalid after decoding."
+          },
+          "404": {
+            "description": "No stop points matched the query."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "500": {
+            "description": "Server error."
           }
         }
       }
     },
     "/BikePoint": {
       "get": {
-        "summary": "Get bike points",
+        "tags": ["Cycle hire"],
+        "summary": "List bike point locations",
+        "description": "Returns an array of **bike points** (Santander Cycles docking stations) with availability and geographic data.\n\nUse this operation to populate maps or dashboards without specifying a search term. For a single dock, other TfL paths exist on the full API (not included in this subset).\n\n**Data freshness:** Availability counts change frequently; treat responses as point-in-time.",
+        "operationId": "bikePointList",
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Success. JSON array of bike point objects.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "additionalProperties": true
+                    "$ref": "#/components/schemas/TflBikePoint"
                   }
                 }
               }
             }
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TflLineStatus": {
+        "type": "object",
+        "description": "Line with nested status and disruption information (subset of fields; additional properties allowed).",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Stable line identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable line name."
+          },
+          "modeName": {
+            "type": "string",
+            "description": "Mode label (for example tube, dlr)."
+          },
+          "created": {
+            "type": "string",
+            "description": "Timestamp associated with the status payload (format as returned by API)."
+          },
+          "lineStatuses": {
+            "type": "array",
+            "description": "List of status and disruption entries.",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "TflSearchResponse": {
+        "type": "object",
+        "description": "Wrapper for stop search results; fields vary. Always parse defensively.",
+        "additionalProperties": true,
+        "properties": {
+          "matches": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "query": {
+            "type": "string"
+          },
+          "total": {
+            "type": "integer"
+          }
+        }
+      },
+      "TflBikePoint": {
+        "type": "object",
+        "description": "Cycle hire docking station. Property names often include `id`, `commonName`, `lat`, `lon`, and `additionalProperties` for bays and bikes.",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "commonName": {
+            "type": "string"
+          },
+          "lat": {
+            "type": "number",
+            "format": "double"
+          },
+          "lon": {
+            "type": "number",
+            "format": "double"
           }
         }
       }

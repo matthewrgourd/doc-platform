@@ -14,10 +14,10 @@ The Transport for London (TfL) Unified API provides real-time transport data, in
 
 | Path | Description | Time |
 |---|---|---|
-| [**Quickstart**](/tfl/getting-started/quickstart) | Get your first API response in under 5 minutes | ~5 min |
-| [**Lines**](/tfl/lines) | Explore Tube and rail line data | ~15 min |
-| [**Stop points**](/tfl/stoppoints) | Find stops and stations | ~15 min |
-| [**Journey**](/tfl/journey) | Plan routes between locations | ~20 min |
+| [**Quickstart**](/tfl/getting-started/quickstart) | Run the three playground **GET** calls | ~5 min |
+| [**Line status by mode**](/tfl/lines/status) | `GET /Line/Mode/{modes}/Status` | ~10 min |
+| [**Search stops**](/tfl/stoppoints/search) | `GET /StopPoint/Search/{query}` | ~10 min |
+| [**Bike points**](/tfl/getting-started/bike-point) | `GET /BikePoint` | ~5 min |
 
 </div>
 
@@ -57,3 +57,7 @@ Use the [API playground](/tfl/api-playground) to run three curated demo endpoint
 - `GET /BikePoint`
 
 These playground examples are configured with sample values and don't require authentication.
+
+## Downloadable OpenAPI (playground only)
+
+The canonical machine-readable description for those three **GET** operations is **[tfl-playground.json](/openapi/tfl-playground.json)**. It does not describe journey planning, arrivals, or other TfL paths.
