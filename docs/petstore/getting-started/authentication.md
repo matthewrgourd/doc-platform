@@ -15,7 +15,7 @@ The [API playground](/petstore/api-playground) includes these unauthenticated de
 - `GET /user/login`
 - `GET /user/logout`
 
-Their contract is defined only in **[petstore-playground.json](/openapi/petstore-playground.json)** (downloadable from this site). That file is not the full Petstore API description.
+Their contract is defined only in **[petstore-playground.json](/openapi/petstore-playground.json)** (downloadable from this site). That file isn't the full Petstore API description.
 
 ## Authentication for extended usage
 

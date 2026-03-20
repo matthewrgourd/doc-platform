@@ -5,7 +5,7 @@ title: Arrivals
 
 # Arrivals
 
-Get the next arrivals at a stop.
+`GET /StopPoint/{ids}/Arrivals` returns the next arrivals at a stop.
 
 ## Request
 
@@ -13,8 +13,8 @@ Get the next arrivals at a stop.
 curl "https://api.tfl.gov.uk/StopPoint/490000077G/Arrivals"
 ```
 
-Use the stop `id` from a search or line route response.
+Use a stop `id` from a search or line route response in place of `490000077G`.
 
 ## Response
 
-Returns an array of arrivals with `lineName`, `platformName`, `expectedArrival`, and `timeToStation` (seconds).
+The response body is a JSON array. Each item typically includes `lineName`, `platformName`, `expectedArrival`, and `timeToStation` (seconds).

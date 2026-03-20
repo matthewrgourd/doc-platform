@@ -60,4 +60,4 @@ These playground examples are configured with sample values and don't require au
 
 ## Downloadable OpenAPI (playground only)
 
-The canonical machine-readable description for those three **GET** operations is **[tfl-playground.json](/openapi/tfl-playground.json)**. It does not describe journey planning, arrivals, or other TfL paths.
+The canonical machine-readable description for those three **GET** operations is **[tfl-playground.json](/openapi/tfl-playground.json)**. It doesn't describe journey planning, arrivals, or other TfL paths.

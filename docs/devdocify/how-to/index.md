@@ -6,7 +6,7 @@ title: How-to guides
 
 # How-to guides
 
-Use how-to guides when you need to complete a specific job quickly.
+Use how-to guides when you need to finish a specific task quickly.
 
 <div className="docs-hero-block">
   <p className="docs-eyebrow">Execution guides</p>

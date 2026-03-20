@@ -6,29 +6,29 @@ title: Playground explanation template
 
 # Playground explanation template
 
-Use this structure whenever you publish an API playground page.
+Copy this structure when you publish an API playground page.
 
 ## 1. What this playground demonstrates
 
-Describe the capability being shown and what "success" looks like for a reader.
+Explain which capability you're showing and what a successful call looks like for the reader.
 
 ## 2. Scope and limits
 
-- Clarify if endpoints are curated demo endpoints.
+- Clarify whether endpoints are curated demos.
 - State whether authentication is required.
 - Mention any non-production behavior.
 
 ## 3. Try-it defaults
 
-List the default values pre-filled in the playground and why they were chosen.
+List the default values pre-filled in the playground and why you chose them.
 
 ## 4. Expected response behavior
 
-Tell the reader what kind of response they should expect for a successful request.
+Tell the reader what kind of response they should expect after a successful request.
 
 ## 5. Follow-up action
 
-Link to where readers should go next after trying the playground.
+Link to where the reader should go next after trying the playground.
 
 ## Current implementations
 

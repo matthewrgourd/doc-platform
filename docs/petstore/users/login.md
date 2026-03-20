@@ -5,7 +5,7 @@ title: Login and logout
 
 # Login and logout
 
-The playground documents two **session-style GET** operations on the public Swagger Petstore sample. They are useful for trying query parameters and response headers without API keys.
+The playground documents two **session-style GET** operations on the public Swagger Petstore sample. They're useful for trying query parameters and response headers without API keys.
 
 :::warning
 Sending passwords in the query string is **not** a production pattern. The Swagger sample does this for teaching only.

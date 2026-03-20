@@ -82,7 +82,7 @@ curl -X POST "https://petstore3.swagger.io/api/v3/store/order" \
 
 ## Response
 
-Returns the created order with an assigned `id`:
+The response body is the created order, including an assigned `id`:
 
 ```json
 {

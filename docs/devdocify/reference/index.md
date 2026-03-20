@@ -6,7 +6,7 @@ title: Reference
 
 # Reference
 
-Use reference pages for exact facts, supported options, and stable technical contracts.
+Use reference pages when you need exact facts, supported options, and stable technical contracts.
 
 <div className="docs-hero-block">
   <p className="docs-eyebrow">System contracts</p>

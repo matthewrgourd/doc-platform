@@ -6,7 +6,7 @@ title: Explanation
 
 # Explanation
 
-Use explanation pages to understand platform design choices and trade-offs.
+Use explanation pages when you want context on platform design choices and trade-offs.
 
 <div className="docs-hero-block">
   <p className="docs-eyebrow">Rationale</p>

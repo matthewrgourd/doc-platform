@@ -63,10 +63,10 @@ export default function Home(): React.JSX.Element {
         </section>
 
         <section className="home-planned container padding-bottom--xl">
-          <h2>Planned next surfaces</h2>
+          <h2>Stub marketing routes</h2>
           <p>
-            These routes are intentionally present as placeholders while `/docs` remains the active
-            delivery focus.
+            These pages are placeholders. Technical content and demos live under{' '}
+            <strong>/docs</strong>, <strong>/tfl</strong>, and <strong>/petstore</strong>.
           </p>
           <div className="home-planned-links">
             <Link to="/customers">Customers</Link>

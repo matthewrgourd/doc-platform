@@ -6,7 +6,7 @@ title: Devdocify docs
 
 # Devdocify docs
 
-This documentation explains how to use Devdocify and demonstrates the platform through its own implementation.
+Use this documentation to learn how Devdocify works. The same site demonstrates the platform through its own implementation.
 
 <div className="docs-hero-block">
   <p className="docs-eyebrow">Technical documentation surface</p>
@@ -16,7 +16,7 @@ This documentation explains how to use Devdocify and demonstrates the platform t
   </p>
 </div>
 
-## Diataxis lanes
+## Diátaxis lanes
 
 <div className="docs-card-grid">
   <div className="docs-card">
@@ -52,8 +52,8 @@ This documentation explains how to use Devdocify and demonstrates the platform t
 ## Start here
 
 <div className="docs-link-grid">
-  <a href="/docs/tutorials">New here -> Tutorials</a>
-  <a href="/docs/how-to">Need a task guide -> How-to</a>
-  <a href="/docs/reference">Need exact details -> Reference</a>
-  <a href="/docs/explanation">Need rationale -> Explanation</a>
+  <a href="/docs/tutorials">Tutorials for new contributors</a>
+  <a href="/docs/how-to">How-to guides for specific tasks</a>
+  <a href="/docs/reference">Reference documentation</a>
+  <a href="/docs/explanation">Explanation and design rationale</a>
 </div>

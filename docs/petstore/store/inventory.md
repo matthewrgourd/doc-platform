@@ -5,7 +5,7 @@ title: Inventory
 
 # Inventory
 
-Returns a map of pet status codes to quantities. Requires API key authentication.
+The response body is a map of pet status codes to quantities. The sample server requires an API key for this endpoint.
 
 ## Request
 

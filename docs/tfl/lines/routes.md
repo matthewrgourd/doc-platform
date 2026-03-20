@@ -5,7 +5,7 @@ title: Line routes
 
 # Line routes
 
-Retrieve the route and stop sequence for a line.
+Use `GET /Line/{ids}/Route` to retrieve the route and stop sequence for one or more lines.
 
 ## Request
 
@@ -15,4 +15,4 @@ curl "https://api.tfl.gov.uk/Line/victoria/Route"
 
 ## Response
 
-Returns route geometry, ordered stop points, and line metadata.
+The response includes route geometry, ordered stop points, and line metadata.

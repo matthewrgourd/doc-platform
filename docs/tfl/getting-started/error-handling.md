@@ -14,15 +14,15 @@ For the three playground **GET** operations, see response codes in **[tfl-playgr
 | Code | Meaning |
 |---|---|
 | `200` | Success |
-| `400` | Bad request - check your parameters |
-| `401` | Unauthorized - invalid or missing credentials (secured environments) |
-| `404` | Resource not found |
-| `429` | Rate limited - reduce request frequency |
-| `500` | Server error - retry later |
+| `400` | Bad request. Check your parameters. |
+| `401` | Unauthorized. Invalid or missing credentials (secured environments). |
+| `404` | Resource not found. |
+| `429` | Rate limited. Reduce request frequency. |
+| `500` | Server error. Retry later. |
 
 ## Authentication errors
 
-This demo uses public, unauthenticated **GET** requests only. A `401` response would mean the upstream service changed policy for your request path; it is not expected for the three playground operations documented on this site.
+This demo uses public, unauthenticated **GET** requests only. A `401` response would mean the upstream service changed policy for your request path; it isn't expected for the three playground operations documented on this site.
 
 ## Rate limiting
 

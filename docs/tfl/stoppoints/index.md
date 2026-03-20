@@ -14,7 +14,7 @@ Search for stops and stations, and get real-time arrivals. The [API playground](
 
 ## Other endpoints on the live API
 
-These are not in the downloadable playground spec:
+These aren't in the downloadable playground spec:
 
 - **Arrivals** — `GET /StopPoint/{ids}/Arrivals` — [Arrivals guide](/tfl/stoppoints/arrivals)
 - **By ID** — `GET /StopPoint/{ids}` — stop details

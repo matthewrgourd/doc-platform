@@ -13,7 +13,7 @@ The machine-readable contract for the demo **GET** operations (this endpoint plu
 
 **[Download `petstore-playground.json`](/openapi/petstore-playground.json)** (JSON, OpenAPI 3.0.3)
 
-It documents only those three paths. Other operations on the public sample server are not part of that file.
+It documents only those three paths. Other operations on the public sample server aren't part of that file.
 
 ## Resource
 

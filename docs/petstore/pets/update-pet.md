@@ -9,7 +9,7 @@ Update an existing pet by ID. Use PUT to replace the entire pet, or POST with fo
 
 ## Update with PUT
 
-Send the full pet object. The `id` in the body must match the pet you are updating:
+Send the full pet object. The `id` in the body must match the pet you're updating:
 
 ```bash
 curl -X PUT "https://petstore3.swagger.io/api/v3/pet" \

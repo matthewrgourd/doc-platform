@@ -14,11 +14,11 @@ For the three playground **GET** operations, see response tables in **[petstore-
 | Code | Meaning |
 |---|---|
 | `200` | Success |
-| `400` | Bad request - check your parameters |
-| `401` | Unauthorized - invalid or missing credentials |
-| `404` | Resource not found (pet, order, or user) |
-| `422` | Validation exception - invalid input |
-| `500` | Server error - retry with exponential backoff |
+| `400` | Bad request. Check your parameters. |
+| `401` | Unauthorized. Invalid or missing credentials. |
+| `404` | Resource not found (pet, order, or user). |
+| `422` | Validation exception. Invalid input. |
+| `500` | Server error. Retry with exponential backoff. |
 
 ## Validation errors
 

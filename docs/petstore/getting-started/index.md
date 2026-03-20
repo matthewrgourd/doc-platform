@@ -59,4 +59,4 @@ These playground examples are configured with sample values and don't require au
 
 ## Downloadable OpenAPI (playground only)
 
-The canonical machine-readable description for those three **GET** operations is **[petstore-playground.json](/openapi/petstore-playground.json)**. It does not describe POST, PUT, DELETE, or other paths on the public sample server.
+The canonical machine-readable description for those three **GET** operations is **[petstore-playground.json](/openapi/petstore-playground.json)**. It doesn't describe POST, PUT, DELETE, or other paths on the public sample server.

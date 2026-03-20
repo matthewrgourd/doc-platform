@@ -6,7 +6,7 @@ title: Tutorials
 
 # Tutorials
 
-Use tutorials for end-to-end learning paths where each step builds on the previous one.
+Use tutorials when you want an end-to-end learning path, with each step building on the previous one.
 
 <div className="docs-hero-block">
   <p className="docs-eyebrow">Learning journey</p>

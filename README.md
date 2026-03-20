@@ -13,7 +13,7 @@ Devdocify is a reference implementation demonstrating the **Docusaurus**, **Scal
 - **Tabbed code samples** - Node.js, Python, Go across all guides
 - **Dark mode** - automatic, respects system preferences
 - **CI/CD** - GitHub Actions pipeline with lint, build, and optional Docker push
-- **Optional self-hosted deployment** - Docker, nginx, Prometheus + Grafana for containerised or on-prem deployments
+- **Optional self-hosted deployment** - Docker, nginx, Prometheus + Grafana for containerized or on-prem deployments
 
 ## Quick start
 
@@ -53,7 +53,7 @@ Each push to `main` triggers a new deployment. PRs get preview URLs automaticall
 
 ## Optional: self-hosted deployment
 
-For containerised or on-prem deployments, the repo includes Docker, nginx, and a monitoring stack.
+For containerized or on-prem deployments, the repo includes Docker, nginx, and a monitoring stack.
 
 **Docker** (requires [Colima](https://github.com/abiosoft/colima) or Docker Desktop):
 

@@ -40,4 +40,4 @@ curl -X PUT "https://petstore3.swagger.io/api/v3/user/user1" \
 curl -X DELETE "https://petstore3.swagger.io/api/v3/user/user1"
 ```
 
-Returns 200 on success. Returns 400 for invalid username, 404 if user not found.
+On success you receive `200`. You may receive `400` for an invalid username or `404` if the user isn't found.
