@@ -41,6 +41,8 @@
   --ifm-background-color: #0f172a;
   --ifm-background-surface-color: #1e293b;
   --ifm-footer-background-color: #020617;
+  --ifm-footer-color: #cbd5e1;
+  --ifm-footer-link-color: #e2e8f0;
 
   --ifm-table-header-background: rgba(255, 255, 255, 0.03);
   --ifm-table-background: rgba(255, 255, 255, 0.06);
@@ -285,6 +287,10 @@ table tbody tr:nth-child(even) {
   background: rgba(15, 23, 42, 0.6);
 }
 
+[data-theme='dark'] .home-route-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
 /* Docs landing + Diataxis hubs */
 .docs-hero-block {
   border: 1px solid rgba(99, 91, 255, 0.2);
@@ -297,7 +303,7 @@ table tbody tr:nth-child(even) {
 .docs-eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 0.73rem;
+  font-size: 0.75rem;
   font-weight: 700;
   margin: 0 0 0.5rem;
   color: var(--ifm-color-primary-dark);
@@ -402,6 +408,19 @@ table tbody tr:nth-child(even) {
 .footer__link-item {
   font-size: 0.875rem;
   line-height: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu__link,
+  .home-route-card,
+  .docs-link-grid a {
+    transition: none;
+  }
+
+  .home-route-card:hover,
+  .docs-link-grid a:hover {
+    transform: none;
+  }
 }
 
 @media (max-width: 996px) {
