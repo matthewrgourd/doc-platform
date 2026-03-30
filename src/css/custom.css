@@ -420,6 +420,99 @@ table tbody tr:nth-child(even) {
   border-color: rgba(165, 180, 252, 0.45);
 }
 
+/* Scalar API playground sidebar — match Docusaurus sidebar exactly.
+   @scalar/docusaurus/dist/theme.css renders the Docusaurus --ifm-menu-link-sublist-icon
+   as ::before on .sidebar-heading-chevron and hides the Scalar SVG with color:transparent. */
+
+/* --- Colors / weights via CSS variables (propagate without specificity fights) --- */
+.t-doc__sidebar {
+  --scalar-sidebar-color-1: var(--ifm-menu-color);
+  --scalar-sidebar-color-2: var(--ifm-menu-color);
+  --scalar-sidebar-color-active: var(--ifm-menu-color);
+  --scalar-sidebar-item-hover-color: currentColor;
+  --scalar-sidebar-font-weight: 400;
+  --scalar-sidebar-font-weight-active: 400;
+  --scalar-sidebar-item-active-background: rgba(99, 91, 255, 0.08);
+  --scalar-sidebar-item-hover-background: var(--ifm-menu-color-background-hover);
+}
+
+.active_page.sidebar-heading {
+  --scalar-sidebar-font-weight-active: 600;
+}
+
+/* Suppress parent folder turning accent when a child is active */
+.sidebar-group-item:has(.active_page) .sidebar-group-item__folder {
+  color: inherit !important;
+}
+
+/* Suppress hover text-colour change (Docusaurus only changes background on hover) */
+.sidebar-heading:hover:not(.active_page) {
+  color: inherit !important;
+}
+
+/* --- Chevron: left, correct size and rotation --- */
+.sidebar-heading.sidebar-group-item__folder {
+  flex-direction: row !important;
+  align-items: center !important;
+}
+
+.sidebar-heading-chevron {
+  display: flex !important;
+  align-items: center !important;
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+  flex-shrink: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Drive gap from the link side — independent of flex gap on the parent. */
+.sidebar-heading.sidebar-group-item__folder .sidebar-heading-link {
+  padding-left: 0.5rem !important;
+}
+
+/* Clip the invisible button inside the container so it doesn't push text rightward. */
+.sidebar-heading-chevron .toggle-nested-icon {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.sidebar-heading-chevron::before {
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+  background-size: 0.75rem 0.75rem !important;
+  transform: rotate(0deg) !important;
+}
+
+.sidebar-group-item:has(ul) .sidebar-heading-chevron::before {
+  transform: rotate(90deg) !important;
+}
+
+/* --- Typography: match .menu__link --- */
+.sidebar-heading-link {
+  color: var(--ifm-menu-color, #374151) !important;
+}
+
+.sidebar-heading-link p {
+  font-size: 0.875rem;
+  color: inherit;
+}
+
+/* --- Nested indentation: match .menu__list .menu__list --- */
+/* Scalar calculates heading indent as (--scalar-sidebar-level * 12px) + 12px.
+   Setting level=1 gives (1*12)+12=24px, creating ~20px more indent than top-level items.
+   !important needed on margin/padding as .sidebar-group resets them to 0. */
+.sidebar-indent-nested {
+  border-left: 1px solid var(--ifm-toc-border-color) !important;
+  margin-left: 0.65rem !important;
+  padding-left: 0 !important;
+  --scalar-sidebar-level: 1;
+}
+
 /* Footer */
 .footer__title {
   text-transform: uppercase;
