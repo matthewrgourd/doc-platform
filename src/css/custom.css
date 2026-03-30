@@ -434,6 +434,9 @@ table tbody tr:nth-child(even) {
   --scalar-sidebar-font-weight-active: 400;
   --scalar-sidebar-item-active-background: rgba(99, 91, 255, 0.08);
   --scalar-sidebar-item-hover-background: var(--ifm-menu-color-background-hover);
+  /* Use Docusaurus border colour for Scalar's own nested indent line */
+  --scalar-sidebar-indent-border: var(--ifm-toc-border-color);
+  --scalar-sidebar-indent-border-hover: var(--ifm-toc-border-color);
 }
 
 .active_page.sidebar-heading {
@@ -502,13 +505,13 @@ table tbody tr:nth-child(even) {
   color: inherit;
 }
 
-/* --- Nested indentation: match .menu__list .menu__list --- */
-/* Scalar calculates heading indent as (--scalar-sidebar-level * 12px) + 12px.
-   Setting level=1 gives (1*12)+12=24px, creating ~20px more indent than top-level items.
-   !important needed on margin/padding as .sidebar-group resets them to 0. */
+/* --- Nested indentation ---
+   Scalar provides its own ::before border line via --scalar-sidebar-indent-border (styled above).
+   We only need the margin-left to push the nested group rightward.
+   Scalar calculates heading padding as (--scalar-sidebar-level * 12px) + 12px;
+   level=1 → 24px, giving ~20px more indent than top-level items. */
 .sidebar-indent-nested {
-  border-left: 1px solid var(--ifm-toc-border-color) !important;
-  margin-left: 0.65rem !important;
+  margin-left: 1rem !important;
   padding-left: 0 !important;
   --scalar-sidebar-level: 1;
 }
