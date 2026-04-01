@@ -20,6 +20,13 @@
   --ifm-heading-font-weight: 600;
   --ifm-font-weight-bold: 600;
 
+  /* Heading scale — compact Stripe-like hierarchy */
+  --ifm-h1-font-size: 1.75rem;
+  --ifm-h2-font-size: 1.25rem;
+  --ifm-h3-font-size: 1.0625rem;
+  --ifm-h4-font-size: 0.9375rem;
+  --ifm-h5-font-size: 0.875rem;
+
   --ifm-navbar-height: 3.5rem;
   --ifm-navbar-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
@@ -112,10 +119,18 @@
   transform: rotate(90deg);
 }
 
-/* Content */
+/* Content — override Infima's .markdown-scoped heading size variables */
 .markdown h1:first-child {
-  font-size: 2rem;
+  --ifm-h1-font-size: 1.75rem;
   margin-bottom: 0.5rem;
+}
+
+.markdown > h2 {
+  --ifm-h2-font-size: 1.25rem;
+}
+
+.markdown > h3 {
+  --ifm-h3-font-size: 1.0625rem;
 }
 
 /* Keep anchored headings visible under fixed navbar when opening #hash links */
