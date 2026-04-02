@@ -16,7 +16,10 @@
     "benchmark": "npx tsx scripts/benchmark-manifest.ts",
     "normalize-openapi": "npx tsx scripts/normalize-openapi.ts",
     "apply-overlay": "npx tsx scripts/apply-overlay.ts",
-    "health-check": "npx tsx scripts/check-playground-health.ts"
+    "health-check": "npx tsx scripts/check-playground-health.ts",
+    "resolve-includes": "npx tsx scripts/resolve-includes.ts",
+    "resolve-variables": "npx tsx scripts/resolve-variables.ts",
+    "lint-content": "npx tsx scripts/lint-content.ts"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",

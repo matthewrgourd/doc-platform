@@ -1,0 +1,5 @@
+{
+  "api_base_url": "https://petstore3.swagger.io/api/v3",
+  "api_name": "Swagger Petstore API",
+  "docset_name": "Petstore"
+}
