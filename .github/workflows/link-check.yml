@@ -1,0 +1,54 @@
+name: External link check
+
+on:
+  schedule:
+    # Run every Monday at 08:00 UTC
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+
+concurrency:
+  group: link-check
+  cancel-in-progress: true
+
+jobs:
+  check-external-links:
+    name: Check external links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Build site
+        run: npm run build
+
+      - name: Check external links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >
+            --verbose
+            --no-progress
+            --exclude-loopback
+            --exclude-private
+            --exclude 'localhost'
+            --exclude 'petstore3.swagger.io'
+            --timeout 30
+            --max-retries 3
+            './build/**/*.html'
+          fail: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload link check report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: link-check-report
+          path: lychee/out.md
+          retention-days: 30

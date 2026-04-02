@@ -19,7 +19,7 @@ const config: Config = {
   markdown: {
     mermaid: true,
     hooks: {
-      onBrokenMarkdownLinks: 'warn',
+      onBrokenMarkdownLinks: 'throw',
     },
   },
 
@@ -65,6 +65,16 @@ const config: Config = {
         path: 'docs/petstore',
         routeBasePath: 'petstore',
         sidebarPath: './sidebarsPetstore.ts',
+      },
+    ],
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        // Add redirect rules here when pages are moved or removed.
+        // Example: { from: '/docs/old-path', to: '/docs/new-path' }
+        redirects: [],
+        // Uncomment to redirect entire path prefixes:
+        // createRedirects(existingPath) { ... }
       },
     ],
   ],
