@@ -114,10 +114,16 @@
   transform: rotate(90deg);
 }
 
-/* Content */
+/* Content — compact heading scale (Stripe-style hierarchy) */
 .markdown h1:first-child {
-  font-size: 2rem;
+  font-size: 1.75rem;
   margin-bottom: 0.5rem;
+}
+.markdown > h2 {
+  font-size: 1.25rem;
+}
+.markdown > h3 {
+  font-size: 1.0625rem;
 }
 
 /* Keep anchored headings visible under fixed navbar when opening #hash links */

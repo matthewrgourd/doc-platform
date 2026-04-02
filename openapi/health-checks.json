@@ -1,0 +1,44 @@
+{
+  "description": "Curated playground endpoint probes. All endpoints must return 2xx for a release to be considered healthy.",
+  "probes": [
+    {
+      "label": "TfL — Line status (tube)",
+      "url": "https://api.tfl.gov.uk/Line/Mode/tube/Status",
+      "expectedStatus": [200],
+      "timeoutMs": 15000
+    },
+    {
+      "label": "TfL — Stop point search (King's Cross)",
+      "url": "https://api.tfl.gov.uk/StopPoint/Search/King's%20Cross",
+      "expectedStatus": [200],
+      "timeoutMs": 15000
+    },
+    {
+      "label": "TfL — BikePoint list",
+      "url": "https://api.tfl.gov.uk/BikePoint",
+      "expectedStatus": [200],
+      "timeoutMs": 15000
+    },
+    {
+      "label": "Petstore — Find pets by status (available)",
+      "url": "https://petstore3.swagger.io/api/v3/pet/findByStatus?status=available",
+      "expectedStatus": [200],
+      "timeoutMs": 10000,
+      "allowedToFail": true
+    },
+    {
+      "label": "Petstore — User login",
+      "url": "https://petstore3.swagger.io/api/v3/user/login?username=demo-user&password=demo-pass",
+      "expectedStatus": [200],
+      "timeoutMs": 10000,
+      "allowedToFail": true
+    },
+    {
+      "label": "Petstore — User logout",
+      "url": "https://petstore3.swagger.io/api/v3/user/logout",
+      "expectedStatus": [200],
+      "timeoutMs": 10000,
+      "allowedToFail": true
+    }
+  ]
+}

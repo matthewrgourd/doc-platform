@@ -4,8 +4,8 @@ import Link from '@docusaurus/Link';
 export default function Home(): React.JSX.Element {
   return (
     <Layout
-      title="Devdocify"
-      description="Marketing at root, technical docs at /docs, with a first-party implementation of the Devdocify platform."
+      title="DevDocify"
+      description="Marketing at root, technical docs at /docs, with a first-party implementation of the DevDocify platform."
     >
       <main className="home-shell">
         <section className="home-hero">
@@ -13,7 +13,7 @@ export default function Home(): React.JSX.Element {
             <p className="home-eyebrow">Developer documentation platform</p>
             <h1>Build and ship first-class docs experiences</h1>
             <p className="home-subtitle">
-              Devdocify separates marketing at root from technical documentation at{' '}
+              DevDocify separates marketing at root from technical documentation at{' '}
               <strong>/docs</strong>, then proves the model with working multi-docset demos and
               API playground flows.
             </p>

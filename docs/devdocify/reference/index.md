@@ -35,7 +35,7 @@ Use reference pages when you need exact facts, supported options, and stable tec
 ## Configuration entry points
 
 - Site config: `docusaurus.config.ts`
-- Sidebars: `sidebarsDevdocify.ts`, `sidebarsTfl.ts`, `sidebarsPetstore.ts`
+- Sidebars: `sidebarsDevDocify.ts`, `sidebarsTfl.ts`, `sidebarsPetstore.ts`
 - Navigation contract loader: `navigation-contract.ts`
 - One-file navigation definitions:
   - `docs/devdocify/navigation.json`

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://devdocify.com/schemas/openapi-overlay/v1",
+  "docset": "petstore",
+  "description": "Playground-optimised patches for the Petstore API. Adds default examples so the Try-it flow works out of the box.",
+  "patches": [
+    {
+      "operationId": "findPetsByStatus",
+      "description": "Pre-fill 'status' with 'available' — the most common playground query.",
+      "parameters": [
+        {
+          "name": "status",
+          "example": "available",
+          "description": "Inventory status to filter by. The playground defaults to `available`. Use `pending` or `sold` to explore other states."
+        }
+      ]
+    },
+    {
+      "operationId": "loginUser",
+      "description": "Pre-fill username and password with demo credentials.",
+      "parameters": [
+        {
+          "name": "username",
+          "example": "demo-user",
+          "description": "Sample username. Use `demo-user` for the public playground server."
+        },
+        {
+          "name": "password",
+          "example": "demo-pass",
+          "description": "Sample password. Use `demo-pass` for the public playground server."
+        }
+      ]
+    }
+  ]
+}

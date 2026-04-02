@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Transport for London Unified API — Devdocify playground (GET subset)",
+    "title": "Transport for London Unified API — DevDocify playground (GET subset)",
     "version": "playground-1.0.0",
-    "description": "OpenAPI description for three **unauthenticated GET** operations used in the Devdocify TfL API playground.\n\n**Scope:** Only `GET /Line/Mode/{modes}/Status`, `GET /StopPoint/Search/{query}`, and `GET /BikePoint` are described. The live TfL Unified API offers many more paths and query options; they are **not** included in this file.\n\n**Audience:** Integrators validating the demo surface, and technical writers maintaining the portal. Prefer this file when you need a single artifact that matches the playground exactly.\n\n**Transport:** HTTPS only (`TLS 1.2+` on `api.tfl.gov.uk`). Responses are UTF-8 JSON unless otherwise negotiated.\n\n**Rate limiting:** Production use may receive `429 Too Many Requests`. Respect `Retry-After` when present and reduce concurrency."
+    "description": "OpenAPI description for three **unauthenticated GET** operations used in the DevDocify TfL API playground.\n\n**Scope:** Only `GET /Line/Mode/{modes}/Status`, `GET /StopPoint/Search/{query}`, and `GET /BikePoint` are described. The live TfL Unified API offers many more paths and query options; they are **not** included in this file.\n\n**Audience:** Integrators validating the demo surface, and technical writers maintaining the portal. Prefer this file when you need a single artifact that matches the playground exactly.\n\n**Transport:** HTTPS only (`TLS 1.2+` on `api.tfl.gov.uk`). Responses are UTF-8 JSON unless otherwise negotiated.\n\n**Rate limiting:** Production use may receive `429 Too Many Requests`. Respect `Retry-After` when present and reduce concurrency."
   },
   "servers": [
     {

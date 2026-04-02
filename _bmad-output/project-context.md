@@ -47,7 +47,7 @@ Install uses **`npm install --legacy-peer-deps`** (documented in README) because
 
 ### Framework-specific (Docusaurus)
 
-- **Three separate docs plugin instances**: default preset docs id `devdocify` (`path: docs/devdocify`, `routeBasePath: 'docs'`), plus plugins `tfl` and `petstore` with their own `path`, `routeBasePath`, and **sidebar files** (`sidebarsDevdocify.ts`, `sidebarsTfl.ts`, `sidebarsPetstore.ts`). Adding a doc page requires updating the correct sidebar.
+- **Three separate docs plugin instances**: default preset docs id `devdocify` (`path: docs/devdocify`, `routeBasePath: 'docs'`), plus plugins `tfl` and `petstore` with their own `path`, `routeBasePath`, and **sidebar files** (`sidebarsDevDocify.ts`, `sidebarsTfl.ts`, `sidebarsPetstore.ts`). Adding a doc page requires updating the correct sidebar.
 - **`onBrokenLinks: 'throw'`** — internal links must resolve or the build fails. Run **`npm run build`** before considering work done.
 - **Blog is disabled** (`blog: false` in preset). Do not assume blog routes exist.
 - **Homepage and marketing-style pages** live under `src/pages/` (MDX/TSX). Product guides live under `docs/{devdocify,tfl,petstore}/`.
