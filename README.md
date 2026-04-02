@@ -1,6 +1,6 @@
-# Devdocify
+# DevDocify
 
-Devdocify is a reference implementation demonstrating the **Docusaurus**, **Scalar**, and **Vercel** stack for multi-product developer documentation. It shows how to structure a portal with multiple products, each with guides and interactive API playground pages.
+DevDocify is a reference implementation demonstrating the **Docusaurus**, **Scalar**, and **Vercel** stack for multi-product developer documentation. It shows how to structure a portal with multiple products, each with guides and interactive API playground pages.
 
 ## Features
 
@@ -154,7 +154,7 @@ Makefile                 Commands (core + optional Docker/monitoring)
 
 ## Brand
 
-The site navbar brand is configured as `Devdocify` in `docusaurus.config.ts`.
+The site navbar brand is configured as `DevDocify` in `docusaurus.config.ts`.
 
 ## License
 

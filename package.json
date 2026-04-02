@@ -13,7 +13,10 @@
     "manifest": "npx tsx scripts/build-route-manifest.ts",
     "prebuild": "npx tsx scripts/build-route-manifest.ts",
     "generate-fixture": "npx tsx scripts/generate-fixture.ts",
-    "benchmark": "npx tsx scripts/benchmark-manifest.ts"
+    "benchmark": "npx tsx scripts/benchmark-manifest.ts",
+    "normalize-openapi": "npx tsx scripts/normalize-openapi.ts",
+    "apply-overlay": "npx tsx scripts/apply-overlay.ts",
+    "health-check": "npx tsx scripts/check-playground-health.ts"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",

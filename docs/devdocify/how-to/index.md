@@ -22,7 +22,7 @@ Use how-to guides when you need to finish a specific task quickly.
    - `docs/devdocify/*` for first-party product docs
    - `docs/tfl/*` and `docs/petstore/*` for demo product docs
 2. Update the related sidebar file when needed:
-   - `sidebarsDevdocify.ts`
+   - `sidebarsDevDocify.ts`
    - `sidebarsTfl.ts`
    - `sidebarsPetstore.ts`
 3. Run quality checks locally:

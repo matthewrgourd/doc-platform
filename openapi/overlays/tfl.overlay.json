@@ -1,0 +1,29 @@
+{
+  "$schema": "https://devdocify.com/schemas/openapi-overlay/v1",
+  "docset": "tfl",
+  "description": "Playground-optimised patches for the TfL API. Adds default examples so the Try-it flow works out of the box.",
+  "patches": [
+    {
+      "operationId": "lineModeStatus",
+      "description": "Pre-fill 'modes' parameter with 'tube' so the playground sends a valid request immediately.",
+      "parameters": [
+        {
+          "name": "modes",
+          "example": "tube",
+          "description": "Comma-separated transport mode(s). Use `tube`, `bus`, `dlr`, or `elizabeth-line`. Defaults to `tube` in the playground."
+        }
+      ]
+    },
+    {
+      "operationId": "stopPointSearch",
+      "description": "Pre-fill 'query' with a known station name for a ready-to-run playground request.",
+      "parameters": [
+        {
+          "name": "query",
+          "example": "King's Cross",
+          "description": "Station or stop name to search for. Try `King's Cross`, `Paddington`, or `Liverpool Street`."
+        }
+      ]
+    }
+  ]
+}

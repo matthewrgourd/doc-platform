@@ -17,7 +17,7 @@ const sections: MenuSection[] = [
     heading: 'Docs',
     groups: [
       {
-        label: 'Devdocify docs',
+        label: 'DevDocify docs',
         items: [
           {label: 'Overview', to: '/docs'},
           {label: 'Tutorials', to: '/docs/tutorials'},

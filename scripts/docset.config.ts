@@ -174,7 +174,7 @@ export function validateDocsetConfig(config: DocsetConfig): ValidationError[] {
 export const DOCSET_REGISTRY: DocsetConfig[] = [
   {
     id: 'devdocify',
-    name: 'Devdocify',
+    name: 'DevDocify',
   },
   {
     id: 'tfl',

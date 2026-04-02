@@ -89,7 +89,7 @@ const config: Config = {
       maxHeadingLevel: 3,
     },
     navbar: {
-      title: 'Devdocify',
+      title: 'DevDocify',
       items: [
         {
           to: '/docs',

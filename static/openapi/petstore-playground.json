@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Swagger Petstore — Devdocify playground (GET subset)",
+    "title": "Swagger Petstore — DevDocify playground (GET subset)",
     "version": "playground-1.0.0",
-    "description": "OpenAPI description for the three **unauthenticated GET** operations exposed in the Devdocify Petstore API playground.\n\n**Scope:** This file documents only `GET /pet/findByStatus`, `GET /user/login`, and `GET /user/logout`. It is the canonical machine-readable contract for the curated demo. The public sample server at `petstore3.swagger.io` implements many additional operations (POST, PUT, DELETE, and other GETs); those are **not** listed here.\n\n**Audience:** Technical writers, client developers, and tooling. Use it to generate snippets, mocks, or contract tests for the demo surface only.\n\n**Encoding:** Requests and responses use UTF-8. Successful JSON responses use `application/json` unless noted."
+    "description": "OpenAPI description for the three **unauthenticated GET** operations exposed in the DevDocify Petstore API playground.\n\n**Scope:** This file documents only `GET /pet/findByStatus`, `GET /user/login`, and `GET /user/logout`. It is the canonical machine-readable contract for the curated demo. The public sample server at `petstore3.swagger.io` implements many additional operations (POST, PUT, DELETE, and other GETs); those are **not** listed here.\n\n**Audience:** Technical writers, client developers, and tooling. Use it to generate snippets, mocks, or contract tests for the demo surface only.\n\n**Encoding:** Requests and responses use UTF-8. Successful JSON responses use `application/json` unless noted."
   },
   "servers": [
     {

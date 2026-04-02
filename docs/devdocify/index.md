@@ -1,12 +1,12 @@
 ---
 sidebar_position: 1
 slug: /
-title: Devdocify docs
+title: DevDocify docs
 ---
 
-# Devdocify docs
+# DevDocify docs
 
-Use this documentation to learn how Devdocify works. The same site demonstrates the platform through its own implementation.
+Use this documentation to learn how DevDocify works. The same site demonstrates the platform through its own implementation.
 
 <div className="docs-hero-block">
   <p className="docs-eyebrow">Technical documentation surface</p>
