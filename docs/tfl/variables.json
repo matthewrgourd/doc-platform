@@ -1,0 +1,5 @@
+{
+  "api_base_url": "https://api.tfl.gov.uk",
+  "api_name": "TfL Unified API",
+  "docset_name": "Transport for London"
+}
