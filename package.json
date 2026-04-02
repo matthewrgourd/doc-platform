@@ -9,7 +9,11 @@
     "swizzle": "docusaurus swizzle",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "manifest": "npx tsx scripts/build-route-manifest.ts",
+    "prebuild": "npx tsx scripts/build-route-manifest.ts",
+    "generate-fixture": "npx tsx scripts/generate-fixture.ts",
+    "benchmark": "npx tsx scripts/benchmark-manifest.ts"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",
