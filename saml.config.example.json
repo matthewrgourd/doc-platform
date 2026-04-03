@@ -1,0 +1,27 @@
+{
+  "_comment": "Copy this file to saml.config.json and fill in your IdP details. Never commit saml.config.json.",
+  "protectedMode": "none",
+  "entityId": "https://your-domain.com/saml/sp",
+  "acsUrl": "https://your-domain.com/saml/acs",
+  "idp": {
+    "metadataUrl": "https://your-idp.com/saml/metadata",
+    "_comment_inline": "Or use inline fields instead of metadataUrl:",
+    "entityId": "https://your-idp.com/saml/idp",
+    "ssoUrl": "https://your-idp.com/saml/sso",
+    "certificate": "MIIC...base64-encoded-cert...=="
+  },
+  "docsetRules": [
+    {
+      "docsetId": "tfl",
+      "protected": true,
+      "allowedRoles": ["admin", "maintainer", "contributor"]
+    }
+  ],
+  "sessionDurationSeconds": 28800,
+  "auditLoginFailures": true,
+  "_idp_notes": {
+    "okta": "Metadata URL: https://<your-okta-domain>/app/<app-id>/sso/saml/metadata",
+    "azure_ad": "Metadata URL: https://login.microsoftonline.com/<tenant-id>/federationmetadata/2007-06/federationmetadata.xml",
+    "google_workspace": "Download metadata XML from Admin console → Apps → SAML Apps → your app → Download metadata"
+  }
+}

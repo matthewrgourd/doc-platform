@@ -1,0 +1,31 @@
+{
+  "_comment": "Copy to rbac.config.json. Run: npx tsx scripts/validate-rbac-config.ts --list-roles",
+  "schemaVersion": "1.0",
+  "assignments": [
+    {
+      "principal": "your-github-username",
+      "role": "admin",
+      "assignedAt": "2026-04-03T09:00:00Z",
+      "assignedBy": "your-github-username"
+    },
+    {
+      "principal": "team:docs-team",
+      "role": "maintainer",
+      "assignedAt": "2026-04-03T09:00:00Z",
+      "assignedBy": "your-github-username"
+    },
+    {
+      "principal": "team:engineers",
+      "role": "contributor",
+      "assignedAt": "2026-04-03T09:00:00Z",
+      "assignedBy": "your-github-username"
+    },
+    {
+      "principal": "external-reviewer",
+      "role": "viewer",
+      "docsetId": "tfl",
+      "assignedAt": "2026-04-03T09:00:00Z",
+      "assignedBy": "your-github-username"
+    }
+  ]
+}

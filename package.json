@@ -19,7 +19,10 @@
     "health-check": "npx tsx scripts/check-playground-health.ts",
     "resolve-includes": "npx tsx scripts/resolve-includes.ts",
     "resolve-variables": "npx tsx scripts/resolve-variables.ts",
-    "lint-content": "npx tsx scripts/lint-content.ts"
+    "lint-content": "npx tsx scripts/lint-content.ts",
+    "validate-saml": "npx tsx scripts/validate-saml-config.ts",
+    "validate-rbac": "npx tsx scripts/validate-rbac-config.ts",
+    "validate-analytics-event": "npx tsx scripts/validate-analytics-event.ts"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",
