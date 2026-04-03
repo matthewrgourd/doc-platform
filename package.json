@@ -11,7 +11,7 @@
     "serve": "docusaurus serve",
     "typecheck": "tsc",
     "manifest": "npx tsx scripts/build-route-manifest.ts",
-    "prebuild": "npx tsx scripts/build-route-manifest.ts",
+    "postbuild": "npx tsx scripts/build-route-manifest.ts && npx tsx scripts/build-search-index.ts && npx tsx scripts/generate-llms-txt.ts --base-url https://www.devdocify.com",
     "generate-fixture": "npx tsx scripts/generate-fixture.ts",
     "benchmark": "npx tsx scripts/benchmark-manifest.ts",
     "normalize-openapi": "npx tsx scripts/normalize-openapi.ts",
@@ -22,7 +22,10 @@
     "lint-content": "npx tsx scripts/lint-content.ts",
     "validate-saml": "npx tsx scripts/validate-saml-config.ts",
     "validate-rbac": "npx tsx scripts/validate-rbac-config.ts",
-    "validate-analytics-event": "npx tsx scripts/validate-analytics-event.ts"
+    "validate-analytics-event": "npx tsx scripts/validate-analytics-event.ts",
+    "build-search-index": "npx tsx scripts/build-search-index.ts",
+    "generate-llms-txt": "npx tsx scripts/generate-llms-txt.ts",
+    "validate-assistant": "npx tsx scripts/validate-assistant-config.ts"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",
