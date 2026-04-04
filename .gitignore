@@ -18,6 +18,9 @@ _bmad/
 .cursor/
 CLAUDE.md
 
+# Vercel
+.vercel/
+
 # Misc
 .DS_Store
 .env
