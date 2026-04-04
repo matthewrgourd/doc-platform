@@ -1,18 +1,26 @@
 # DevDocify
 
-DevDocify is a reference implementation demonstrating the **Docusaurus**, **Scalar**, and **Vercel** stack for multi-product developer documentation. It shows how to structure a portal with multiple products, each with guides and interactive API playground pages.
+DevDocify is a reference implementation demonstrating the **Docusaurus**, **Scalar**, and **Vercel** stack for multi-product developer documentation. It shows how to structure a portal with multiple docsets, each with guides and an interactive API playground.
 
 ## Features
 
-- **Multi-product site** - Petstore and TfL as selectable products with separate doc sections and API playgrounds
+- **Multi-docset site** - TfL and Petstore as selectable products with separate doc sections and API playgrounds
 - **Site overview homepage** - explains the tech stack and links to each product
 - **Interactive API playground** - powered by Scalar, with "Try it" request builder and curated unauthenticated examples
-- **Curated demo specs** - each API playground page exposes 3 GET endpoints designed to return valid responses without authentication
+- **Curated demo specs** - each API playground exposes 3 GET endpoints designed to return valid responses without authentication
 - **Context-aware spec download links** - "Download API spec" appears only on API playground routes and points to the corresponding local demo spec
+- **Route manifest builder** - walks the docs tree and emits a deterministic JSON manifest of all routes, docsets, and versions
+- **Docset config schema** - CalVer versioning, lifecycle states (active/LTS/EOL), and registry validation
+- **OpenAPI normalization** - validates OpenAPI 3.x specs, deduplicates servers, and sorts paths for deterministic output
+- **OpenAPI overlay patches** - operationId-matched patches for parameter defaults and x-\* extensions without modifying source specs
+- **Playground health checks** - probes live endpoints and fails CI on broken required probes
+- **Include resolution engine** - resolves `<!-- include: snippets/name.md -->` directives with circular-reference detection
+- **Variable substitution engine** - resolves `{{variable}}` / `{{variable|fallback}}` with a portal > docset > version > page scope chain
+- **Content linter** - validates includes and variables across the docs tree with actionable file:line error output
 - **Mermaid diagrams** - sequence diagrams, state machines, and flowcharts rendered natively
 - **Tabbed code samples** - Node.js, Python, Go across all guides
 - **Dark mode** - automatic, respects system preferences
-- **CI/CD** - GitHub Actions pipeline with lint, build, and optional Docker push
+- **CI/CD** - GitHub Actions pipeline with typecheck, build, and optional Docker push
 - **Optional self-hosted deployment** - Docker, nginx, Prometheus + Grafana for containerized or on-prem deployments
 
 ## Quick start
@@ -48,8 +56,8 @@ Each push to `main` triggers a new deployment. PRs get preview URLs automaticall
 
 **PR preview comments:** To post the Vercel preview URL as a comment on each PR, add these [GitHub repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets):
 
-- `VERCEL_TOKEN` – create at [vercel.com/account/tokens](https://vercel.com/account/tokens)
-- `VERCEL_PROJECT_ID` – from your Vercel project **Settings → General** (or from `.vercel/project.json` after `vercel link`)
+- `VERCEL_TOKEN` - create at [vercel.com/account/tokens](https://vercel.com/account/tokens)
+- `VERCEL_PROJECT_ID` - from your Vercel project **Settings → General** (or from `.vercel/project.json` after `vercel link`)
 
 ## Optional: self-hosted deployment
 
@@ -82,14 +90,28 @@ make monitoring-down    # tear down
 
 ## Available commands
 
-Run `make help` to see all commands. Core workflow: `dev`, `build`, `serve`. Docker and monitoring commands are optional.
+```bash
+npm start                    # dev server
+npm run build                # production build (runs manifest builder then Docusaurus)
+npm run serve                # serve production build locally
+npm run typecheck            # TypeScript type-check
+npm run manifest             # build route manifest manually
+npm run normalize-openapi    # validate and normalize OpenAPI specs
+npm run apply-overlay        # apply overlay patches to a normalized spec
+npm run health-check         # probe live API endpoints
+npm run resolve-includes     # resolve include directives in a file
+npm run resolve-variables    # resolve variable references in a file
+npm run lint-content         # run full content lint (includes + variables)
+npm run generate-fixture     # generate synthetic docs fixture for benchmarking
+npm run benchmark            # benchmark manifest builder at scale
+```
 
 ## CI/CD pipeline
 
 **CI** (`ci.yml`) runs on every push and PR to `main`:
 
 ```
-lint-and-typecheck --> build
+typecheck --> build
 ```
 
 **Deploy** (`deploy.yml`) runs only on push to `main`:
@@ -98,46 +120,65 @@ lint-and-typecheck --> build
 docker (push to GHCR) --> deploy-staging
 ```
 
-PRs and feature branches only run lint and build. Docker and deploy run exclusively when merging to `main`. For static hosting (Vercel, Netlify, GitHub Pages), use the `build` output directly and skip the Docker job if desired.
+PRs get a Vercel preview URL posted as a comment via `preview.yml`.
 
 ## Project structure
 
 ```
 docs/
-  petstore/              Petstore product
-    getting-started/     Onboarding guides (quickstart, auth, errors)
-    pets/                Pet management (add, find, update, delete, upload)
-    store/               Store orders and inventory
-    users/               User management (create, login, manage)
-  tfl/                   TfL API product
-    getting-started/     Overview, quickstart, auth, error handling
-    lines/               Line status and routes
-    stoppoints/          Stop search and arrivals
-    journey/              Journey planning
+  _snippets/               Shared content snippets (resolved via include directives)
+  devdocify/               DevDocify product docs
+  petstore/                Petstore product docs
+    getting-started/       Onboarding guides (quickstart, auth, errors)
+    pets/                  Pet management (add, find, update, delete, upload)
+    store/                 Store orders and inventory
+    users/                 User management (create, login, manage)
+  tfl/                     TfL API product docs
+    getting-started/       Overview, quickstart, auth, error handling
+    lines/                 Line status and routes
+    stoppoints/            Stop search and arrivals
+    journey/               Journey planning
+  variables.json           Portal-level variable defaults
+openapi/
+  overlays/
+    petstore.overlay.json  Overlay patches for Petstore spec
+    tfl.overlay.json       Overlay patches for TfL spec
+  health-checks.json       Endpoint probe config for health check script
+scripts/
+  build-route-manifest.ts  Walks docs tree, emits build/route-manifest.json
+  docset.config.ts         Docset registry, CalVer schema, and validation
+  normalize-openapi.ts     Validates and normalizes OpenAPI 3.x specs
+  apply-overlay.ts         Applies operationId-matched overlay patches
+  check-playground-health.ts  Probes live endpoints, fails on broken required probes
+  resolve-includes.ts      Resolves include directives inline
+  resolve-variables.ts     Resolves variable references with scope-chain lookup
+  lint-content.ts          Validates includes and variables across the docs tree
+  generate-fixture.ts      Generates synthetic docs fixtures for benchmarking
+  benchmark-manifest.ts    Benchmarks manifest builder at 1k/5k/10k file scale
 src/
   components/
     ApiReferenceClient.tsx  Scalar renderer used by API playground routes
-  css/custom.css         Custom theme (Stripe-inspired)
-  pages/index.tsx        Site overview homepage
+  css/custom.css           Custom theme (Stripe-inspired heading hierarchy)
+  pages/index.tsx          Site overview homepage
   pages/petstore/api-playground.tsx  Petstore API playground page route
   pages/tfl/api-playground.tsx       TfL API playground page route
-  pages/status.mdx       Service status page
-  pages/support.mdx      Support page
-  pages/privacy.mdx      Privacy notice page
-  pages/terms.mdx        Terms of use page
-  theme/Navbar/...       Swizzled navbar and mobile menu behavior
+  pages/status.mdx         Service status page
+  pages/support.mdx        Support page
+  pages/privacy.mdx        Privacy notice page
+  pages/terms.mdx          Terms of use page
+  theme/Navbar/...         Swizzled navbar and mobile menu behavior
 static/
   openapi/
     petstore-playground.json  Curated Petstore demo spec (3 GET endpoints)
     tfl-playground.json       Curated TfL demo spec (3 GET endpoints)
 .github/workflows/
-  ci.yml                 Lint, typecheck, build (all branches/PRs)
-  deploy.yml             Docker push and deploy (main only)
-  preview.yml             PR preview (posts Vercel deployment URL)
-vercel.json              Vercel build config (install, output dir)
-Dockerfile               Optional: multi-stage build (node + nginx)
-docker-compose.yml       Optional: local containers and monitoring
-Makefile                 Commands (core + optional Docker/monitoring)
+  ci.yml                   Typecheck and build (all branches/PRs)
+  deploy.yml               Docker push and deploy (main only)
+  preview.yml              PR preview comment (posts Vercel deployment URL)
+vercel.json                Vercel build config (install, output dir)
+Dockerfile                 Optional: multi-stage build (node + nginx)
+docker-compose.yml         Optional: local containers and monitoring
+Makefile                   Docker and monitoring commands
 ```
 
 ## Stack
@@ -151,10 +192,6 @@ Makefile                 Commands (core + optional Docker/monitoring)
 | Diagrams | [Mermaid](https://mermaid.js.org/) |
 | CI/CD | GitHub Actions |
 | Optional | Docker, nginx, Prometheus, Grafana, GHCR |
-
-## Brand
-
-The site navbar brand is configured as `DevDocify` in `docusaurus.config.ts`.
 
 ## License
 
