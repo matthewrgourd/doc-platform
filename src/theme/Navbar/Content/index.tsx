@@ -20,6 +20,7 @@ import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
 import NavbarLogo from '@theme/Navbar/Logo';
 import NavbarSearch from '@theme/Navbar/Search';
 import {useLocation} from '@docusaurus/router';
+import { AiPanelButton } from '@site/src/components/AiPanel';
 
 import styles from './styles.module.css';
 
@@ -108,6 +109,7 @@ export default function NavbarContent(): ReactNode {
               Download API spec
             </a>
           )}
+          <AiPanelButton />
           {!searchBarItem && (
             <NavbarSearch>
               <SearchBar />
