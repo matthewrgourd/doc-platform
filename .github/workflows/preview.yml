@@ -51,16 +51,32 @@ jobs:
             });
 
       # Vercel's GitHub app triggers its own build in parallel.
-      # This step polls for the completed deployment URL.
+      # This step polls the Vercel API until the deployment is ready.
       - name: Get Vercel preview URL
         id: deploy
-        uses: thomasheyenbrock/vercel-deployment-url@v2
+        uses: actions/github-script@v7
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          search-retries: 6
-          ready-retries: 20
+          script: |
+            const sha = context.payload.pull_request.head.sha;
+            const { VERCEL_TOKEN, VERCEL_PROJECT_ID } = process.env;
+
+            for (let i = 0; i < 24; i++) {
+              const res = await fetch(
+                `https://api.vercel.com/v6/deployments?projectId=${VERCEL_PROJECT_ID}&meta-githubCommitSha=${sha}&limit=1`,
+                { headers: { Authorization: `Bearer ${VERCEL_TOKEN}` } }
+              );
+              const data = await res.json();
+              const deployment = data.deployments?.[0];
+              if (deployment?.readyState === 'READY') {
+                core.setOutput('url', `https://${deployment.url}`);
+                return;
+              }
+              await new Promise(r => setTimeout(r, 15000));
+            }
+            core.setFailed('Timed out waiting for Vercel deployment to become ready');
 
       - name: Set success deployment status
         if: success()
