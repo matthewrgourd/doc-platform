@@ -108,6 +108,15 @@ export default function NavbarContent(): ReactNode {
               Download API spec
             </a>
           )}
+          <a
+            className="navbar__item navbar__link"
+            href="https://chat.devdocify.com"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open AI assistant"
+          >
+            Ask AI
+          </a>
           {!searchBarItem && (
             <NavbarSearch>
               <SearchBar />
