@@ -11,7 +11,7 @@ export default function Home(): React.JSX.Element {
         <section className="home-hero">
           <div className="container">
             <p className="home-eyebrow">Developer documentation platform</p>
-            <h1>Build and ship first-class docs experiences</h1>
+            <h1>Build and ship first-class doc experiences</h1>
             <p className="home-subtitle">
               DevDocify separates marketing at root from technical documentation at{' '}
               <strong>/docs</strong>, then proves the model with working multi-docset demos and
