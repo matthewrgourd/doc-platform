@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Transport for London Unified API — DevDocify playground (GET subset)",
+    "title": "Transport for London Unified API — DevDocify playground",
     "version": "playground-1.0.0",
-    "description": "OpenAPI description for three **unauthenticated GET** operations used in the DevDocify TfL API playground.\n\n**Scope:** Only `GET /Line/Mode/{modes}/Status`, `GET /StopPoint/Search/{query}`, and `GET /BikePoint` are described. The live TfL Unified API offers many more paths and query options; they are **not** included in this file.\n\n**Audience:** Integrators validating the demo surface, and technical writers maintaining the portal. Prefer this file when you need a single artifact that matches the playground exactly.\n\n**Transport:** HTTPS only (`TLS 1.2+` on `api.tfl.gov.uk`). Responses are UTF-8 JSON unless otherwise negotiated.\n\n**Rate limiting:** Production use may receive `429 Too Many Requests`. Respect `Retry-After` when present and reduce concurrency."
+    "description": "OpenAPI description for the unauthenticated GET operations used in the DevDocify TfL API playground.\n\n**Scope:** Covers `GET /Line/Mode/{modes}/Status`, `GET /StopPoint/Search/{query}`, `GET /BikePoint`, `GET /AirQuality`, and `GET /Journey/JourneyResults/{from}/to/{to}`. The live TfL Unified API offers many more paths and query options; they are **not** included in this file.\n\n**Audience:** Integrators validating the demo surface, and technical writers maintaining the portal. Prefer this file when you need a single artifact that matches the playground exactly.\n\n**Transport:** HTTPS only (`TLS 1.2+` on `api.tfl.gov.uk`). Responses are UTF-8 JSON unless otherwise negotiated.\n\n**Rate limiting:** Production use may receive `429 Too Many Requests`. Respect `Retry-After` when present and reduce concurrency."
   },
   "servers": [
     {
@@ -23,6 +23,14 @@
     {
       "name": "Cycle hire",
       "description": "Santander Cycles (bike point) availability and locations."
+    },
+    {
+      "name": "Air quality",
+      "description": "London air quality forecast and index data."
+    },
+    {
+      "name": "Journey",
+      "description": "Point-to-point journey planning across all TfL modes."
     }
   ],
   "paths": {
@@ -158,6 +166,109 @@
           }
         }
       }
+    },
+    "/AirQuality": {
+      "get": {
+        "tags": ["Air quality"],
+        "summary": "London air quality forecast",
+        "description": "Returns the current **air quality forecast** for London, including pollution index levels and health advice for sensitive groups.\n\nThe response includes today's and tomorrow's forecast broken down by pollutant (nitrogen dioxide, ozone, PM2.5, PM10). No parameters are required.\n\n**Authentication:** Anonymous request — no API key needed.",
+        "operationId": "airQuality",
+        "responses": {
+          "200": {
+            "description": "Success. JSON object containing current and forecast air quality data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TflAirQuality"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited. Respect `Retry-After` when present."
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      }
+    },
+    "/Journey/JourneyResults/{from}/to/{to}": {
+      "get": {
+        "tags": ["Journey"],
+        "summary": "Plan a journey between two points",
+        "description": "Returns a set of **journey options** between `from` and `to`, covering all available TfL modes (tube, bus, Overground, DLR, Elizabeth line, and more).\n\n`from` and `to` can be:\n- A stop point ID (for example `1000032` for King's Cross St. Pancras)\n- A postcode (for example `SW1A2AA`)\n- A free-text location name (resolved by TfL)\n\nEach journey option includes legs, durations, departure/arrival times, and line information.\n\n**Authentication:** Anonymous request — no API key needed for the playground.",
+        "operationId": "journeyResults",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "path",
+            "required": true,
+            "description": "Origin — stop point ID, postcode, or place name.",
+            "schema": {
+              "type": "string",
+              "default": "1000032"
+            },
+            "example": "1000032"
+          },
+          {
+            "name": "to",
+            "in": "path",
+            "required": true,
+            "description": "Destination — stop point ID, postcode, or place name.",
+            "schema": {
+              "type": "string",
+              "default": "1000123"
+            },
+            "example": "1000123"
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "required": false,
+            "description": "Comma-separated list of modes to include (for example `tube,bus`). Omit to allow all modes.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "tube"
+          },
+          {
+            "name": "timeIs",
+            "in": "query",
+            "required": false,
+            "description": "Whether `time` represents departure or arrival. Defaults to `Departing`.",
+            "schema": {
+              "type": "string",
+              "enum": ["Departing", "Arriving"],
+              "default": "Departing"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. JSON object containing an array of journey options with legs, durations, and line details.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TflJourneyResult"
+                }
+              }
+            }
+          },
+          "300": {
+            "description": "Disambiguation required. `from` or `to` matched multiple locations — the response body lists candidates to choose from."
+          },
+          "400": {
+            "description": "Bad request. `from` or `to` could not be resolved."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      }
     }
   },
   "components": {
@@ -231,6 +342,57 @@
           "lon": {
             "type": "number",
             "format": "double"
+          }
+        }
+      },
+      "TflAirQuality": {
+        "type": "object",
+        "description": "Air quality forecast for London. Additional properties allowed — parse defensively.",
+        "additionalProperties": true,
+        "properties": {
+          "updatePeriod": {
+            "type": "string",
+            "description": "How frequently the forecast is updated."
+          },
+          "updateFrequency": {
+            "type": "string"
+          },
+          "forecastURL": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to the detailed forecast page."
+          },
+          "currentForecast": {
+            "type": "array",
+            "description": "Array of forecast periods (today, tomorrow, etc.).",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "TflJourneyResult": {
+        "type": "object",
+        "description": "Journey planner result containing one or more route options. Additional properties allowed.",
+        "additionalProperties": true,
+        "properties": {
+          "journeys": {
+            "type": "array",
+            "description": "Array of journey options, each with legs, duration, and line details.",
+            "items": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "startDateTime": { "type": "string" },
+                "arrivalDateTime": { "type": "string" },
+                "duration": { "type": "integer", "description": "Total journey time in minutes." },
+                "legs": {
+                  "type": "array",
+                  "items": { "type": "object", "additionalProperties": true }
+                }
+              }
+            }
           }
         }
       }

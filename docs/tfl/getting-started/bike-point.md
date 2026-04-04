@@ -5,11 +5,11 @@ title: Bike points
 
 # Bike points
 
-`GET /BikePoint` returns Santander Cycles (cycle hire) docking stations with locations and availability. It's one of the three **GET** operations in the [API playground](/tfl/api-playground).
+`GET /BikePoint` returns Santander Cycles (cycle hire) docking stations with locations and availability. It's one of the operations in the [API playground](/tfl/api-playground).
 
 ## OpenAPI description (playground scope)
 
-**[Download `tfl-playground.json`](/openapi/tfl-playground.json)** — includes this path plus `GET /Line/Mode/{modes}/Status` and `GET /StopPoint/Search/{query}` only.
+**[Download `tfl-playground.json`](/openapi/tfl-playground.json)** — includes all playground operations.
 
 ## Resource
 
@@ -43,5 +43,5 @@ curl "https://api.tfl.gov.uk/BikePoint"
 
 ## Related
 
-- [Quickstart](./quickstart) — runs this **GET** as step 3
-- [Search stops](/tfl/stoppoints/search) — companion playground **GET** for stop search
+- [Quickstart](./quickstart) — runs this operation as step 3
+- [Search stops](/tfl/stoppoints/search) — companion playground operation for stop search
