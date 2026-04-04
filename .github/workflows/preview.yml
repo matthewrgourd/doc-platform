@@ -9,13 +9,49 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  preview:
-    name: Vercel preview URL
+  build-and-preview:
+    name: Build and preview
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
+      statuses: write
+
     steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      # Fail fast: validate content before handing off to Vercel
+      - name: Lint content
+        run: npm run lint-content
+
+      # Fail fast: build must pass locally before polling for preview URL
+      - name: Build site
+        run: npm run build
+
+      # Report pending status so reviewers see the check immediately
+      - name: Set pending deployment status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.payload.pull_request.head.sha,
+              state: 'pending',
+              context: 'preview / vercel',
+              description: 'Waiting for Vercel preview…',
+            });
+
+      # Vercel's GitHub app triggers its own build in parallel.
+      # This step polls for the completed deployment URL.
       - name: Get Vercel preview URL
         id: deploy
         uses: thomasheyenbrock/vercel-deployment-url@v2
@@ -26,17 +62,102 @@ jobs:
           search-retries: 6
           ready-retries: 20
 
-      - name: Comment preview URL on PR
+      - name: Set success deployment status
+        if: success()
         uses: actions/github-script@v7
         with:
           script: |
-            const body = `## Preview deployment
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.payload.pull_request.head.sha,
+              state: 'success',
+              context: 'preview / vercel',
+              description: 'Preview ready',
+              target_url: '${{ steps.deploy.outputs.url }}',
+            });
 
-            | Status | URL |
-            |---|---|
-            | Ready | [${{ steps.deploy.outputs.url }}](${{ steps.deploy.outputs.url }}) |
+      - name: Set failure deployment status
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.payload.pull_request.head.sha,
+              state: 'failure',
+              context: 'preview / vercel',
+              description: 'Preview failed — check workflow logs',
+            });
 
-            Built from commit ${{ github.sha }}`;
+      # Post or update a single comment per PR with the preview link
+      - name: Post preview comment
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = '${{ steps.deploy.outputs.url }}';
+            const sha = context.payload.pull_request.head.sha.slice(0, 7);
+            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              '## Preview deployment',
+              '',
+              '| | |',
+              '|---|---|',
+              `| **Status** | ✅ Ready |`,
+              `| **URL** | [${url}](${url}) |`,
+              `| **Commit** | \`${sha}\` |`,
+              `| **Build** | [Workflow run](${runUrl}) |`,
+              '',
+              '_Updated on each push to this PR._',
+            ].join('\n');
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const existing = comments.find(c =>
+              c.user.login === 'github-actions[bot]' &&
+              c.body.includes('Preview deployment')
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
+      - name: Post failure comment
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sha = context.payload.pull_request.head.sha.slice(0, 7);
+            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              '## Preview deployment',
+              '',
+              '| | |',
+              '|---|---|',
+              `| **Status** | ❌ Failed |`,
+              `| **Commit** | \`${sha}\` |`,
+              `| **Logs** | [View workflow run](${runUrl}) |`,
+              '',
+              '_Updated on each push to this PR._',
+            ].join('\n');
 
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,

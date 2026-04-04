@@ -69,7 +69,7 @@ const CONTENT_EXTENSIONS = new Set(['.md', '.mdx']);
 const CALVER_RE = /^\d{4}\.\d{2}(-LTS)?$/;
 
 /** Docset folder names to skip (not actual docsets). */
-const SKIP_FOLDERS = new Set(['api-reference', 'connect', 'guides', 'payments']);
+const SKIP_FOLDERS = new Set(['_snippets', 'api-reference', 'connect', 'guides', 'payments']);
 
 // ---------------------------------------------------------------------------
 // Validation

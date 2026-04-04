@@ -1,0 +1,16 @@
+{
+  "_comment": "Copy to assistant.config.json. Run: npx tsx scripts/validate-assistant-config.ts --policy",
+  "schemaVersion": "1.0",
+  "model": "claude-sonnet-4-6",
+  "defaultScope": "docset",
+  "allowScopeExpansion": false,
+  "citationMode": "inline",
+  "systemPromptPrefix": "You are a helpful documentation assistant for DevDocify. Answer questions using only the documentation content provided below. Always cite your sources by linking to the relevant page slug and title. If the answer cannot be found in the provided content, say so clearly — do not guess or invent information.",
+  "safety": {
+    "refusePromptInjection": true,
+    "requireGrounding": true,
+    "maxContextEntries": 8,
+    "outOfScopeFallback": "I can only answer questions about the documentation in this portal. Your question appears to be outside that scope. Try searching the docs directly or contact support."
+  },
+  "latencyBudgetMs": 10000
+}
