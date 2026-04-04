@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Swagger Petstore — DevDocify playground (GET subset)",
+    "title": "Swagger Petstore — DevDocify playground",
     "version": "playground-1.0.0",
-    "description": "OpenAPI description for the three **unauthenticated GET** operations exposed in the DevDocify Petstore API playground.\n\n**Scope:** This file documents only `GET /pet/findByStatus`, `GET /user/login`, and `GET /user/logout`. It is the canonical machine-readable contract for the curated demo. The public sample server at `petstore3.swagger.io` implements many additional operations (POST, PUT, DELETE, and other GETs); those are **not** listed here.\n\n**Audience:** Technical writers, client developers, and tooling. Use it to generate snippets, mocks, or contract tests for the demo surface only.\n\n**Encoding:** Requests and responses use UTF-8. Successful JSON responses use `application/json` unless noted."
+    "description": "OpenAPI description for the operations exposed in the DevDocify Petstore API playground.\n\n**Scope:** Covers `GET /pet/findByStatus`, `POST /pet`, `PUT /pet`, `DELETE /pet/{petId}`, `GET /user/login`, and `GET /user/logout`. All operations run against the public sample server at `petstore3.swagger.io` without authentication.\n\n**Audience:** Technical writers, client developers, and tooling. Use it to generate snippets, mocks, or contract tests for the demo surface only.\n\n**Encoding:** Requests and responses use UTF-8. Successful JSON responses use `application/json` unless noted."
   },
   "servers": [
     {
@@ -14,7 +14,7 @@
   "tags": [
     {
       "name": "Pets",
-      "description": "Read-only pet catalog queries included in the playground."
+      "description": "Pet catalog queries and mutations."
     },
     {
       "name": "User session",
@@ -80,7 +80,173 @@
             }
           },
           "500": {
-            "description": "Server error. Retry with backoff; do not assume idempotency for repeated reads if the server is unhealthy."
+            "description": "Server error. Retry with backoff."
+          }
+        }
+      }
+    },
+    "/pet": {
+      "post": {
+        "tags": ["Pets"],
+        "summary": "Add a new pet to the store",
+        "description": "Creates a new **Pet** resource on the sample server. The server assigns an `id` and returns the created pet in the response body.\n\n`name` and `photoUrls` are required. `status` defaults to `available` if omitted.\n\n**Security:** Unauthenticated on the public sample server.",
+        "operationId": "addPet",
+        "requestBody": {
+          "required": true,
+          "description": "Pet to add. `name` and `photoUrls` are required.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              },
+              "example": {
+                "name": "Rex",
+                "photoUrls": ["https://example.com/rex.jpg"],
+                "status": "available",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pet created. Response body contains the new pet with server-assigned `id`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                },
+                "example": {
+                  "id": 9223372036854775807,
+                  "name": "Rex",
+                  "photoUrls": ["https://example.com/rex.jpg"],
+                  "status": "available",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input. The request body is missing required fields or has an invalid value.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      },
+      "put": {
+        "tags": ["Pets"],
+        "summary": "Update an existing pet",
+        "description": "Replaces the stored fields of an existing **Pet** resource. The `id` field in the request body identifies the pet to update; include all fields you want to retain, not just changed ones.\n\n**Security:** Unauthenticated on the public sample server.",
+        "operationId": "updatePet",
+        "requestBody": {
+          "required": true,
+          "description": "Updated pet. Must include `id`, `name`, and `photoUrls`.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              },
+              "example": {
+                "id": 1,
+                "name": "Rex (updated)",
+                "photoUrls": ["https://example.com/rex-updated.jpg"],
+                "status": "pending"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pet updated. Response body contains the updated pet.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Rex (updated)",
+                  "photoUrls": ["https://example.com/rex-updated.jpg"],
+                  "status": "pending"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid `id` supplied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pet not found for the given `id`."
+          },
+          "405": {
+            "description": "Validation exception."
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      }
+    },
+    "/pet/{petId}": {
+      "delete": {
+        "tags": ["Pets"],
+        "summary": "Delete a pet by ID",
+        "description": "Removes the **Pet** resource identified by `petId` from the sample store. On the public demo server this operation is accepted for any numeric `petId` and returns a success response regardless of whether the pet existed.\n\n**Security:** Unauthenticated on the public sample server.",
+        "operationId": "deletePet",
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "description": "Numeric ID of the pet to delete.",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "default": 1
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pet deleted successfully."
+          },
+          "400": {
+            "description": "Invalid pet ID supplied (must be a positive integer).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pet not found."
+          },
+          "500": {
+            "description": "Server error."
           }
         }
       }
@@ -89,7 +255,7 @@
       "get": {
         "tags": ["User session"],
         "summary": "Log in with username and password (sample)",
-        "description": "Returns a **plain-text session token** in the response body for the supplied credentials.\n\n**Warning:** Credentials are passed as **query parameters**, which appear in logs and browser history. This matches the upstream Swagger Petstore sample for teaching only—**do not** copy this pattern for production APIs.\n\n**Response headers:** On success, the sample server may include rate-limit and session expiry hints (see response `headers` below).",
+        "description": "Returns a **plain-text session token** in the response body for the supplied credentials.\n\n**Warning:** Credentials are passed as **query parameters**, which appear in logs and browser history. This matches the upstream Swagger Petstore sample for teaching only — **do not** copy this pattern for production APIs.\n\n**Response headers:** On success, the sample server may include rate-limit and session expiry hints (see response `headers` below).",
         "operationId": "loginUser",
         "parameters": [
           {
@@ -205,15 +371,17 @@
       "Pet": {
         "type": "object",
         "description": "Pet resource as returned by the sample store.",
+        "required": ["name", "photoUrls"],
         "properties": {
           "id": {
             "type": "integer",
             "format": "int64",
-            "description": "Server-assigned identifier."
+            "description": "Server-assigned identifier. Omit on POST; include on PUT."
           },
           "name": {
             "type": "string",
-            "description": "Display name of the pet."
+            "description": "Display name of the pet.",
+            "example": "Rex"
           },
           "category": {
             "$ref": "#/components/schemas/Category"
@@ -221,7 +389,8 @@
           "photoUrls": {
             "type": "array",
             "items": { "type": "string", "format": "uri" },
-            "description": "URLs of photos associated with the pet."
+            "description": "URLs of photos associated with the pet.",
+            "example": ["https://example.com/rex.jpg"]
           },
           "tags": {
             "type": "array",
@@ -230,10 +399,10 @@
           "status": {
             "type": "string",
             "description": "Inventory status.",
-            "enum": ["available", "pending", "sold"]
+            "enum": ["available", "pending", "sold"],
+            "example": "available"
           }
-        },
-        "required": ["name", "photoUrls"]
+        }
       },
       "ApiError": {
         "type": "object",
