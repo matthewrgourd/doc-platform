@@ -5,7 +5,6 @@
 import React, {type ReactNode} from 'react';
 import clsx from 'clsx';
 import useIsBrowser from '@docusaurus/useIsBrowser';
-import {useColorMode} from '@docusaurus/theme-common';
 import {translate} from '@docusaurus/Translate';
 import IconLightMode from '@theme/Icon/LightMode';
 import IconDarkMode from '@theme/Icon/DarkMode';
@@ -72,9 +71,7 @@ function ColorModeToggle({
   onChange,
 }: Props): ReactNode {
   const isBrowser = useIsBrowser();
-  const {colorMode} = useColorMode();
-
-  const effectiveMode = value ?? colorMode;
+  const effectiveMode = value;
 
   return (
     <div className={clsx(styles.toggle, className)}>
