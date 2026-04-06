@@ -9,10 +9,7 @@ import {
   ErrorCauseBoundary,
   ThemeClassNames,
 } from '@docusaurus/theme-common';
-import {
-  splitNavbarItems,
-  useNavbarMobileSidebar,
-} from '@docusaurus/theme-common/internal';
+import {splitNavbarItems} from '@docusaurus/theme-common/internal';
 import NavbarItem, {type Props as NavbarItemConfig} from '@theme/NavbarItem';
 import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
 import SearchBar from '@theme/SearchBar';
@@ -20,7 +17,6 @@ import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
 import NavbarLogo from '@theme/Navbar/Logo';
 import NavbarSearch from '@theme/Navbar/Search';
 import {useLocation} from '@docusaurus/router';
-import { AiPanelButton } from '@site/src/components/AiPanel';
 
 import styles from './styles.module.css';
 
@@ -77,7 +73,6 @@ function NavbarContentLayout({
 }
 
 export default function NavbarContent(): ReactNode {
-  const mobileSidebar = useNavbarMobileSidebar();
   const location = useLocation();
   const pathname = location.pathname.replace(/\/$/, '');
   const downloadSpecHref =
@@ -96,7 +91,7 @@ export default function NavbarContent(): ReactNode {
     <NavbarContentLayout
       left={
         <>
-          {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
+          {items.length > 0 && <NavbarMobileSidebarToggle />}
           <NavbarLogo />
           <NavbarItems items={leftItems} />
         </>
@@ -109,7 +104,6 @@ export default function NavbarContent(): ReactNode {
               Download API spec
             </a>
           )}
-          <AiPanelButton />
           {!searchBarItem && (
             <NavbarSearch>
               <SearchBar />
