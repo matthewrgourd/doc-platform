@@ -5,7 +5,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { createPortal } from 'react-dom';
 import styles from './styles.module.css';
 
 // Inline markdown renderer — no external deps, handles Claude's common output patterns
@@ -274,12 +273,6 @@ interface AiPanelProps {
 }
 
 export function AiPanel({ isOpen, onClose }: AiPanelProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   useEffect(() => {
     if (!isOpen) return;
     const handler = (e: KeyboardEvent) => {
@@ -294,9 +287,7 @@ export function AiPanel({ isOpen, onClose }: AiPanelProps) {
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
-  if (!mounted) return null;
-
-  return createPortal(
+  return (
     <>
       <div
         className={`${styles.backdrop} ${isOpen ? styles.backdropVisible : ''}`}
@@ -329,30 +320,22 @@ export function AiPanel({ isOpen, onClose }: AiPanelProps) {
         </div>
         <ChatWidget />
       </div>
-    </>,
-    document.body,
+    </>
   );
 }
 
 export function AiPanelButton() {
-  const [isOpen, setIsOpen] = useState(false);
-  const close = useCallback(() => setIsOpen(false), []);
-
   return (
-    <>
-      <button
-        className={styles.triggerBtn}
-        onClick={() => setIsOpen((v) => !v)}
-        aria-label="Open AI assistant"
-        aria-expanded={isOpen}
-        type="button"
-      >
-        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M8 1l1.5 4.5L14 7l-4.5 1.5L8 13l-1.5-4.5L2 7l4.5-1.5L8 1z" fill="currentColor" />
-        </svg>
-        Ask AI
-      </button>
-      <AiPanel isOpen={isOpen} onClose={close} />
-    </>
+    <button
+      className={styles.triggerBtn}
+      onClick={() => window.dispatchEvent(new CustomEvent('open-ai-panel'))}
+      aria-label="Open AI assistant"
+      type="button"
+    >
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M8 1l1.5 4.5L14 7l-4.5 1.5L8 13l-1.5-4.5L2 7l4.5-1.5L8 1z" fill="currentColor" />
+      </svg>
+      Ask AI
+    </button>
   );
 }
