@@ -1,12 +1,93 @@
 import React, {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
-import Markdown from 'react-markdown';
 import styles from './styles.module.css';
+
+// Inline markdown renderer — no external deps, handles Claude's common output patterns
+function renderInline(text: string, key: string): React.ReactNode {
+  const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`|\*[^*\n]+\*)/g);
+  return (
+    <React.Fragment key={key}>
+      {parts.map((part, i) => {
+        if (part.startsWith('**') && part.endsWith('**')) return <strong key={i}>{part.slice(2, -2)}</strong>;
+        if (part.startsWith('`') && part.endsWith('`')) return <code key={i} className={styles.inlineCode}>{part.slice(1, -1)}</code>;
+        if (part.startsWith('*') && part.endsWith('*')) return <em key={i}>{part.slice(1, -1)}</em>;
+        return part;
+      })}
+    </React.Fragment>
+  );
+}
+
+function MarkdownContent({ children, className }: { children: string; className?: string }) {
+  const nodes = useMemo(() => {
+    const blocks: React.ReactNode[] = [];
+    const segments = children.split(/(```[\w]*\n[\s\S]*?```)/g);
+
+    segments.forEach((seg, si) => {
+      if (seg.startsWith('```')) {
+        const code = seg.replace(/^```[\w]*\n?/, '').replace(/\n?```$/, '');
+        blocks.push(<pre key={`pre-${si}`} className={styles.codeBlock}><code>{code}</code></pre>);
+        return;
+      }
+
+      const lines = seg.split('\n');
+      let i = 0;
+      while (i < lines.length) {
+        const line = lines[i];
+        const hm = line.match(/^(#{1,3})\s+(.+)/);
+        if (hm) {
+          const Tag = `h${hm[1].length}` as 'h1' | 'h2' | 'h3';
+          blocks.push(<Tag key={`h-${si}-${i}`}>{renderInline(hm[2], `hi-${si}-${i}`)}</Tag>);
+          i++; continue;
+        }
+        if (/^[-*]\s+/.test(line)) {
+          const items: React.ReactNode[] = [];
+          while (i < lines.length && /^[-*]\s+/.test(lines[i])) {
+            items.push(<li key={i}>{renderInline(lines[i].replace(/^[-*]\s+/, ''), `li-${si}-${i}`)}</li>);
+            i++;
+          }
+          blocks.push(<ul key={`ul-${si}-${i}`}>{items}</ul>);
+          continue;
+        }
+        if (/^\d+\.\s+/.test(line)) {
+          const items: React.ReactNode[] = [];
+          while (i < lines.length && /^\d+\.\s+/.test(lines[i])) {
+            items.push(<li key={i}>{renderInline(lines[i].replace(/^\d+\.\s+/, ''), `oli-${si}-${i}`)}</li>);
+            i++;
+          }
+          blocks.push(<ol key={`ol-${si}-${i}`}>{items}</ol>);
+          continue;
+        }
+        if (line.trim()) {
+          const paraLines: string[] = [];
+          while (i < lines.length && lines[i].trim() && !/^#{1,3}\s/.test(lines[i]) && !/^[-*\d]/.test(lines[i])) {
+            paraLines.push(lines[i]);
+            i++;
+          }
+          blocks.push(
+            <p key={`p-${si}-${i}`}>
+              {paraLines.flatMap((l, li) =>
+                li < paraLines.length - 1
+                  ? [renderInline(l, `pl-${si}-${li}`), <br key={`br-${li}`} />]
+                  : [renderInline(l, `pl-${si}-${li}`)]
+              )}
+            </p>
+          );
+        } else {
+          i++;
+        }
+      }
+    });
+    return blocks;
+  }, [children]);
+
+  return <div className={className}>{nodes}</div>;
+}
 
 const WIDGET_API = 'https://chat.devdocify.com/api/widget-chat';
 
@@ -130,7 +211,7 @@ function ChatWidget() {
             {msg.role === 'user' ? (
               msg.content
             ) : msg.content ? (
-              <Markdown className={styles.markdown}>{msg.content}</Markdown>
+              <MarkdownContent className={styles.markdown}>{msg.content}</MarkdownContent>
             ) : (
               streaming && i === messages.length - 1 ? (
                 <span className={styles.cursor} aria-label="Thinking" />
