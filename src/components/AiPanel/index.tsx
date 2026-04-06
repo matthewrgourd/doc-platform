@@ -5,6 +5,7 @@ import React, {
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
+import Markdown from 'react-markdown';
 import styles from './styles.module.css';
 
 const WIDGET_API = 'https://chat.devdocify.com/api/widget-chat';
@@ -126,9 +127,15 @@ function ChatWidget() {
             key={i}
             className={`${styles.message} ${msg.role === 'user' ? styles.userMessage : styles.assistantMessage}`}
           >
-            {msg.content || (msg.role === 'assistant' && streaming && i === messages.length - 1 ? (
-              <span className={styles.cursor} aria-label="Thinking" />
-            ) : null)}
+            {msg.role === 'user' ? (
+              msg.content
+            ) : msg.content ? (
+              <Markdown className={styles.markdown}>{msg.content}</Markdown>
+            ) : (
+              streaming && i === messages.length - 1 ? (
+                <span className={styles.cursor} aria-label="Thinking" />
+              ) : null
+            )}
           </div>
         ))}
         <div ref={bottomRef} />
