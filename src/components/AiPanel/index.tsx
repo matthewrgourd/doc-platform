@@ -89,6 +89,8 @@ function MarkdownContent({ children, className }: { children: string; className?
 }
 
 const WIDGET_API = 'https://chat.devdocify.com/api/widget-chat';
+const REQUEST_TIMEOUT_MS = 45000;
+const REQUEST_TIMEOUT_MESSAGE = 'The AI request timed out. Please try again.';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -122,6 +124,11 @@ function ChatWidget() {
 
     const ctrl = new AbortController();
     abortRef.current = ctrl;
+    let didTimeout = false;
+    const timeoutId = window.setTimeout(() => {
+      didTimeout = true;
+      ctrl.abort();
+    }, REQUEST_TIMEOUT_MS);
 
     try {
       const res = await fetch(WIDGET_API, {
@@ -150,17 +157,24 @@ function ChatWidget() {
         });
       }
     } catch (err) {
-      if ((err as Error).name !== 'AbortError') {
+      const message =
+        (err as Error).name === 'AbortError' && didTimeout
+          ? REQUEST_TIMEOUT_MESSAGE
+          : 'Sorry, something went wrong. Please try again.';
+      if ((err as Error).name !== 'AbortError' || didTimeout) {
         setMessages((prev) => {
           const updated = [...prev];
           updated[updated.length - 1] = {
             role: 'assistant',
-            content: 'Sorry, something went wrong. Please try again.',
+            content: message,
           };
           return updated;
         });
+      } else {
+        setMessages((prev) => prev.slice(0, -1));
       }
     } finally {
+      window.clearTimeout(timeoutId);
       setStreaming(false);
       abortRef.current = null;
       inputRef.current?.focus();
