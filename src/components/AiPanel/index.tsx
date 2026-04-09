@@ -9,10 +9,18 @@ import styles from './styles.module.css';
 
 // Inline markdown renderer — no external deps, handles Claude's common output patterns
 function renderInline(text: string, key: string): React.ReactNode {
-  const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`|\*[^*\n]+\*)/g);
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|`[^`]+`|\*[^*\n]+\*)/g);
   return (
     <React.Fragment key={key}>
       {parts.map((part, i) => {
+        const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+        if (linkMatch) {
+          return (
+            <a key={i} href={linkMatch[2]} target="_blank" rel="noreferrer">
+              {linkMatch[1]}
+            </a>
+          );
+        }
         if (part.startsWith('**') && part.endsWith('**')) return <strong key={i}>{part.slice(2, -2)}</strong>;
         if (part.startsWith('`') && part.endsWith('`')) return <code key={i} className={styles.inlineCode}>{part.slice(1, -1)}</code>;
         if (part.startsWith('*') && part.endsWith('*')) return <em key={i}>{part.slice(1, -1)}</em>;
@@ -38,6 +46,49 @@ function MarkdownContent({ children, className }: { children: string; className?
       let i = 0;
       while (i < lines.length) {
         const line = lines[i];
+        if (
+          /^\|.+\|$/.test(line.trim()) &&
+          i + 1 < lines.length &&
+          /^\|(?:\s*:?-+:?\s*\|)+$/.test(lines[i + 1].trim())
+        ) {
+          const parseTableRow = (tableLine: string): string[] =>
+            tableLine
+              .trim()
+              .replace(/^\|/, '')
+              .replace(/\|$/, '')
+              .split('|')
+              .map((cell) => cell.trim());
+
+          const headerCells = parseTableRow(line);
+          i += 2; // skip header and separator
+          const bodyRows: string[][] = [];
+          while (i < lines.length && /^\|.+\|$/.test(lines[i].trim())) {
+            bodyRows.push(parseTableRow(lines[i]));
+            i++;
+          }
+
+          blocks.push(
+            <table key={`table-${si}-${i}`} className={styles.table}>
+              <thead>
+                <tr>
+                  {headerCells.map((cell, ci) => (
+                    <th key={`th-${ci}`}>{renderInline(cell, `th-${si}-${i}-${ci}`)}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {bodyRows.map((row, ri) => (
+                  <tr key={`tr-${ri}`}>
+                    {row.map((cell, ci) => (
+                      <td key={`td-${ri}-${ci}`}>{renderInline(cell, `td-${si}-${i}-${ri}-${ci}`)}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          );
+          continue;
+        }
         const hm = line.match(/^(#{1,3})\s+(.+)/);
         if (hm) {
           const Tag = `h${hm[1].length}` as 'h1' | 'h2' | 'h3';

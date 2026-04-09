@@ -194,6 +194,30 @@
   padding-left: 1.25em;
 }
 
+.markdown table,
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5em 0;
+  font-size: 0.84rem;
+}
+
+.markdown th,
+.markdown td,
+.table th,
+.table td {
+  border: 1px solid var(--ifm-toc-border-color);
+  padding: 0.35rem 0.45rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.markdown th,
+.table th {
+  font-weight: 600;
+  background: var(--ifm-menu-color-background-hover);
+}
+
 .markdown li {
   margin-bottom: 0.2em;
 }
