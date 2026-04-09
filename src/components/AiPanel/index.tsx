@@ -196,17 +196,29 @@ function ChatWidget() {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let accumulated = '';
+      let rafPending = false;
+
+      const flush = () => {
+        const content = accumulated;
+        setMessages((prev) => {
+          const updated = [...prev];
+          updated[updated.length - 1] = { role: 'assistant', content };
+          return updated;
+        });
+        rafPending = false;
+      };
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         accumulated += decoder.decode(value, { stream: true });
-        setMessages((prev) => {
-          const updated = [...prev];
-          updated[updated.length - 1] = { role: 'assistant', content: accumulated };
-          return updated;
-        });
+        if (!rafPending) {
+          rafPending = true;
+          requestAnimationFrame(flush);
+        }
       }
+      // Ensure final content is flushed after stream ends
+      flush();
     } catch (err) {
       const message =
         (err as Error).name === 'AbortError' && didTimeout
