@@ -34,6 +34,10 @@ function MarkdownContent({ children, className }: { children: string; className?
   const nodes = useMemo(() => {
     const blocks: React.ReactNode[] = [];
     const segments = children.split(/(```[\w]*\n[\s\S]*?```)/g);
+    const isBlockBoundary = (value: string): boolean =>
+      /^#{1,3}\s/.test(value) ||
+      /^[-*]\s+/.test(value) ||
+      /^\d+\.\s+/.test(value);
 
     segments.forEach((seg, si) => {
       if (seg.startsWith('```')) {
@@ -115,8 +119,16 @@ function MarkdownContent({ children, className }: { children: string; className?
         }
         if (line.trim()) {
           const paraLines: string[] = [];
-          while (i < lines.length && lines[i].trim() && !/^#{1,3}\s/.test(lines[i]) && !/^[-*\d]/.test(lines[i])) {
+          while (
+            i < lines.length &&
+            lines[i].trim() &&
+            !isBlockBoundary(lines[i])
+          ) {
             paraLines.push(lines[i]);
+            i++;
+          }
+          if (paraLines.length === 0) {
+            paraLines.push(line);
             i++;
           }
           blocks.push(
