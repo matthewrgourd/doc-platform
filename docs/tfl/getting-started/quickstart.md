@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: Quickstart
+description: "Get your first TfL API responses in under 5 minutes. No account required. curl examples for line status, stop search, and journey planning."
 ---
 
 # Quickstart

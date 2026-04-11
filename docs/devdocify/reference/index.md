@@ -2,6 +2,7 @@
 sidebar_position: 1
 slug: /reference
 title: Reference
+description: "Technical reference for DevDocify. Route behavior, command surface, navigation contracts, and configuration entry points for the current implementation."
 ---
 
 # Reference

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: Quickstart
+description: "Run your first Petstore API calls in minutes. No authentication required. curl examples cover GET, POST, PUT, and DELETE operations from the interactive API playground."
 ---
 
 # Quickstart

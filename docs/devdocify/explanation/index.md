@@ -2,6 +2,7 @@
 sidebar_position: 1
 slug: /explanation
 title: Explanation
+description: "Architecture decisions and design rationale behind DevDocify, including multi-docset structure, Diataxis information architecture, and preview-first delivery."
 ---
 
 # Explanation

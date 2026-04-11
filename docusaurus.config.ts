@@ -3,15 +3,15 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'API documentation',
-  tagline: 'API documentation for Petstore and TfL',
+  title: 'DevDocify',
+  tagline: 'Build and ship first-class developer documentation',
   favicon: 'img/favicon.ico',
 
   future: {
     v4: true,
   },
 
-  url: 'https://petstore3.swagger.io',
+  url: 'https://www.devdocify.com',
   baseUrl: '/',
 
   onBrokenLinks: 'throw',
@@ -80,6 +80,12 @@ const config: Config = {
   ],
 
   themeConfig: {
+    metadata: [
+      {name: 'og:type', content: 'website'},
+      {name: 'og:site_name', content: 'DevDocify'},
+      {name: 'twitter:card', content: 'summary'},
+      {name: 'twitter:site', content: '@devdocify'},
+    ],
     colorMode: {
       defaultMode: 'light',
       respectPrefersColorScheme: true,

@@ -2,6 +2,7 @@
 sidebar_position: 1
 slug: /
 title: DevDocify docs
+description: "Learn how DevDocify works. Tutorials, how-to guides, reference, and explanation for building and shipping developer documentation with multi-docset support and interactive API playgrounds."
 ---
 
 # DevDocify docs

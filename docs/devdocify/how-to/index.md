@@ -2,6 +2,7 @@
 sidebar_position: 1
 slug: /how-to
 title: How-to guides
+description: "How-to guides for DevDocify: edit docs safely, preserve route boundaries, configure multi-docset navigation, and validate output before merge."
 ---
 
 # How-to guides

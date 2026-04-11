@@ -2,6 +2,7 @@
 sidebar_position: 1
 slug: /tutorials
 title: Tutorials
+description: "Step-by-step DevDocify tutorials that take you from local setup to a validated documentation preview with working API playground flows."
 ---
 
 # Tutorials

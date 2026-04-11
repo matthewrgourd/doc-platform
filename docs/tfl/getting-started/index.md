@@ -2,6 +2,7 @@
 sidebar_position: 1
 slug: /getting-started
 title: Overview
+description: "Get started with the Transport for London (TfL) Unified API. Access real-time data for line status, stop search, cycle hire, air quality, and journey planning."
 ---
 
 # Overview

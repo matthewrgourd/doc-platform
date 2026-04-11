@@ -5,7 +5,7 @@ export default function Home(): React.JSX.Element {
   return (
     <Layout
       title="DevDocify"
-      description="Marketing at root, technical docs at /docs, with a first-party implementation of the DevDocify platform."
+      description="DevDocify is a developer documentation platform that separates marketing from technical docs, with multi-docset support, interactive API playgrounds, and Diataxis-structured content."
     >
       <main className="home-shell">
         <section className="home-hero">
