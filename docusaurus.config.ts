@@ -7,6 +7,17 @@ const config: Config = {
   tagline: 'Build and ship first-class developer documentation',
   favicon: 'img/favicon.svg',
 
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'icon',
+        type: 'image/svg+xml',
+        href: '/img/favicon.svg',
+      },
+    },
+  ],
+
   future: {
     v4: true,
   },
