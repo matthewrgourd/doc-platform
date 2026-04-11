@@ -5,7 +5,18 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'DevDocify',
   tagline: 'Build and ship first-class developer documentation',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.svg',
+
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'icon',
+        type: 'image/svg+xml',
+        href: '/img/favicon.svg',
+      },
+    },
+  ],
 
   future: {
     v4: true,
