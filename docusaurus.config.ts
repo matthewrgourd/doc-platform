@@ -170,6 +170,13 @@ const config: Config = {
       ],
       copyright: `© ${new Date().getFullYear()} Matthew Gourd`,
     },
+    algolia: {
+      appId: 'YOUR_APP_ID',
+      apiKey: 'YOUR_SEARCH_API_KEY',
+      indexName: 'devdocify',
+      contextualSearch: true,
+      searchParameters: {},
+    },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,

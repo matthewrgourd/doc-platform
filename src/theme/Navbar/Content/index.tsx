@@ -105,12 +105,12 @@ export default function NavbarContent(): ReactNode {
               Download API spec
             </a>
           )}
-          <AiPanelButton />
           {!searchBarItem && (
             <NavbarSearch>
               <SearchBar />
             </NavbarSearch>
           )}
+          <AiPanelButton />
           <NavbarColorModeToggle className={styles.colorModeToggle} />
         </>
       }
