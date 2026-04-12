@@ -14,6 +14,7 @@ docs/tool-delegation-strategy.md
 # Internal planning and AI tooling
 _planning/
 _bmad/
+_bmad-output/
 .claude/
 .cursor/
 CLAUDE.md
