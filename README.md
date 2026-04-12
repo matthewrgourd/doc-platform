@@ -19,6 +19,8 @@ DevDocify is a reference implementation demonstrating the **Docusaurus**, **Scal
 - **Content linter** - validates includes and variables across the docs tree with actionable file:line error output
 - **Mermaid diagrams** - sequence diagrams, state machines, and flowcharts rendered natively
 - **Tabbed code samples** - Node.js, Python, Go across all guides
+- **Algolia DocSearch** - full-text search with contextual scoping per docset
+- **AI assistant panel** - floating chat panel powered by Claude, answering questions in context
 - **Dark mode** - automatic, respects system preferences
 - **CI/CD** - GitHub Actions pipeline with typecheck, build, and optional Docker push
 - **Optional self-hosted deployment** - Docker, nginx, Prometheus + Grafana for containerized or on-prem deployments
@@ -108,19 +110,15 @@ npm run benchmark            # benchmark manifest builder at scale
 
 ## CI/CD pipeline
 
-**CI** (`ci.yml`) runs on every push and PR to `main`:
+`ci.yml` runs on every push and PR to `main`:
 
 ```
-typecheck --> build
+typecheck ──┐
+            ├──▶ build ──▶ docker (push to GHCR) ──▶ deploy-staging
+lint ───────┘
 ```
 
-**Deploy** (`deploy.yml`) runs only on push to `main`:
-
-```
-docker (push to GHCR) --> deploy-staging
-```
-
-PRs get a Vercel preview URL posted as a comment via `preview.yml`.
+Docker and deploy-staging only run on push to `main`, not on PRs. PRs get a Vercel preview URL posted as a comment via `preview.yml`.
 
 ## Project structure
 
@@ -172,8 +170,7 @@ static/
     petstore-playground.json  Curated Petstore demo spec (3 GET endpoints)
     tfl-playground.json       Curated TfL demo spec (3 GET endpoints)
 .github/workflows/
-  ci.yml                   Typecheck and build (all branches/PRs)
-  deploy.yml               Docker push and deploy (main only)
+  ci.yml                   Typecheck, build, Docker push, and deploy (gated by branch)
   preview.yml              PR preview comment (posts Vercel deployment URL)
 vercel.json                Vercel build config (install, output dir)
 Dockerfile                 Optional: multi-stage build (node + nginx)
@@ -186,6 +183,8 @@ Makefile                   Docker and monitoring commands
 | Component | Technology |
 |---|---|
 | Docs framework | [Docusaurus 3.9](https://docusaurus.io/) |
+| Search | [Algolia DocSearch](https://docsearch.algolia.com/) |
+| AI assistant | [Claude](https://claude.ai/) via Vercel AI SDK |
 | Typography | [Inter](https://fonts.google.com/specimen/Inter) + [Fira Code](https://fonts.google.com/specimen/Fira+Code) |
 | API playground | [Scalar](https://scalar.com/) |
 | Hosting | [Vercel](https://vercel.com/) |
