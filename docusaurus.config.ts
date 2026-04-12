@@ -171,8 +171,8 @@ const config: Config = {
       copyright: `© ${new Date().getFullYear()} Matthew Gourd`,
     },
     algolia: {
-      appId: 'YOUR_APP_ID',
-      apiKey: 'YOUR_SEARCH_API_KEY',
+      appId: '56LVNO7TSU',
+      apiKey: '3f045ef234e7f78945663bb72374ddad',
       indexName: 'devdocify',
       contextualSearch: true,
       searchParameters: {},
