@@ -1,7 +1,8 @@
 ---
-sidebar_position: 4
-slug: /how-to/tfl-playground
+sidebar_position: 6
+slug: /getting-started/playground
 title: TfL playground guide
+description: "What the TfL API playground demonstrates, what defaults are pre-filled, and how to interpret the demo behavior."
 ---
 
 # TfL playground guide
