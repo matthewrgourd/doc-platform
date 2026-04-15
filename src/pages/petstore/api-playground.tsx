@@ -9,7 +9,7 @@ export default function PetstoreApiPlaygroundPage(): React.JSX.Element {
       <section className="container padding-top--md">
         <p>
           Curated no-auth demo playground. For intent, limits, and expected outcomes, read the{' '}
-          <Link to="/docs/how-to/petstore-playground">Petstore playground guide</Link>.
+          <Link to="/petstore/getting-started/playground">Petstore playground guide</Link>.
         </p>
       </section>
       <ApiReferenceClient
