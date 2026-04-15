@@ -11,18 +11,17 @@ This tutorial walks you from installing the CLI to deploying a DevDocify site. I
 
 ## What you'll build
 
-A new documentation site running locally, with content validation and broken-link checks passing, ready to push to Vercel.
+A new documentation site running locally, with content validation and broken-link checks passing, ready to deploy to Vercel.
 
 ## Prerequisites
 
-- Node.js 20.17.0 or later
-- An npm account (for global install)
-- A GitHub account (for the deploy step)
-- A Vercel account (for the deploy step)
+- Node.js 20.17.0 or later (includes npm)
+- A GitHub account (for deployment)
+- A Vercel account (for deployment)
 
 ---
 
-## Step 1 — Install the CLI
+## Step 1: Install the CLI
 
 Install the Docify CLI globally:
 
@@ -30,7 +29,7 @@ Install the Docify CLI globally:
 npm install -g @devdocify/cli
 ```
 
-Confirm it's working:
+Confirm it's available:
 
 ```bash
 docify --version
@@ -38,15 +37,13 @@ docify --version
 
 ---
 
-## Step 2 — Create a project
+## Step 2: Create a project
 
 Scaffold a new DevDocify project in a directory called `my-docs`:
 
 ```bash
 docify new my-docs
 ```
-
-The CLI creates the directory with a minimal Docusaurus project, a placeholder doc, and a `.gitignore`.
 
 Change into the new directory and install dependencies:
 
@@ -57,7 +54,7 @@ npm install
 
 ---
 
-## Step 3 — Start the dev server
+## Step 3: Start the dev server
 
 ```bash
 docify dev
@@ -65,13 +62,13 @@ docify dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser. You should see your new docs site.
 
-Edit `docs/index.md` and save — the browser reloads automatically.
+Edit `docs/index.md` and save. The browser should reload automatically.
 
-Press `Ctrl+C` to stop the dev server when you're done.
+Press `Ctrl+C` to stop the dev server when you are done.
 
 ---
 
-## Step 4 — Validate content
+## Step 4: Validate content
 
 Run the content linter to catch common issues before you build:
 
@@ -79,7 +76,7 @@ Run the content linter to catch common issues before you build:
 docify validate
 ```
 
-If your project's `package.json` doesn't have a `lint-content` script yet, add one:
+If your `package.json` doesn't have a `lint-content` script yet, add one:
 
 ```json
 "lint-content": "echo \"No linter configured\""
@@ -87,7 +84,7 @@ If your project's `package.json` doesn't have a `lint-content` script yet, add o
 
 ---
 
-## Step 5 — Check for broken links
+## Step 5: Check for broken links
 
 Build the site and check every internal link:
 
@@ -99,7 +96,7 @@ Fix any broken links reported before continuing.
 
 ---
 
-## Step 6 — Build and deploy
+## Step 6: Build and deploy
 
 Build a production bundle:
 
@@ -107,15 +104,19 @@ Build a production bundle:
 docify build
 ```
 
-To deploy to Vercel:
+Deploy to Vercel:
 
 1. Push your project to a GitHub repository.
 2. Log in to [vercel.com](https://vercel.com) and click **Add New Project**.
 3. Import your GitHub repository.
-4. Set the following in the Vercel project settings:
-   - **Build command**: `npm run build`
-   - **Output directory**: `build`
-   - **Install command**: `npm install`
+4. Set the following in Vercel project settings:
+
+| Setting | Value |
+|---|---|
+| Build command | `npm run build` |
+| Output directory | `build` |
+| Install command | `npm install` |
+
 5. Click **Deploy**.
 
 Vercel runs a build on every push to `main` and creates preview deployments for every pull request.
@@ -124,7 +125,7 @@ Vercel runs a build on every push to `main` and creates preview deployments for 
 
 ## What's next
 
-- [Add a docset](/docs/how-to/add-docset) — bring a new product into your site
-- [Add an API playground](/docs/how-to/add-playground) — add an interactive OpenAPI explorer
-- [Configure search](/docs/how-to/configure-search) — set up Algolia DocSearch
-- [CLI reference](/docs/reference/cli) — all commands and flags
+- [Add a docset](/docs/how-to/add-docset)
+- [Add an API playground](/docs/how-to/add-playground)
+- [Configure search](/docs/how-to/configure-search)
+- [CLI reference](/docs/reference/cli)

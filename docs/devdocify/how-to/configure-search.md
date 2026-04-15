@@ -7,23 +7,29 @@ description: "How to configure Algolia DocSearch for a DevDocify site, including
 
 # Configure search
 
-DevDocify uses Algolia DocSearch for full-text search across all docsets. Follow these steps to configure it.
+DevDocify uses Algolia DocSearch for full-text search across docsets.
+
+## Prerequisites
+
+- A deployed docs URL that Algolia can crawl
+- Access to your `docusaurus.config.ts`
+- Access to Algolia DocSearch or Algolia dashboard
 
 ## 1. Apply for DocSearch
 
-Go to [docsearch.algolia.com](https://docsearch.algolia.com) and apply with your site's URL.
+Go to [docsearch.algolia.com](https://docsearch.algolia.com) and apply with your site URL.
 
-Algolia reviews applications for documentation sites manually. Approval typically takes a few days. You'll receive an email with your `appId`, `apiKey`, and `indexName` when approved.
+After approval, Algolia sends your `appId`, `apiKey`, and `indexName`.
 
-If you need immediate access, create an Algolia account directly at [algolia.com](https://www.algolia.com) and set up a free application.
+If you need immediate access, create an Algolia app directly at [algolia.com](https://www.algolia.com).
 
 ## 2. Run a test crawl
 
-Once your Algolia application is provisioned, run a manual crawl from the Algolia Crawler dashboard to confirm the index populates correctly before wiring it into the site.
+Run a manual crawl from the Algolia Crawler dashboard and verify records are indexed before wiring search into the site.
 
-## 3. Add the credentials to docusaurus.config.ts
+## 3. Add credentials in `docusaurus.config.ts`
 
-In `docusaurus.config.ts`, add an `algolia` block inside `themeConfig`:
+Add an `algolia` block inside `themeConfig`:
 
 ```ts
 themeConfig: {
@@ -36,26 +42,24 @@ themeConfig: {
 },
 ```
 
-Do not commit your write API key. The `apiKey` here is the public **search-only** key. It's safe to include in source.
+Use a public search-only key here. Do not commit write/admin API keys.
 
 ## 4. Enable contextual search
 
-For multi-docset sites, `contextualSearch: true` scopes search results to the current docset. Algolia uses the Docusaurus `docusaurus_tag` facet to filter results.
+For multi-docset sites, `contextualSearch: true` scopes results to the current docset.
 
-If your index doesn't include the tag facet, update your Algolia crawler configuration to include it. The Docusaurus documentation has an [example crawler config](https://docusaurus.io/docs/search#using-algolia-docsearch) you can adapt.
+If your index doesn't include the Docusaurus facet tags, update your crawler config to include `docusaurus_tag` in `attributesForFaceting`.
 
 ## 5. Test locally
-
-Start the dev server:
 
 ```bash
 docify dev
 ```
 
-Use the search box to confirm results are scoped correctly to the active docset.
+Use the search box in at least two docsets to confirm scoped results.
 
 ## Troubleshooting
 
-- **No results**: Check that your Algolia index has been crawled and contains documents. Run a manual crawl from the Algolia dashboard.
-- **Results from other docsets showing up**: Confirm `contextualSearch: true` is set and the crawler config includes `docusaurus_tag` in the `attributesForFaceting` list.
-- **Search box not appearing**: Confirm your `themeConfig.algolia` block is inside the correct preset config and not duplicated.
+- No results: verify crawl success and index contents in Algolia.
+- Cross-docset results: confirm `contextualSearch: true` and `docusaurus_tag` faceting.
+- Search box missing: verify `themeConfig.algolia` is present once in the active config.

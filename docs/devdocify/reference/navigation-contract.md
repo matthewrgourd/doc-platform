@@ -16,7 +16,7 @@ These files are loaded and validated by `navigation-contract.ts` and then consum
 
 ## Supported node types
 
-Each node must declare a `type`:
+Each node must declare `type`:
 
 - `doc`: `{"type":"doc","id":"path/to/doc","label":"Optional label"}`
 - `category`: `{"type":"category","label":"Section","items":[...]}`
@@ -26,20 +26,20 @@ Each node must declare a `type`:
 
 Validation runs at build/start time and fails fast when the contract is invalid.
 
-Examples of invalid input that fail the build with actionable errors:
+Examples that fail validation:
 
-- root is not an array
-- missing or unsupported `type`
-- `doc` node without `id`
-- `link` node without `href`
-- `category` node without non-empty `items`
+- Root isn't an array.
+- Missing or unsupported `type`.
+- `doc` node without `id`.
+- `link` node without `href`.
+- `category` node without non-empty `items`.
 
 ## Deep nesting support
 
-The contract parser is recursive and supports deeply nested category trees, including trees deeper than five levels.
+The parser is recursive and supports deeply nested category trees.
 
 ## Why this model
 
-- one navigation file per docset/version
-- deterministic, validated behavior before publish
-- easier ownership and change review for information architecture updates
+- One navigation file per docset or version.
+- Deterministic behavior before publish.
+- Easier ownership and review for information architecture changes.

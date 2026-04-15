@@ -61,6 +61,22 @@ Each push to `main` triggers a new deployment. PRs get preview URLs automaticall
 - `VERCEL_TOKEN` - create at [vercel.com/account/tokens](https://vercel.com/account/tokens)
 - `VERCEL_PROJECT_ID` - from your Vercel project **Settings → General** (or from `.vercel/project.json` after `vercel link`)
 
+### Ask AI backend and preview behavior
+
+The Ask AI panel in this repo calls `https://chat.devdocify.com/api/widget-chat` from the browser.
+
+For production and Vercel preview environments to work:
+
+- `chat-devdocify` must be deployed and healthy.
+- The widget API CORS policy must allow:
+  - `https://www.devdocify.com`
+  - `https://devdocify.com`
+  - `http://localhost:*`
+  - `https://doc-platform*.vercel.app` preview origins
+
+If preview origins are not allowed by CORS, Ask AI requests fail in browser and the panel shows:
+`Sorry, something went wrong. Please try again.`
+
 ## Optional: self-hosted deployment
 
 For containerized or on-prem deployments, the repo includes Docker, nginx, and a monitoring stack.
