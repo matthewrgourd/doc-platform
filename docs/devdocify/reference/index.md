@@ -2,7 +2,7 @@
 sidebar_position: 1
 slug: /reference
 title: Reference
-description: "Technical reference for DevDocify. CLI commands, navigation contract schema, route model, and configuration entry points."
+description: "Technical reference for DevDocify: CLI commands, navigation contract schema, route model, and configuration entry points."
 ---
 
 # Reference
@@ -16,9 +16,7 @@ Use reference pages when you need exact facts, supported options, and stable tec
   </p>
 </div>
 
-## CLI reference
-
-See the [CLI reference](/docs/reference/cli) for all `docify` commands, flags, and examples.
+## Reference pages
 
 <div className="docs-link-grid">
   <a href="/docs/reference/cli">CLI reference</a>
@@ -29,7 +27,7 @@ See the [CLI reference](/docs/reference/cli) for all `docify` commands, flags, a
 
 <div className="docs-route-list">
   <p><code>/</code> marketing-first root surface</p>
-  <p><code>/docs</code> first-party technical product docs (Diátaxis)</p>
+  <p><code>/docs</code> first-party technical product docs (Diataxis)</p>
   <p><code>/tfl</code> demo TfL product docs</p>
   <p><code>/petstore</code> demo Petstore product docs</p>
   <p><code>/tfl/api-playground</code> and <code>/petstore/api-playground</code> interactive demo routes</p>
@@ -40,8 +38,5 @@ See the [CLI reference](/docs/reference/cli) for all `docify` commands, flags, a
 - Site config: `docusaurus.config.ts`
 - Sidebars: `sidebarsDevDocify.ts`, `sidebarsTfl.ts`, `sidebarsPetstore.ts`
 - Navigation contract loader: `navigation-contract.ts`
-- Navigation definitions:
-  - `docs/devdocify/navigation.json`
-  - `docs/tfl/navigation.json`
-  - `docs/petstore/navigation.json`
+- Navigation definitions: `docs/*/navigation.json`
 - Workflows: `.github/workflows/ci.yml`, `.github/workflows/deploy.yml`, `.github/workflows/preview.yml`
