@@ -2,46 +2,37 @@
 sidebar_position: 1
 slug: /how-to
 title: How-to guides
-description: "How-to guides for DevDocify: edit docs safely, preserve route boundaries, configure multi-docset navigation, and validate output before merge."
+description: "How-to guides for DevDocify: add a docset, add a playground, configure Algolia search, and deploy to Vercel."
 ---
 
 # How-to guides
 
-Use how-to guides when you need to finish a specific task quickly.
+Use how-to guides when you need to complete a specific task quickly and you already know the basics.
 
 <div className="docs-hero-block">
-  <p className="docs-eyebrow">Execution guides</p>
+  <p className="docs-eyebrow">Task guides</p>
   <p className="docs-hero-copy">
-    Use these pages for operational work: editing docs safely, preserving route boundaries, and
-    validating output before merge.
+    Focused, step-oriented instructions for common DevDocify platform tasks.
   </p>
 </div>
 
-## How to add documentation content safely
+## Available guides
 
-1. Add or update docs content in the correct docset path:
-   - `docs/devdocify/*` for first-party product docs
-   - `docs/tfl/*` and `docs/petstore/*` for demo product docs
-2. Update the related sidebar file when needed:
-   - `sidebarsDevDocify.ts`
-   - `sidebarsTfl.ts`
-   - `sidebarsPetstore.ts`
-3. Run quality checks locally:
-   - `npm run build`
-4. Open a PR and validate preview output before merge.
-
-## How to verify root/docs split
-
-1. Confirm root (`/`) presents marketing-oriented context.
-2. Confirm `/docs` is technical product documentation.
-3. Confirm product demos remain scoped to `/tfl` and `/petstore`.
-
-These checks protect the information architecture agreed in Story 7.1.
-
-## API playground explanation guides
-
-<div className="docs-link-grid">
-  <a href="/docs/how-to/playground-overview">Playground explanation template</a>
-  <a href="/docs/how-to/petstore-playground">Petstore playground guide</a>
-  <a href="/docs/how-to/tfl-playground">TfL playground guide</a>
+<div className="docs-card-grid">
+  <div className="docs-card">
+    <h3><a href="/docs/how-to/add-docset">Add a docset</a></h3>
+    <p>Create a new product docset directory, configure the sidebar, and wire it into the platform navigation.</p>
+  </div>
+  <div className="docs-card">
+    <h3><a href="/docs/how-to/add-playground">Add an API playground</a></h3>
+    <p>Add an interactive OpenAPI explorer to a docset with pre-filled defaults for fast onboarding.</p>
+  </div>
+  <div className="docs-card">
+    <h3><a href="/docs/how-to/configure-search">Configure search</a></h3>
+    <p>Apply for Algolia DocSearch and configure contextual search across your docsets.</p>
+  </div>
+  <div className="docs-card">
+    <h3><a href="/docs/how-to/deploy">Deploy to Vercel</a></h3>
+    <p>Set up continuous deployment with Vercel, including preview deployments on pull requests.</p>
+  </div>
 </div>

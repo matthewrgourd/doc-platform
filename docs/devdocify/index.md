@@ -2,59 +2,66 @@
 sidebar_position: 1
 slug: /
 title: DevDocify docs
-description: "Learn how DevDocify works. Tutorials, how-to guides, reference, and explanation for building and shipping developer documentation with multi-docset support and interactive API playgrounds."
+description: "Learn how DevDocify works. Tutorials, how-to guides, reference, and explanation for building and shipping developer documentation with multi-docset support, a CLI, and interactive API playgrounds."
 ---
 
 # DevDocify docs
 
-Use this documentation to learn how DevDocify works. The same site demonstrates the platform through its own implementation.
+DevDocify is a multi-docset documentation platform built on Docusaurus. It includes a CLI, Algolia search, an AI assistant panel, and interactive API playgrounds — all wired together and deployable to Vercel in minutes.
 
 <div className="docs-hero-block">
-  <p className="docs-eyebrow">Technical documentation surface</p>
+  <p className="docs-eyebrow">Platform documentation</p>
   <p className="docs-hero-copy">
-    `/docs` is the primary technical surface for product guidance, operational patterns, and
-    implementation examples.
+    Everything you need to add docsets, configure search, run local previews, and ship
+    documentation with confidence.
   </p>
 </div>
 
-## Diátaxis lanes
+## What's included
 
 <div className="docs-card-grid">
   <div className="docs-card">
-    <h3>Tutorials</h3>
-    <p>Guided learning journeys that build confidence step by step.</p>
+    <h3>Multi-docset navigation</h3>
+    <p>Each product gets its own docset under a dedicated base path, with isolated sidebars and navigation contracts.</p>
   </div>
   <div className="docs-card">
-    <h3>How-to</h3>
-    <p>Task-oriented instructions optimized for fast execution.</p>
+    <h3>Docify CLI</h3>
+    <p>A command-line tool for local dev, content validation, broken-link checks, SEO scoring, and project scaffolding.</p>
   </div>
   <div className="docs-card">
-    <h3>Reference</h3>
-    <p>Stable factual contracts, routes, and command surfaces.</p>
+    <h3>Algolia search</h3>
+    <p>Contextual DocSearch across all docsets, with per-docset faceting so results stay relevant to the product the reader is viewing.</p>
   </div>
   <div className="docs-card">
-    <h3>Explanation</h3>
-    <p>Rationale and architecture context behind key decisions.</p>
+    <h3>AI assistant panel</h3>
+    <p>An inline assistant panel that answers questions about the currently viewed docset using Retrieval-Augmented Generation.</p>
+  </div>
+  <div className="docs-card">
+    <h3>API playgrounds</h3>
+    <p>Interactive OpenAPI explorers embedded in product docsets, with pre-filled defaults for fast onboarding.</p>
+  </div>
+  <div className="docs-card">
+    <h3>Preview deployments</h3>
+    <p>Every pull request gets a Vercel preview with full build validation before anything merges to production.</p>
   </div>
 </div>
-
-## What is live today
-
-<div className="docs-tag-row">
-  <span className="docs-tag">Multi-docset docs</span>
-  <span className="docs-tag">API playground demos</span>
-  <span className="docs-tag">Preview + build gates</span>
-</div>
-
-- Product docsets: [TfL](/tfl/getting-started), [Petstore](/petstore/getting-started)
-- Playground routes: [TfL playground](/tfl/api-playground), [Petstore playground](/petstore/api-playground)
-- Delivery model: CI build gates + preview-first validation
 
 ## Start here
 
 <div className="docs-link-grid">
-  <a href="/docs/tutorials">Tutorials for new contributors</a>
+  <a href="/docs/tutorials/quick-start">Quick start with the CLI</a>
   <a href="/docs/how-to">How-to guides for specific tasks</a>
-  <a href="/docs/reference">Reference documentation</a>
-  <a href="/docs/explanation">Explanation and design rationale</a>
+  <a href="/docs/reference/cli">CLI reference</a>
+  <a href="/docs/explanation">Architecture and design rationale</a>
 </div>
+
+## Diátaxis structure
+
+<div className="docs-tag-row">
+  <span className="docs-tag">Tutorials</span>
+  <span className="docs-tag">How-to</span>
+  <span className="docs-tag">Reference</span>
+  <span className="docs-tag">Explanation</span>
+</div>
+
+This documentation follows the [Diátaxis framework](https://diataxis.fr). Each section serves a different reader need: learning (tutorials), task completion (how-to), lookup (reference), and understanding (explanation).

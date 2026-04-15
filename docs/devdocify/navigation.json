@@ -4,7 +4,8 @@
     "type": "category",
     "label": "Tutorials",
     "items": [
-      {"type": "doc", "id": "tutorials/index", "label": "Start here"}
+      {"type": "doc", "id": "tutorials/index", "label": "Start here"},
+      {"type": "doc", "id": "tutorials/quick-start", "label": "Quick start"}
     ]
   },
   {
@@ -12,9 +13,10 @@
     "label": "How-to",
     "items": [
       {"type": "doc", "id": "how-to/index", "label": "Task guides"},
-      {"type": "doc", "id": "how-to/playground-overview", "label": "Playground explanation template"},
-      {"type": "doc", "id": "how-to/petstore-playground", "label": "Petstore playground guide"},
-      {"type": "doc", "id": "how-to/tfl-playground", "label": "TfL playground guide"}
+      {"type": "doc", "id": "how-to/add-docset", "label": "Add a docset"},
+      {"type": "doc", "id": "how-to/add-playground", "label": "Add an API playground"},
+      {"type": "doc", "id": "how-to/configure-search", "label": "Configure search"},
+      {"type": "doc", "id": "how-to/deploy", "label": "Deploy to Vercel"}
     ]
   },
   {
@@ -22,6 +24,7 @@
     "label": "Reference",
     "items": [
       {"type": "doc", "id": "reference/index", "label": "Reference hub"},
+      {"type": "doc", "id": "reference/cli", "label": "CLI reference"},
       {"type": "doc", "id": "reference/navigation-contract", "label": "Navigation contract"}
     ]
   },

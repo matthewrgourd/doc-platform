@@ -9,7 +9,7 @@ export default function TflApiPlaygroundPage(): React.JSX.Element {
       <section className="container padding-top--md">
         <p>
           Curated no-auth demo playground. For intent, limits, and expected outcomes, read the{' '}
-          <Link to="/docs/how-to/tfl-playground">TfL playground guide</Link>.
+          <Link to="/tfl/getting-started/playground">TfL playground guide</Link>.
         </p>
       </section>
       <ApiReferenceClient

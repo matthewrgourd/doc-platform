@@ -1,7 +1,8 @@
 ---
-sidebar_position: 3
-slug: /how-to/petstore-playground
+sidebar_position: 5
+slug: /getting-started/playground
 title: Petstore playground guide
+description: "What the Petstore API playground demonstrates, what defaults are pre-filled, and how to interpret the demo behavior."
 ---
 
 # Petstore playground guide
