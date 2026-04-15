@@ -124,18 +124,18 @@ Docker and deploy-staging only run on push to `main`, not on PRs. PRs get a Verc
 
 ```
 docs/
-  _snippets/               Shared content snippets (resolved via include directives)
-  devdocify/               DevDocify product docs
-  petstore/                Petstore product docs
-    getting-started/       Onboarding guides (quickstart, auth, errors)
-    pets/                  Pet management (add, find, update, delete, upload)
-    store/                 Store orders and inventory
-    users/                 User management (create, login, manage)
-  tfl/                     TfL API product docs
-    getting-started/       Overview, quickstart, auth, error handling
-    lines/                 Line status and routes
-    stoppoints/            Stop search and arrivals
-    journey/               Journey planning
+  _snippets/               Shared markdown snippets for include resolution
+  api-reference/           API reference docs surface
+  connect/                 Integration-oriented docs surface
+  devdocify/               DevDocify product docs (Diataxis sections)
+    tutorials/
+    how-to/
+    reference/
+    explanation/
+  guides/                  General guides docs surface
+  payments/                Payments docs surface
+  petstore/                Petstore demo docset
+  tfl/                     TfL demo docset
   variables.json           Portal-level variable defaults
 openapi/
   overlays/
@@ -155,7 +155,8 @@ scripts/
   benchmark-manifest.ts    Benchmarks manifest builder at 1k/5k/10k file scale
 src/
   components/
-    ApiReferenceClient.tsx  Scalar renderer used by API playground routes
+    AiPanel/               Ask AI panel UI + markdown renderer
+    ApiReferenceClient.tsx Scalar renderer used by API playground routes
   css/custom.css           Custom theme (Stripe-inspired heading hierarchy)
   pages/index.tsx          Site overview homepage
   pages/petstore/api-playground.tsx  Petstore API playground page route
@@ -164,13 +165,16 @@ src/
   pages/support.mdx        Support page
   pages/privacy.mdx        Privacy notice page
   pages/terms.mdx          Terms of use page
+  theme/Layout/...         Root-level layout/provider customizations
   theme/Navbar/...         Swizzled navbar and mobile menu behavior
 static/
+  img/                     Static site assets
   openapi/
     petstore-playground.json  Curated Petstore demo spec (3 GET endpoints)
     tfl-playground.json       Curated TfL demo spec (3 GET endpoints)
 .github/workflows/
   ci.yml                   Typecheck, build, Docker push, and deploy (gated by branch)
+  link-check.yml           Scheduled external link checking
   preview.yml              PR preview comment (posts Vercel deployment URL)
 vercel.json                Vercel build config (install, output dir)
 Dockerfile                 Optional: multi-stage build (node + nginx)
