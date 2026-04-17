@@ -81,7 +81,9 @@ export default function NavbarContent(): ReactNode {
       ? '/openapi/petstore-playground.json'
       : pathname === '/tfl/api-playground'
         ? '/openapi/tfl-playground.json'
-        : null;
+        : pathname === '/platzi/api-playground'
+          ? '/openapi/platzi-playground.json'
+          : null;
 
   const items = useNavbarItems();
   const [leftItems, rightItems] = splitNavbarItems(items);

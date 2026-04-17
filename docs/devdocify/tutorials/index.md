@@ -32,5 +32,7 @@ After completing the quick start, explore the demo docsets to see multi-docset n
 
 - [TfL getting started](/tfl/getting-started)
 - [Petstore getting started](/petstore/getting-started)
+- [Platzi getting started](/platzi/getting-started)
 - [TfL API playground](/tfl/api-playground)
 - [Petstore API playground](/petstore/api-playground)
+- [Platzi API playground](/platzi/api-playground)

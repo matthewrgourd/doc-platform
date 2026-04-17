@@ -1,0 +1,37 @@
+[
+  {
+    "type": "category",
+    "label": "Getting started",
+    "items": [
+      {"type": "doc", "id": "getting-started/index", "label": "Overview"},
+      {"type": "doc", "id": "getting-started/quickstart", "label": "Quickstart"},
+      {"type": "doc", "id": "getting-started/authentication", "label": "Authentication"},
+      {"type": "doc", "id": "getting-started/error-handling", "label": "Error handling"},
+      {"type": "doc", "id": "getting-started/playground", "label": "Playground guide"}
+    ]
+  },
+  {
+    "type": "category",
+    "label": "Products",
+    "items": [
+      {"type": "doc", "id": "products/index", "label": "Overview"},
+      {"type": "doc", "id": "products/list", "label": "List and paginate"}
+    ]
+  },
+  {
+    "type": "category",
+    "label": "Users",
+    "items": [
+      {"type": "doc", "id": "users/index", "label": "Overview"},
+      {"type": "doc", "id": "users/check-email", "label": "Check email"}
+    ]
+  },
+  {
+    "type": "category",
+    "label": "Locations",
+    "items": [
+      {"type": "doc", "id": "locations/index", "label": "Overview"}
+    ]
+  },
+  {"type": "link", "label": "API playground", "href": "/platzi/api-playground"}
+]

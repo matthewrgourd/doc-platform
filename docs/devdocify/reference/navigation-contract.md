@@ -11,6 +11,7 @@ Navigation for each docset is defined in one file:
 - `docs/devdocify/navigation.json`
 - `docs/tfl/navigation.json`
 - `docs/petstore/navigation.json`
+- `docs/platzi/navigation.json`
 
 These files are loaded and validated by `navigation-contract.ts` and then consumed by each sidebar entrypoint.
 

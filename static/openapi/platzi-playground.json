@@ -1,0 +1,369 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Platzi Fake Store API — DevDocify playground",
+    "version": "playground-1.0.0",
+    "description": "Curated OpenAPI subset for the DevDocify Platzi playground. This file documents a stable demo-focused surface of the public API hosted at api.escuelajs.co."
+  },
+  "servers": [
+    {
+      "url": "https://api.escuelajs.co/api/v1",
+      "description": "Platzi Fake Store public API"
+    }
+  ],
+  "tags": [
+    {"name": "Products", "description": "Product listing and pagination."},
+    {"name": "Catalog", "description": "Category listing."},
+    {"name": "Users", "description": "User listing and email availability checks."},
+    {"name": "Auth", "description": "JWT login, refresh, and profile operations."},
+    {"name": "Locations", "description": "Geospatial location examples."}
+  ],
+  "paths": {
+    "/products": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "List products",
+        "description": "Returns products with optional offset pagination.",
+        "operationId": "platziListProducts",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {"type": "integer", "minimum": 0, "default": 0},
+            "example": 0
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {"type": "integer", "minimum": 1, "maximum": 100, "default": 10},
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Product"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": ["Catalog"],
+        "summary": "List categories",
+        "operationId": "platziListCategories",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Category"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "List users",
+        "operationId": "platziListUsers",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {"type": "integer", "minimum": 0, "default": 0},
+            "example": 0
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {"type": "integer", "minimum": 1, "maximum": 100, "default": 10},
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/User"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/is-available": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Check email availability",
+        "operationId": "platziIsUserEmailAvailable",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/EmailCheckRequest"},
+              "example": {"email": "john@mail.com"}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/EmailCheckResponse"},
+                "example": {"isAvailable": false}
+              }
+            }
+          },
+          "400": {"description": "Bad request."}
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login",
+        "description": "Returns an access token and refresh token.",
+        "operationId": "platziLogin",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/LoginRequest"},
+              "example": {"email": "john@mail.com", "password": "changeme"}
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Login success.",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/AuthTokens"}
+              }
+            }
+          },
+          "200": {
+            "description": "Login success (alternative status).",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/AuthTokens"}
+              }
+            }
+          },
+          "401": {"description": "Invalid credentials."}
+        }
+      }
+    },
+    "/auth/refresh-token": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Refresh access token",
+        "operationId": "platziRefreshToken",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/RefreshTokenRequest"},
+              "example": {"refreshToken": "<refresh_token>"}
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Refresh success.",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/AuthTokens"}
+              }
+            }
+          },
+          "200": {
+            "description": "Refresh success (alternative status).",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/AuthTokens"}
+              }
+            }
+          },
+          "401": {"description": "Invalid or expired refresh token."}
+        }
+      }
+    },
+    "/auth/profile": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get authenticated profile",
+        "operationId": "platziProfile",
+        "security": [{"bearerAuth": []}],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/User"}
+              }
+            }
+          },
+          "401": {"description": "Missing or invalid bearer token."}
+        }
+      }
+    },
+    "/locations": {
+      "get": {
+        "tags": ["Locations"],
+        "summary": "List locations",
+        "description": "Returns random or origin-filtered locations for map-style demos.",
+        "operationId": "platziListLocations",
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {"type": "integer", "minimum": 1, "maximum": 50, "default": 5},
+            "example": 5
+          },
+          {
+            "name": "origin",
+            "in": "query",
+            "required": false,
+            "description": "Latitude,longitude pair.",
+            "schema": {"type": "string"},
+            "example": "6.2071641,-75.5720321"
+          },
+          {
+            "name": "radius",
+            "in": "query",
+            "required": false,
+            "schema": {"type": "number", "format": "float"},
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Location"}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "integer"},
+          "name": {"type": "string"},
+          "slug": {"type": "string"},
+          "image": {"type": "string", "format": "uri"}
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "integer"},
+          "title": {"type": "string"},
+          "slug": {"type": "string"},
+          "price": {"type": "number"},
+          "description": {"type": "string"},
+          "category": {"$ref": "#/components/schemas/Category"},
+          "images": {
+            "type": "array",
+            "items": {"type": "string", "format": "uri"}
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "integer"},
+          "email": {"type": "string", "format": "email"},
+          "name": {"type": "string"},
+          "role": {"type": "string"},
+          "avatar": {"type": "string", "format": "uri"}
+        }
+      },
+      "EmailCheckRequest": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {"type": "string", "format": "email"}
+        }
+      },
+      "EmailCheckResponse": {
+        "type": "object",
+        "properties": {
+          "isAvailable": {"type": "boolean"}
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {"type": "string", "format": "email"},
+          "password": {"type": "string"}
+        }
+      },
+      "RefreshTokenRequest": {
+        "type": "object",
+        "required": ["refreshToken"],
+        "properties": {
+          "refreshToken": {"type": "string"}
+        }
+      },
+      "AuthTokens": {
+        "type": "object",
+        "properties": {
+          "access_token": {"type": "string"},
+          "refresh_token": {"type": "string"}
+        }
+      },
+      "Location": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "number"},
+          "name": {"type": "string"},
+          "description": {"type": "string"},
+          "latitude": {"type": "number"},
+          "longitude": {"type": "number"}
+        }
+      }
+    }
+  }
+}

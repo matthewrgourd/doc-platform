@@ -34,7 +34,7 @@ export default function Home(): React.JSX.Element {
               </div>
               <div className="home-proof-card">
                 <h2>Interactive API demos</h2>
-                <p>TfL and Petstore playgrounds are live with explanatory context and defaults.</p>
+                <p>TfL, Petstore, and Platzi playgrounds are live with explanatory context and defaults.</p>
               </div>
               <div className="home-proof-card">
                 <h2>Preview-first delivery</h2>
@@ -59,6 +59,10 @@ export default function Home(): React.JSX.Element {
               <strong>Petstore demo docs</strong>
               <span>Sample API docset and playground routes</span>
             </Link>
+            <Link className="home-route-card" to="/platzi/getting-started">
+              <strong>Platzi demo docs</strong>
+              <span>Retail-style fake store API docset and playground</span>
+            </Link>
           </div>
         </section>
 
@@ -66,7 +70,7 @@ export default function Home(): React.JSX.Element {
           <h2>Stub marketing routes</h2>
           <p>
             These pages are placeholders. Technical content and demos live under{' '}
-            <strong>/docs</strong>, <strong>/tfl</strong>, and <strong>/petstore</strong>.
+            <strong>/docs</strong>, <strong>/tfl</strong>, <strong>/petstore</strong>, and <strong>/platzi</strong>.
           </p>
           <div className="home-planned-links">
             <Link to="/customers">Customers</Link>
