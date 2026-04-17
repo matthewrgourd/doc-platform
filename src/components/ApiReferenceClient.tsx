@@ -4,9 +4,11 @@ import {ApiReferenceReact} from '@scalar/api-reference-react';
 import '@scalar/api-reference-react/style.css';
 import '@scalar/docusaurus/dist/theme.css';
 
+type ApiProfile = 'petstore' | 'tfl' | 'platzi';
+
 type ApiReferenceClientProps = {
   specUrl: string;
-  profile: 'petstore' | 'tfl';
+  profile: ApiProfile;
   downloadUrl: string;
   specLabel: string;
 };
@@ -23,6 +25,24 @@ function setParamDefault(parameter: JsonObject, value: any): void {
     parameter.schema.example = parameter.schema.example ?? value;
   } else {
     parameter.default = parameter.default ?? value;
+  }
+}
+
+function setRequestBodyExample(
+  operation: JsonObject | undefined,
+  value: JsonObject,
+  contentType = 'application/json'
+): void {
+  if (!operation || typeof operation !== 'object') {
+    return;
+  }
+  const mediaType = operation.requestBody?.content?.[contentType];
+  if (!mediaType || typeof mediaType !== 'object') {
+    return;
+  }
+  mediaType.example = mediaType.example ?? value;
+  if (mediaType.schema && typeof mediaType.schema === 'object') {
+    mediaType.schema.example = mediaType.schema.example ?? value;
   }
 }
 
@@ -66,9 +86,53 @@ function applyTflPlaygroundDefaults(spec: JsonObject): JsonObject {
   return spec;
 }
 
-function applyPlaygroundDefaults(spec: JsonObject, profile: 'petstore' | 'tfl'): JsonObject {
+function applyPlatziPlaygroundDefaults(spec: JsonObject): JsonObject {
+  const paths = spec.paths ?? {};
+
+  const products = paths['/products']?.get?.parameters;
+  if (Array.isArray(products)) {
+    const offset = products.find((p: JsonObject) => p.name === 'offset');
+    const limit = products.find((p: JsonObject) => p.name === 'limit');
+    if (offset) setParamDefault(offset, 0);
+    if (limit) setParamDefault(limit, 10);
+  }
+
+  const users = paths['/users']?.get?.parameters;
+  if (Array.isArray(users)) {
+    const offset = users.find((p: JsonObject) => p.name === 'offset');
+    const limit = users.find((p: JsonObject) => p.name === 'limit');
+    if (offset) setParamDefault(offset, 0);
+    if (limit) setParamDefault(limit, 10);
+  }
+
+  const locations = paths['/locations']?.get?.parameters;
+  if (Array.isArray(locations)) {
+    const size = locations.find((p: JsonObject) => p.name === 'size');
+    if (size) setParamDefault(size, 5);
+  }
+
+  setRequestBodyExample(paths['/users/is-available']?.post, {
+    email: 'john@mail.com',
+  });
+
+  setRequestBodyExample(paths['/auth/login']?.post, {
+    email: 'john@mail.com',
+    password: 'changeme',
+  });
+
+  setRequestBodyExample(paths['/auth/refresh-token']?.post, {
+    refreshToken: '<refresh_token>',
+  });
+
+  return spec;
+}
+
+function applyPlaygroundDefaults(spec: JsonObject, profile: ApiProfile): JsonObject {
   if (profile === 'petstore') {
     return applyPetstorePlaygroundDefaults(spec);
+  }
+  if (profile === 'platzi') {
+    return applyPlatziPlaygroundDefaults(spec);
   }
   return applyTflPlaygroundDefaults(spec);
 }

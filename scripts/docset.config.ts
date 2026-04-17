@@ -184,6 +184,10 @@ export const DOCSET_REGISTRY: DocsetConfig[] = [
     id: 'petstore',
     name: 'Petstore',
   },
+  {
+    id: 'platzi',
+    name: 'Platzi Fake Store',
+  },
 ];
 
 // ---------------------------------------------------------------------------
