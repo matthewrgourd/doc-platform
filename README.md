@@ -4,10 +4,10 @@ DevDocify is a reference implementation demonstrating the **Docusaurus**, **Scal
 
 ## Features
 
-- **Multi-docset site** - TfL and Petstore as selectable products with separate doc sections and API playgrounds
+- **Multi-docset site** - TfL, Petstore, and Platzi as selectable products with separate doc sections and API playgrounds
 - **Site overview homepage** - explains the tech stack and links to each product
 - **Interactive API playground** - powered by Scalar, with "Try it" request builder and curated unauthenticated examples
-- **Curated demo specs** - each API playground exposes 3 GET endpoints designed to return valid responses without authentication
+- **Curated demo specs** - each API playground uses a local OpenAPI subset aligned to its demo routes
 - **Context-aware spec download links** - "Download API spec" appears only on API playground routes and points to the corresponding local demo spec
 - **Route manifest builder** - walks the docs tree and emits a deterministic JSON manifest of all routes, docsets, and versions
 - **Docset config schema** - CalVer versioning, lifecycle states (active/LTS/EOL), and registry validation
@@ -24,6 +24,21 @@ DevDocify is a reference implementation demonstrating the **Docusaurus**, **Scal
 - **Dark mode** - automatic, respects system preferences
 - **CI/CD** - GitHub Actions pipeline with typecheck, build, and optional Docker push
 - **Optional self-hosted deployment** - Docker, nginx, Prometheus + Grafana for containerized or on-prem deployments
+
+## Docs taxonomy (Diataxis)
+
+The primary product docs under `/docs` are organized by the Diataxis model:
+
+- **Tutorials** - guided, end-to-end learning paths
+- **How-to guides** - task-focused implementation steps
+- **Reference** - exact facts, schemas, and command contracts
+- **Explanation** - design rationale and trade-offs
+
+Demo API docsets live alongside this at:
+
+- `/tfl`
+- `/petstore`
+- `/platzi`
 
 ## Quick start
 
@@ -142,6 +157,10 @@ Docker and deploy-staging only run on push to `main`, not on PRs. PRs get a Verc
 docs/
   _snippets/               Shared content snippets (resolved via include directives)
   devdocify/               DevDocify product docs
+    tutorials/             Guided learning paths
+    how-to/                Task-oriented implementation guides
+    reference/             Commands, contracts, and technical facts
+    explanation/           Architecture and rationale
   petstore/                Petstore product docs
     getting-started/       Onboarding guides (quickstart, auth, errors)
     pets/                  Pet management (add, find, update, delete, upload)
@@ -152,6 +171,11 @@ docs/
     lines/                 Line status and routes
     stoppoints/            Stop search and arrivals
     journey/               Journey planning
+  platzi/                  Platzi Fake Store API product docs
+    getting-started/       Overview, quickstart, auth, error handling
+    products/              Product listing and pagination guides
+    users/                 User and email-availability guides
+    locations/             Location query guides
   variables.json           Portal-level variable defaults
 openapi/
   overlays/
@@ -176,6 +200,7 @@ src/
   pages/index.tsx          Site overview homepage
   pages/petstore/api-playground.tsx  Petstore API playground page route
   pages/tfl/api-playground.tsx       TfL API playground page route
+  pages/platzi/api-playground.tsx    Platzi API playground page route
   pages/status.mdx         Service status page
   pages/support.mdx        Support page
   pages/privacy.mdx        Privacy notice page
@@ -183,8 +208,9 @@ src/
   theme/Navbar/...         Swizzled navbar and mobile menu behavior
 static/
   openapi/
-    petstore-playground.json  Curated Petstore demo spec (3 GET endpoints)
-    tfl-playground.json       Curated TfL demo spec (3 GET endpoints)
+    petstore-playground.json  Curated Petstore demo spec (playground subset)
+    tfl-playground.json       Curated TfL demo spec (playground subset)
+    platzi-playground.json    Curated Platzi demo spec (products, users, auth, locations)
 .github/workflows/
   ci.yml                   Typecheck, build, Docker push, and deploy (gated by branch)
   preview.yml              PR preview comment (posts Vercel deployment URL)
