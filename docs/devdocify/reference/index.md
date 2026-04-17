@@ -30,13 +30,14 @@ Use reference pages when you need exact facts, supported options, and stable tec
   <p><code>/docs</code> first-party technical product docs (Diataxis)</p>
   <p><code>/tfl</code> demo TfL product docs</p>
   <p><code>/petstore</code> demo Petstore product docs</p>
-  <p><code>/tfl/api-playground</code> and <code>/petstore/api-playground</code> interactive demo routes</p>
+  <p><code>/platzi</code> demo Platzi Fake Store docs</p>
+  <p><code>/tfl/api-playground</code>, <code>/petstore/api-playground</code>, and <code>/platzi/api-playground</code> interactive demo routes</p>
 </div>
 
 ## Configuration entry points
 
 - Site config: `docusaurus.config.ts`
-- Sidebars: `sidebarsDevDocify.ts`, `sidebarsTfl.ts`, `sidebarsPetstore.ts`
+- Sidebars: `sidebarsDevDocify.ts`, `sidebarsTfl.ts`, `sidebarsPetstore.ts`, `sidebarsPlatzi.ts`
 - Navigation contract loader: `navigation-contract.ts`
 - Navigation definitions: `docs/*/navigation.json`
 - Workflows: `.github/workflows/ci.yml`, `.github/workflows/deploy.yml`, `.github/workflows/preview.yml`

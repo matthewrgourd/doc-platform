@@ -112,6 +112,40 @@ const sections: MenuSection[] = [
     ],
     apiPlaygroundPath: '/petstore/api-playground',
   },
+  {
+    heading: 'Platzi',
+    groups: [
+      {
+        label: 'Getting started',
+        items: [
+          {label: 'Overview', to: '/platzi/getting-started'},
+          {label: 'Quickstart', to: '/platzi/getting-started/quickstart'},
+          {label: 'Authentication', to: '/platzi/getting-started/authentication'},
+          {label: 'Error handling', to: '/platzi/getting-started/error-handling'},
+          {label: 'Playground guide', to: '/platzi/getting-started/playground'},
+        ],
+      },
+      {
+        label: 'Products',
+        items: [
+          {label: 'Overview', to: '/platzi/products'},
+          {label: 'List and paginate', to: '/platzi/products/list'},
+        ],
+      },
+      {
+        label: 'Users',
+        items: [
+          {label: 'Overview', to: '/platzi/users'},
+          {label: 'Check email', to: '/platzi/users/check-email'},
+        ],
+      },
+      {
+        label: 'Locations',
+        items: [{label: 'Overview', to: '/platzi/locations'}],
+      },
+    ],
+    apiPlaygroundPath: '/platzi/api-playground',
+  },
 ];
 
 function normalizePath(route: string): string {
@@ -135,7 +169,9 @@ export default function NavbarMobilePrimaryMenu(): ReactNode {
       ? '/openapi/petstore-playground.json'
       : pathname === '/tfl/api-playground'
         ? '/openapi/tfl-playground.json'
-        : null;
+        : pathname === '/platzi/api-playground'
+          ? '/openapi/platzi-playground.json'
+          : null;
 
   return (
     <ul className="menu__list">

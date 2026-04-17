@@ -79,6 +79,15 @@ const config: Config = {
       },
     ],
     [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'platzi',
+        path: 'docs/platzi',
+        routeBasePath: 'platzi',
+        sidebarPath: './sidebarsPlatzi.ts',
+      },
+    ],
+    [
       '@docusaurus/plugin-client-redirects',
       {
         // Add redirect rules here when pages are moved or removed.
@@ -126,6 +135,12 @@ const config: Config = {
           position: 'left',
           activeBasePath: '/petstore',
         },
+        {
+          to: '/platzi/getting-started',
+          label: 'Platzi',
+          position: 'left',
+          activeBasePath: '/platzi',
+        },
       ],
     },
     footer: {
@@ -143,6 +158,13 @@ const config: Config = {
           items: [
             {label: 'Getting started', to: '/tfl/getting-started'},
             {label: 'API playground', to: '/tfl/api-playground'},
+          ],
+        },
+        {
+          title: 'Platzi',
+          items: [
+            {label: 'Getting started', to: '/platzi/getting-started'},
+            {label: 'API playground', to: '/platzi/api-playground'},
           ],
         },
         {

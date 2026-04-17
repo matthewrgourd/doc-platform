@@ -136,7 +136,7 @@ function buildLlmsTxt(
   const lines: string[] = [
     '# DevDocify',
     '',
-    '> Developer documentation platform. Covers the Transport for London (TfL) Unified API and the Swagger Petstore API, with guides, reference, and interactive playgrounds.',
+    '> Developer documentation platform. Covers the Transport for London (TfL) Unified API, Swagger Petstore API, and Platzi Fake Store API, with guides, reference, and interactive playgrounds.',
     '',
     'DevDocify is a documentation platform that demonstrates multi-docset API documentation, versioning, and interactive API playgrounds. The following links are the canonical sources for all content.',
     '',
@@ -150,6 +150,7 @@ function buildLlmsTxt(
       devdocify: 'DevDocify docs',
       tfl: 'Transport for London (TfL) API',
       petstore: 'Swagger Petstore API',
+      platzi: 'Platzi Fake Store API',
     }[docset.id] ?? docset.id;
 
     lines.push(`## ${docsetName}`, '');
