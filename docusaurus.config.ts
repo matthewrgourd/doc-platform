@@ -16,6 +16,13 @@ const config: Config = {
         href: '/img/favicon.svg',
       },
     },
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'algolia-site-verification',
+        content: '3105B021CBC2AB3E',
+      },
+    },
   ],
 
   future: {
