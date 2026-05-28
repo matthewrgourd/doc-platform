@@ -2,6 +2,8 @@
 
 DevDocify is a reference implementation demonstrating the **Docusaurus**, **Scalar**, and **Vercel** stack for multi-product developer documentation. It shows how to structure a portal with multiple docsets, each with guides and an interactive API playground.
 
+Live site: [https://www.devdocify.com](https://www.devdocify.com)
+
 ## Features
 
 - **Multi-docset site** - TfL, Petstore, and Platzi as selectable products with separate doc sections and API playgrounds
