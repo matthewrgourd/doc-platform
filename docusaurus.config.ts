@@ -97,6 +97,21 @@ const config: Config = {
         // createRedirects(existingPath) { ... }
       },
     ],
+    // Benchmark mode: inject a synthetic fixture docset when BENCHMARK_SCALE is set.
+    // Used by scripts/benchmark-build.ts — never active in normal builds.
+    ...(process.env.BENCHMARK_SCALE
+      ? [
+          [
+            '@docusaurus/plugin-content-docs' as const,
+            {
+              id: `_fixture-${process.env.BENCHMARK_SCALE}`,
+              path: `docs/_fixture-${process.env.BENCHMARK_SCALE}`,
+              routeBasePath: `_fixture-benchmark`,
+              sidebarPath: './sidebarsBenchmark.ts',
+            },
+          ],
+        ]
+      : []),
   ],
 
   themeConfig: {
