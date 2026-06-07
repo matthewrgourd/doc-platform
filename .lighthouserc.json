@@ -1,10 +1,10 @@
 {
   "ci": {
     "collect": {
-      "startServerCommand": "npm run serve -- --port 3000 --no-open",
-      "startServerReadyPattern": "http://localhost:3000",
-      "startServerReadyTimeout": 15000,
       "numberOfRuns": 1,
+      "settings": {
+        "chromeFlags": "--no-sandbox"
+      },
       "url": [
         "http://localhost:3000/",
         "http://localhost:3000/docs",
