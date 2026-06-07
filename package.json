@@ -25,7 +25,8 @@
     "validate-analytics-event": "npx tsx scripts/validate-analytics-event.ts",
     "build-search-index": "npx tsx scripts/build-search-index.ts",
     "generate-llms-txt": "npx tsx scripts/generate-llms-txt.ts",
-    "validate-assistant": "npx tsx scripts/validate-assistant-config.ts"
+    "validate-assistant": "npx tsx scripts/validate-assistant-config.ts",
+    "validate-assistant-quality": "npx tsx scripts/validate-assistant-quality.ts"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",

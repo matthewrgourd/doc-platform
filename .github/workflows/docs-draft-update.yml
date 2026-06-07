@@ -1,0 +1,264 @@
+name: Docs draft update
+
+# Triggered by chat-devdocify when a monitored change is merged to its main
+# branch. Creates a draft PR in doc-platform for human review — never publishes
+# content directly. Auto-approval is not permitted.
+#
+# Required secret: DOCS_DRAFT_TOKEN
+#   Fine-grained PAT scoped to this repo with contents:write and
+#   pull-requests:write. Falls back to GITHUB_TOKEN for testing (may lack PR
+#   creation permissions in fork scenarios).
+#
+# Monitored paths in chat-devdocify:
+#   src/prompt/   → system prompt changes → assistant docs
+#   src/routes/   → endpoint changes      → API contract docs
+#   src/safety/   → safety policy changes → quality policy docs
+#   src/config/   → config schema changes → configuration reference
+
+on:
+  repository_dispatch:
+    types: [chat-devdocify-change]
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: Simulated source commit SHA (for manual testing)
+        required: false
+        default: 'manual-test'
+      commit_message:
+        description: Simulated commit message
+        required: false
+        default: 'Manual test dispatch'
+      changed_files:
+        description: JSON array of changed file paths
+        required: false
+        default: '["src/prompt/system.ts"]'
+      doc_sections:
+        description: JSON array of affected doc slugs
+        required: false
+        default: '["devdocify/explanation/assistant"]'
+
+jobs:
+  create-draft-pr:
+    name: Create docs draft PR
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.DOCS_DRAFT_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Resolve inputs
+        id: inputs
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo "run_id=${{ github.event.client_payload.run_id }}"           >> "$GITHUB_OUTPUT"
+            echo "commit_sha=${{ github.event.client_payload.commit_sha }}"   >> "$GITHUB_OUTPUT"
+            echo "commit_message=${{ github.event.client_payload.commit_message }}" >> "$GITHUB_OUTPUT"
+            echo "changed_files=${{ toJson(github.event.client_payload.changed_files) }}" >> "$GITHUB_OUTPUT"
+            echo "doc_sections=${{ toJson(github.event.client_payload.doc_sections) }}"   >> "$GITHUB_OUTPUT"
+          else
+            echo "run_id=manual-${{ github.run_id }}"                         >> "$GITHUB_OUTPUT"
+            echo "commit_sha=${{ github.event.inputs.commit_sha }}"           >> "$GITHUB_OUTPUT"
+            echo "commit_message=${{ github.event.inputs.commit_message }}"   >> "$GITHUB_OUTPUT"
+            echo "changed_files=${{ github.event.inputs.changed_files }}"     >> "$GITHUB_OUTPUT"
+            echo "doc_sections=${{ github.event.inputs.doc_sections }}"       >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Configure git
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create draft branch
+        id: branch
+        run: |
+          SHA="${{ steps.inputs.outputs.commit_sha }}"
+          BRANCH="docs-draft/chat-devdocify-${SHA}"
+          git checkout -b "$BRANCH"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Generate draft summary file
+        id: draft_file
+        run: |
+          SHA="${{ steps.inputs.outputs.commit_sha }}"
+          DRAFT_PATH="docs/devdocify/explanation/pending-updates/draft-${SHA}.md"
+          mkdir -p "$(dirname "$DRAFT_PATH")"
+
+          cat > "$DRAFT_PATH" <<'DRAFT_EOF'
+          ---
+          draft: true
+          review_required: true
+          source_repo: chat-devdocify
+          source_commit: COMMIT_SHA_PLACEHOLDER
+          source_run: SOURCE_RUN_PLACEHOLDER
+          generated_by: docs-draft-update workflow
+          ---
+
+          # Draft: Pending documentation update
+
+          > **This file is a machine-generated draft. It must not be merged as-is.**
+          > A human reviewer must verify, edit, and approve this content before merge.
+          > Auto-approval is not permitted.
+
+          ## Source change summary
+
+          | Field | Value |
+          |---|---|
+          | Source repo | `chat-devdocify` |
+          | Commit | `COMMIT_SHA_PLACEHOLDER` |
+          | Commit message | COMMIT_MESSAGE_PLACEHOLDER |
+          | Workflow run | `SOURCE_RUN_PLACEHOLDER` |
+
+          ## Changed files
+
+          CHANGED_FILES_PLACEHOLDER
+
+          ## Affected documentation sections
+
+          DOC_SECTIONS_PLACEHOLDER
+
+          ## Reviewer instructions
+
+          1. Review the changed files in `chat-devdocify` at commit `COMMIT_SHA_PLACEHOLDER`.
+          2. Identify which documentation sections are stale or incorrect.
+          3. Edit the affected doc pages directly (do not publish this draft file).
+          4. Remove this draft file before merging.
+          5. Ensure the build passes (`npm run build`) — broken links will fail CI.
+
+          If this draft is not actionable, close the PR with a rationale comment.
+          If regeneration is needed, re-trigger the `chat-devdocify-change` dispatch.
+          DRAFT_EOF
+
+          # Substitute placeholders with actual values
+          SHA="${{ steps.inputs.outputs.commit_sha }}"
+          MSG="${{ steps.inputs.outputs.commit_message }}"
+          RUN="${{ steps.inputs.outputs.run_id }}"
+          FILES="${{ steps.inputs.outputs.changed_files }}"
+          SECTIONS="${{ steps.inputs.outputs.doc_sections }}"
+
+          # Build markdown lists from JSON arrays
+          FILES_MD=$(echo "$FILES" | python3 -c "
+          import sys, json
+          items = json.load(sys.stdin)
+          print('\n'.join(f'- \`{i}\`' for i in items))
+          " 2>/dev/null || echo "- (could not parse changed_files)")
+
+          SECTIONS_MD=$(echo "$SECTIONS" | python3 -c "
+          import sys, json
+          items = json.load(sys.stdin)
+          print('\n'.join(f'- \`{i}\`' for i in items))
+          " 2>/dev/null || echo "- (could not parse doc_sections)")
+
+          # Apply substitutions
+          sed -i \
+            -e "s|COMMIT_SHA_PLACEHOLDER|${SHA}|g" \
+            -e "s|SOURCE_RUN_PLACEHOLDER|${RUN}|g" \
+            -e "s|COMMIT_MESSAGE_PLACEHOLDER|${MSG}|g" \
+            "$DRAFT_PATH"
+
+          # Insert file/section lists (multi-line — use python3)
+          python3 - "$DRAFT_PATH" "$FILES_MD" "$SECTIONS_MD" <<'PYEOF'
+          import sys
+
+          draft_path, files_md, sections_md = sys.argv[1], sys.argv[2], sys.argv[3]
+          content = open(draft_path).read()
+          content = content.replace('CHANGED_FILES_PLACEHOLDER', files_md)
+          content = content.replace('DOC_SECTIONS_PLACEHOLDER', sections_md)
+          open(draft_path, 'w').write(content)
+          PYEOF
+
+          echo "draft_path=$DRAFT_PATH" >> "$GITHUB_OUTPUT"
+
+      - name: Commit draft file
+        run: |
+          SHA="${{ steps.inputs.outputs.commit_sha }}"
+          RUN="${{ steps.inputs.outputs.run_id }}"
+          FILES="${{ steps.inputs.outputs.changed_files }}"
+          SECTIONS="${{ steps.inputs.outputs.doc_sections }}"
+          ACTOR="${{ github.actor }}"
+
+          git add "${{ steps.draft_file.outputs.draft_path }}"
+          git commit -m "$(cat <<EOF
+          docs(draft): pending update from chat-devdocify@${SHA}
+
+          trigger: repository_dispatch / chat-devdocify-change
+          source-run: ${RUN}
+          source-commit: ${SHA}
+          actor: ${ACTOR}
+          changed-files: ${FILES}
+          doc-sections: ${SECTIONS}
+          review-required: true
+          auto-approval: blocked
+          EOF
+          )"
+
+      - name: Push draft branch
+        run: |
+          git push origin "${{ steps.branch.outputs.branch }}"
+
+      - name: Create draft PR
+        env:
+          GH_TOKEN: ${{ secrets.DOCS_DRAFT_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          SHA="${{ steps.inputs.outputs.commit_sha }}"
+          MSG="${{ steps.inputs.outputs.commit_message }}"
+          RUN="${{ steps.inputs.outputs.run_id }}"
+          FILES="${{ steps.inputs.outputs.changed_files }}"
+          SECTIONS="${{ steps.inputs.outputs.doc_sections }}"
+
+          gh pr create \
+            --draft \
+            --title "docs(draft): pending update from chat-devdocify@${SHA}" \
+            --body "$(cat <<EOF
+          ## Automated docs draft — human approval required
+
+          > **Auto-approval is not permitted.** This PR must be reviewed and approved by a human before merge.
+
+          A change was merged to \`chat-devdocify\` that may affect documentation in this repo.
+          This draft PR was created automatically to surface the impact for human review.
+
+          ### Source change
+
+          | Field | Value |
+          |---|---|
+          | Source repo | \`chat-devdocify\` |
+          | Commit | \`${SHA}\` |
+          | Commit message | ${MSG} |
+          | Workflow run | \`${RUN}\` |
+
+          ### Changed files in chat-devdocify
+
+          \`\`\`
+          ${FILES}
+          \`\`\`
+
+          ### Affected documentation sections
+
+          \`\`\`
+          ${SECTIONS}
+          \`\`\`
+
+          ### Reviewer checklist
+
+          - [ ] Reviewed source commit \`${SHA}\` in \`chat-devdocify\`
+          - [ ] Identified stale or incorrect documentation sections
+          - [ ] Updated affected doc pages (not the draft file)
+          - [ ] Removed the draft file before merge
+          - [ ] Verified \`npm run build\` passes (broken links fail CI)
+          - [ ] Approved this PR (auto-approval is blocked)
+
+          ### If this draft is not actionable
+
+          Close this PR with a rationale comment. To regenerate, re-trigger the
+          \`chat-devdocify-change\` repository dispatch from \`chat-devdocify\`.
+          EOF
+          )" \
+            --base main \
+            --head "${{ steps.branch.outputs.branch }}"
+
+      - name: Emit audit log
+        run: |
+          echo "::notice title=Docs draft PR created::branch=${{ steps.branch.outputs.branch }} source-commit=${{ steps.inputs.outputs.commit_sha }} trigger=${{ github.event_name }} actor=${{ github.actor }} sections=${{ steps.inputs.outputs.doc_sections }}"

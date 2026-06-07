@@ -50,10 +50,33 @@ jobs:
       - name: Lint content (includes + variables)
         run: npm run lint-content
 
+  validate-assistant:
+    name: Validate assistant quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Copy example config if no real config present
+        run: |
+          if [ ! -f assistant.config.json ]; then
+            cp assistant.config.example.json assistant.config.json
+          fi
+
+      - name: Validate assistant quality
+        run: npm run validate-assistant-quality
+
   build:
     name: Build site
     runs-on: ubuntu-latest
-    needs: [typecheck, lint]
+    needs: [typecheck, lint, validate-assistant]
     steps:
       - uses: actions/checkout@v4
 
