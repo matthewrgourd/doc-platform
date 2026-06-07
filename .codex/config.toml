@@ -1,0 +1,32 @@
+# Codex agent configuration for doc-platform
+# See .codex/AGENTS.md for behavioral rules.
+
+[agent]
+# Require explicit approval before running commands outside the workspace.
+approval_policy = "on-request"
+
+# Allow reads and writes within the workspace; block external writes.
+sandbox_mode = "workspace-write"
+
+# Allow live web search (useful for checking library versions and docs).
+web_search = "live"
+
+[context]
+# Files always included in agent context for this repo.
+always_include = [
+  "CLAUDE.md",
+  ".codex/AGENTS.md",
+  "package.json",
+  "_planning/04-delivery/epics-and-stories.md",
+]
+
+[safety]
+# Never commit secrets, real configs, or binary build artifacts.
+deny_commit_patterns = [
+  "assistant.config.json",
+  "saml.config.json",
+  "rbac.config.json",
+  ".env",
+  "*.env",
+  "build/",
+]

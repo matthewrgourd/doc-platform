@@ -214,39 +214,46 @@ function parseArgs(): {configPath: string; printPolicy: boolean} {
   return {configPath, printPolicy};
 }
 
-const {configPath, printPolicy} = parseArgs();
+// Only run CLI when this file is the entry point, not when it is imported as a
+// module by another script (e.g. validate-assistant-quality.ts).
+const isMain = process.argv[1]?.endsWith('validate-assistant-config.ts') ||
+               process.argv[1]?.endsWith('validate-assistant-config.js');
 
-if (printPolicy) {
-  console.log(SAFETY_POLICY_DOC);
-  process.exit(0);
-}
+if (isMain) {
+  const {configPath, printPolicy} = parseArgs();
 
-if (!fs.existsSync(configPath)) {
-  console.error(`[assistant-config] ERROR: config not found: ${configPath}`);
-  console.error('  Copy assistant.config.example.json to assistant.config.json.');
-  process.exit(1);
-}
+  if (printPolicy) {
+    console.log(SAFETY_POLICY_DOC);
+    process.exit(0);
+  }
 
-let config: AssistantConfig;
-try {
-  config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-} catch (err) {
-  console.error(`[assistant-config] ERROR: failed to parse JSON: ${(err as Error).message}`);
-  process.exit(1);
-}
+  if (!fs.existsSync(configPath)) {
+    console.error(`[assistant-config] ERROR: config not found: ${configPath}`);
+    console.error('  Copy assistant.config.example.json to assistant.config.json.');
+    process.exit(1);
+  }
 
-const errors = validateAssistantConfig(config);
-let hasErrors = false;
+  let config: AssistantConfig;
+  try {
+    config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  } catch (err) {
+    console.error(`[assistant-config] ERROR: failed to parse JSON: ${(err as Error).message}`);
+    process.exit(1);
+  }
 
-for (const e of errors) {
-  const prefix = e.level === 'error' ? 'ERROR' : 'WARN';
-  console[e.level === 'error' ? 'error' : 'warn'](`[assistant-config] ${prefix}: ${e.field} — ${e.message}`);
-  if (e.level === 'error') hasErrors = true;
-}
+  const errors = validateAssistantConfig(config);
+  let hasErrors = false;
 
-if (hasErrors) {
-  process.exit(1);
-} else {
-  const warnCount = errors.filter(e => e.level === 'warn').length;
-  console.log(`[assistant-config] config valid — model: ${config.model}, scope: ${config.defaultScope}${warnCount > 0 ? ` (${warnCount} warning(s))` : ''}`);
+  for (const e of errors) {
+    const prefix = e.level === 'error' ? 'ERROR' : 'WARN';
+    console[e.level === 'error' ? 'error' : 'warn'](`[assistant-config] ${prefix}: ${e.field} — ${e.message}`);
+    if (e.level === 'error') hasErrors = true;
+  }
+
+  if (hasErrors) {
+    process.exit(1);
+  } else {
+    const warnCount = errors.filter(e => e.level === 'warn').length;
+    console.log(`[assistant-config] config valid — model: ${config.model}, scope: ${config.defaultScope}${warnCount > 0 ? ` (${warnCount} warning(s))` : ''}`);
+  }
 }
