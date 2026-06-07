@@ -113,11 +113,14 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: build-output
-          path: build/
+      - name: Build
+        run: npm run build
+
+      - name: Start static server
+        run: npm run serve -- --port 3000 --no-open &
+
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:3000 --timeout 30000
 
       - name: Run Lighthouse CI
         run: npx @lhci/cli@0.14.x autorun
