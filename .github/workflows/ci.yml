@@ -113,11 +113,8 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: build-output
-          path: build/
+      - name: Build
+        run: npm run build
 
       - name: Run Lighthouse CI
         run: npx @lhci/cli@0.14.x autorun
