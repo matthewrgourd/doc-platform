@@ -34,3 +34,39 @@ Use explanation pages when you want context on platform design choices and trade
 - Versioned docs changes can be reviewed in pull requests.
 - Build and link checks run before merge.
 - Preview workflows make UI/content regressions visible before production.
+
+## Platform component overview
+
+```plantuml Platform component overview
+@startuml
+skinparam componentStyle rectangle
+skinparam backgroundColor transparent
+
+package "doc-platform" {
+  [Docusaurus site] as site
+  [Route manifest builder] as manifest
+  [OpenAPI normalizer] as openapi
+  [Search index builder] as search
+  [AI assistant embed] as embed
+}
+
+package "chat-devdocify" {
+  [Widget chat API] as api
+  [Claude runtime] as claude
+}
+
+cloud "GitHub" {
+  [CI / CD] as ci
+  [PR previews] as preview
+}
+
+site --> manifest : postbuild
+site --> openapi : postbuild
+site --> search : postbuild
+site --> embed : runtime
+embed --> api : streaming
+api --> claude : prompt
+ci --> site : build + lint
+ci --> preview : deploy
+@enduml
+```

@@ -1,6 +1,7 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import remarkPlantuml from './src/remark/remark-plantuml';
 
 const config: Config = {
   title: 'DevDocify',
@@ -50,6 +51,7 @@ const config: Config = {
           path: 'docs/devdocify',
           routeBasePath: 'docs',
           sidebarPath: './sidebarsDevdocify.ts',
+          remarkPlugins: [remarkPlantuml],
         },
         blog: false,
         theme: {
@@ -67,6 +69,7 @@ const config: Config = {
         path: 'docs/tfl',
         routeBasePath: 'tfl',
         sidebarPath: './sidebarsTfl.ts',
+        remarkPlugins: [remarkPlantuml],
       },
     ],
     [
@@ -76,6 +79,7 @@ const config: Config = {
         path: 'docs/petstore',
         routeBasePath: 'petstore',
         sidebarPath: './sidebarsPetstore.ts',
+        remarkPlugins: [remarkPlantuml],
       },
     ],
     [
@@ -85,6 +89,7 @@ const config: Config = {
         path: 'docs/platzi',
         routeBasePath: 'platzi',
         sidebarPath: './sidebarsPlatzi.ts',
+        remarkPlugins: [remarkPlantuml],
       },
     ],
     [
