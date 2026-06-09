@@ -25,6 +25,7 @@
     "validate-rbac": "npx tsx scripts/validate-rbac-config.ts",
     "validate-analytics-event": "npx tsx scripts/validate-analytics-event.ts",
     "build-search-index": "npx tsx scripts/build-search-index.ts",
+    "push-search-index": "npx tsx scripts/push-search-index.ts",
     "generate-llms-txt": "npx tsx scripts/generate-llms-txt.ts",
     "validate-assistant": "npx tsx scripts/validate-assistant-config.ts",
     "validate-assistant-quality": "npx tsx scripts/validate-assistant-quality.ts"
