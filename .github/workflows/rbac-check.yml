@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   rbac-check:
-    name: RBAC — verify publish permission
+    name: "RBAC: verify publish permission"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
       - name: Check publish permission for ${{ github.actor }}
         run: |
           if [ ! -f rbac.config.json ]; then
-            echo "[rbac-check] No rbac.config.json — skipping (no real config present)"
+            echo "[rbac-check] No rbac.config.json: skipping (no real config present)"
             exit 0
           fi
           npx tsx scripts/check-rbac-permission.ts \

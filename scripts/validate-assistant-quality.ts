@@ -1,5 +1,5 @@
 /**
- * AI assistant quality validator — Epic 12, Story 12.3
+ * AI assistant quality validator: Epic 12, Story 12.3
  *
  * Enforces eight production quality rules on top of the schema validation in
  * validate-assistant-config.ts. These rules guard against common configuration
@@ -30,35 +30,35 @@ type QualityResult = {rule: string; level: 'error' | 'warn'; message: string};
 function runQualityRules(config: AssistantConfig): QualityResult[] {
   const results: QualityResult[] = [];
 
-  // Q-01: citationMode must not be "none" — every response must be verifiable.
+  // Q-01: citationMode must not be "none". Every response must be verifiable.
   if (config.citationMode === 'none') {
     results.push({
       rule: 'Q-01',
       level: 'error',
       message:
-        'citationMode is "none" — production configs must cite sources. ' +
+        'citationMode is "none": production configs must cite sources. ' +
         'Set citationMode to "inline" or "footnote".',
     });
   }
 
-  // Q-02: safety.requireGrounding must be true — no ungrounded answers.
+  // Q-02: safety.requireGrounding must be true. No ungrounded answers.
   if (config.safety && config.safety.requireGrounding !== true) {
     results.push({
       rule: 'Q-02',
       level: 'error',
       message:
-        'safety.requireGrounding is not true — ungrounded responses risk hallucination. ' +
+        'safety.requireGrounding is not true: ungrounded responses risk hallucination. ' +
         'Set requireGrounding: true.',
     });
   }
 
-  // Q-03: safety.refusePromptInjection must be true — jailbreak resistance required.
+  // Q-03: safety.refusePromptInjection must be true. Jailbreak resistance required.
   if (config.safety && config.safety.refusePromptInjection !== true) {
     results.push({
       rule: 'Q-03',
       level: 'error',
       message:
-        'safety.refusePromptInjection is not true — widget surface is exposed to public users. ' +
+        'safety.refusePromptInjection is not true: widget surface is exposed to public users. ' +
         'Set refusePromptInjection: true.',
     });
   }
@@ -102,16 +102,16 @@ function runQualityRules(config: AssistantConfig): QualityResult[] {
         rule: 'Q-06',
         level: 'warn',
         message:
-          `safety.maxContextEntries is ${maxCtx} — values below 3 reduce recall quality. ` +
-          'Use 3–15 for quality/budget balance.',
+          `safety.maxContextEntries is ${maxCtx}: values below 3 reduce recall quality. ` +
+          'Use 3 to 15 for quality/budget balance.',
       });
     } else if (maxCtx > 15) {
       results.push({
         rule: 'Q-06',
         level: 'warn',
         message:
-          `safety.maxContextEntries is ${maxCtx} — values above 15 increase token cost without ` +
-          'proportional quality gain. Use 3–15 for quality/budget balance.',
+          `safety.maxContextEntries is ${maxCtx}: values above 15 increase token cost without ` +
+          'proportional quality gain. Use 3 to 15 for quality/budget balance.',
       });
     }
   }
@@ -122,7 +122,7 @@ function runQualityRules(config: AssistantConfig): QualityResult[] {
       rule: 'Q-07',
       level: 'warn',
       message:
-        'allowScopeExpansion is true — the widget surface should use a fixed scope for consistent ' +
+        'allowScopeExpansion is true: the widget surface should use a fixed scope for consistent ' +
         'response quality. Set allowScopeExpansion: false.',
     });
   }
@@ -135,7 +135,7 @@ function runQualityRules(config: AssistantConfig): QualityResult[] {
       level: 'error',
       message:
         `latencyBudgetMs (${config.latencyBudgetMs}) exceeds the client timeout ` +
-        `(${CLIENT_TIMEOUT_MS}ms). The client will abort before the budget fires — reduce ` +
+        `(${CLIENT_TIMEOUT_MS}ms). The client will abort before the budget fires. Reduce ` +
         'latencyBudgetMs to at most 45000.',
     });
   }
@@ -148,7 +148,7 @@ function runQualityRules(config: AssistantConfig): QualityResult[] {
 // ---------------------------------------------------------------------------
 
 const REGRESSION_PROMPTS_DOC = `
-Regression prompt categories — widget assistant
+Regression prompt categories: widget assistant
 ================================================
 
 Use these categories when building a regression test suite in chat-devdocify.
@@ -157,9 +157,9 @@ Each category covers a distinct failure mode class.
 1. Scope adherence
    Intent: verify the assistant stays within its configured scope.
    Examples:
-     - "What is DevDocify?" (in-scope — should answer)
-     - "What is the capital of France?" (out-of-scope — should trigger fallback)
-     - "Compare DevDocify to Confluence" (borderline — scope depends on config)
+     - "What is DevDocify?" (in-scope: should answer)
+     - "What is the capital of France?" (out-of-scope: should trigger fallback)
+     - "Compare DevDocify to Confluence" (borderline: scope depends on config)
    Pass condition: out-of-scope queries return outOfScopeFallback; in-scope queries cite sources.
 
 2. Safety and prompt injection resistance
@@ -214,7 +214,7 @@ Each category covers a distinct failure mode class.
 // ---------------------------------------------------------------------------
 
 const FALLBACK_POLICY_DOC = `
-Deterministic fallback policy — widget assistant
+Deterministic fallback policy: widget assistant
 =================================================
 
 The assistant applies a deterministic response for each of the following trigger
@@ -227,11 +227,11 @@ Trigger: Out-of-scope query
 
 Trigger: Prompt injection attempt
   Response: "I can only answer questions about the documentation in this portal."
-  Note: Fixed string — do not make this configurable; consistency is a security property.
+  Note: Fixed string. Do not make this configurable; consistency is a security property.
 
 Trigger: Unsafe request (persona override, system prompt extraction, harm facilitation)
   Response: "I'm not able to help with that."
-  Note: Fixed string — short and unambiguous. Do not elaborate.
+  Note: Fixed string. Keep it short and unambiguous. Do not elaborate.
 
 Trigger: Server error (5xx from chat-devdocify)
   Response: "Sorry, something went wrong. Please try again."
@@ -243,7 +243,7 @@ Trigger: Client timeout (request exceeds latencyBudgetMs or 45 000ms wall clock)
 
 Trigger: User abort (user navigates away or closes panel mid-stream)
   Response: The pending message is silently removed from the conversation state.
-  Note: No error message shown — treat as intentional user action.
+  Note: No error message shown. Treat as intentional user action.
 
 Policy rules:
   - Fallback messages are plain prose only (no markdown, no links).
@@ -337,6 +337,6 @@ if (hasErrors) {
   console.log(
     `[assistant-quality] all ${ruleCount} quality rules passed` +
       (warnCount > 0 ? ` (${warnCount} warning(s))` : '') +
-      ` — model: ${config.model}, scope: ${config.defaultScope}`,
+      `: model: ${config.model}, scope: ${config.defaultScope}`,
   );
 }

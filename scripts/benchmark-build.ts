@@ -1,5 +1,5 @@
 /**
- * Full Docusaurus build benchmark — scale validation
+ * Full Docusaurus build benchmark: scale validation
  *
  * Times a production `npm run build` at the current actual scale (baseline)
  * and optionally at synthetic fixture scales. Complements benchmark-manifest.ts,
@@ -21,7 +21,7 @@
  * _planning/05-validation/benchmark-results.md.
  *
  * Warning: each scale run triggers a full Docusaurus webpack build. Allow
- * 3–10+ minutes per run depending on machine speed and scale.
+ * 3 to 10+ minutes per run depending on machine speed and scale.
  */
 
 import {execSync, execFileSync} from 'child_process';
@@ -74,7 +74,7 @@ function generateFixture(scale: number): void {
     for (let p = 0; p < FILES_PER_DIR && filesWritten < scale; p++) {
       const isIndex = p === 0 && s === 0;
       const filename = isIndex ? 'index.md' : `page-${p + 1}.md`;
-      const title = isIndex ? `Benchmark fixture (${scale} files)` : `Section ${s + 1} — Page ${p + 1}`;
+      const title = isIndex ? `Benchmark fixture (${scale} files)` : `Section ${s + 1}: Page ${p + 1}`;
       fs.writeFileSync(
         path.join(sectionDir, filename),
         `---\ntitle: "${title}"\n---\n\n# ${title}\n\nSynthetic fixture content for scale benchmarking.\n`,

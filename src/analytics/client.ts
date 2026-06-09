@@ -1,8 +1,8 @@
 /**
- * Analytics emission client — Epic 5, Story 5.6
+ * Analytics emission client: Epic 5, Story 5.6
  *
  * Wraps @vercel/analytics track() with the structured event schema.
- * Safe to call in SSR — no-ops when window/sessionStorage are unavailable.
+ * Safe to call in SSR: no-ops when window/sessionStorage are unavailable.
  */
 
 import {track} from '@vercel/analytics';
@@ -14,7 +14,7 @@ import {
 } from './types';
 
 // ---------------------------------------------------------------------------
-// Session ID — opaque, non-PII, persisted for the browser session
+// Session ID: opaque, non-PII, persisted for the browser session
 // ---------------------------------------------------------------------------
 
 function getSessionId(): string {

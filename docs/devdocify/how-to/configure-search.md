@@ -2,64 +2,87 @@
 sidebar_position: 4
 slug: /how-to/configure-search
 title: Configure search
-description: "How to configure Algolia DocSearch for a DevDocify site, including application, crawler setup, and contextual search for multi-docset sites."
+description: "How to configure Algolia search for a DevDocify site, including contextual search, structured index generation, and deploy-time index pushes."
 ---
 
 # Configure search
 
-DevDocify uses Algolia DocSearch for full-text search across docsets.
+DevDocify uses Algolia for contextual search across docsets. The site config exposes a search-only API key to the browser, while CI can push a structured index that includes both documentation pages and API operations.
 
 ## Prerequisites
 
-- A deployed docs URL that Algolia can crawl
-- Access to your `docusaurus.config.ts`
-- Access to Algolia DocSearch or Algolia dashboard
+- An Algolia application and index.
+- Access to `docusaurus.config.ts`.
+- A deployed docs URL for production search.
+- An `ALGOLIA_ADMIN_API_KEY` CI secret if you want deploy-time index pushes.
 
-## 1. Apply for DocSearch
+## 1. Configure browser search
 
-Go to [docsearch.algolia.com](https://docsearch.algolia.com) and apply with your site URL.
-
-After approval, Algolia sends your `appId`, `apiKey`, and `indexName`.
-
-If you need immediate access, create an Algolia app directly at [algolia.com](https://www.algolia.com).
-
-## 2. Run a test crawl
-
-Run a manual crawl from the Algolia Crawler dashboard and verify records are indexed before wiring search into the site.
-
-## 3. Add credentials in `docusaurus.config.ts`
-
-Add an `algolia` block inside `themeConfig`:
+In `docusaurus.config.ts`, confirm that `themeConfig.algolia` contains these values:
 
 ```ts
-themeConfig: {
-  algolia: {
-    appId: 'YOUR_APP_ID',
-    apiKey: 'YOUR_SEARCH_API_KEY',
-    indexName: 'YOUR_INDEX_NAME',
-    contextualSearch: true,
-  },
+algolia: {
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_SEARCH_API_KEY',
+  indexName: 'YOUR_INDEX_NAME',
+  contextualSearch: true,
 },
 ```
 
-Use a public search-only key here. Do not commit write/admin API keys.
+Use a search-only API key for `apiKey`. Do not expose an admin key in source code or browser bundles.
 
-## 4. Enable contextual search
+## 2. Build the structured index
 
-For multi-docset sites, `contextualSearch: true` scopes results to the current docset.
-
-If your index doesn't include the Docusaurus facet tags, update your crawler config to include `docusaurus_tag` in `attributesForFaceting`.
-
-## 5. Test locally
+Generate the local search index:
 
 ```bash
-docify dev
+npm run build-search-index
 ```
 
-Use the search box in at least two docsets to confirm scoped results.
+The command writes `build/search-index.json`. The index contains:
+
+| Type | Source |
+|---|---|
+| `doc` | Markdown and MDX pages from each docset |
+| `api-op` | OpenAPI operations from `static/openapi/*.json` |
+
+The `npm run build` command also runs this step through `postbuild`.
+
+## 3. Test the Algolia payload locally
+
+Build the site and run a dry push:
+
+```bash
+npm run build
+npm run push-search-index -- --dry-run
+```
+
+The dry run prints record counts by docset and a sample Algolia record. It does not call the Algolia API.
+
+## 4. Add CI credentials
+
+Add `ALGOLIA_ADMIN_API_KEY` as a GitHub Actions secret. The CI workflow uses it only on pushes to `main`.
+
+Optional environment variables:
+
+| Variable | Purpose |
+|---|---|
+| `ALGOLIA_APP_ID` | Overrides the app ID from the script default. |
+| `ALGOLIA_INDEX_NAME` | Overrides the default `devdocify` index name. |
+
+If `ALGOLIA_ADMIN_API_KEY` is absent, the push job exits successfully without updating Algolia. This keeps forks and local preview branches from failing because they do not have production secrets.
+
+## 5. Verify contextual results
+
+After deployment, test search from at least two docsets:
+
+1. Open `/docs` and search for a DevDocify topic.
+2. Open `/tfl/getting-started` and search for a TfL topic.
+3. Confirm that results stay scoped to the current docset when contextual search is active.
 
 ## Troubleshooting
 
-- No results: verify crawl success and index contents in Algolia.
-- Cross-docset results: confirm `contextualSearch: true` and `docusaurus_tag` faceting.
-- Search box missing: verify `themeConfig.algolia` is present once in the active config.
+- No browser search box: confirm `themeConfig.algolia` is present in `docusaurus.config.ts`.
+- No results after deploy: confirm `ALGOLIA_ADMIN_API_KEY` exists and the push job ran on `main`.
+- Cross-docset results appear: confirm `contextualSearch: true` and `filterOnly(docset)` faceting in `scripts/push-search-index.ts`.
+- API operations are missing: confirm the relevant OpenAPI file exists in `static/openapi/` and rerun `npm run build-search-index`.

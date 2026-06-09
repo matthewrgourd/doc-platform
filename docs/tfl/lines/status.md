@@ -9,7 +9,7 @@ title: Line status by mode
 
 ## OpenAPI description (playground scope)
 
-**[Download `tfl-playground.json`](/openapi/tfl-playground.json)** — documents this path plus `GET /StopPoint/Search/{query}` and `GET /BikePoint` only.
+**[Download `tfl-playground.json`](/openapi/tfl-playground.json)**: documents this path plus `GET /StopPoint/Search/{query}` and `GET /BikePoint` only.
 
 ## Resource
 
@@ -34,8 +34,8 @@ Each item in the response array represents a **line** with identifiers, display 
 
 | Code | Description |
 |---|---|
-| `200` | Success — JSON array of line status objects. |
-| `400` | Bad request — unknown or malformed `modes`. |
+| `200` | Success: JSON array of line status objects. |
+| `400` | Bad request: unknown or malformed `modes`. |
 | `404` | No data for the requested combination. |
 | `429` | Rate limited. |
 | `500` | Server error. |

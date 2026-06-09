@@ -68,4 +68,4 @@ curl "https://petstore3.swagger.io/api/v3/pet/findByStatus?status=available"
 
 ## Related playground operations
 
-- [Login and logout](/petstore/users/login) — `GET /user/login` and `GET /user/logout` in the same OpenAPI file.
+- [Login and logout](/petstore/users/login): `GET /user/login` and `GET /user/logout` in the same OpenAPI file.

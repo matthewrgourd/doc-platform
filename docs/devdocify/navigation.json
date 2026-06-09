@@ -16,6 +16,8 @@
       {"type": "doc", "id": "how-to/add-docset", "label": "Add a docset"},
       {"type": "doc", "id": "how-to/add-playground", "label": "Add an API playground"},
       {"type": "doc", "id": "how-to/configure-search", "label": "Configure search"},
+      {"type": "doc", "id": "how-to/configure-enterprise-controls", "label": "Configure enterprise controls"},
+      {"type": "doc", "id": "how-to/add-plantuml-diagrams", "label": "Add PlantUML diagrams"},
       {"type": "doc", "id": "how-to/deploy", "label": "Deploy to Vercel"}
     ]
   },

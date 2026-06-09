@@ -1,5 +1,5 @@
 /**
- * Route manifest builder — Epic 1, Story 1.1
+ * Route manifest builder: Epic 1, Story 1.1
  *
  * Walks the docs/<docset>/[<version>/]... folder structure and produces a
  * deterministic JSON manifest of all routes, slugs, and docset metadata.
@@ -53,7 +53,7 @@ export type RouteManifest = {
   generatedAt: string;
   docsRoot: string;
   docsets: DocsetManifest[];
-  /** Flat list of all routes across all docsets — convenient for link validation. */
+  /** Flat list of all routes across all docsets. Convenient for link validation. */
   allRoutes: RouteEntry[];
 };
 
@@ -166,7 +166,7 @@ function walkDocset(docsetId: string, docsetDir: string): DocsetManifest {
   // Every docset must have a root index
   const hasIndex = routes.some(r => r.isIndex && r.slug === `/${docsetId}`);
   if (!hasIndex) {
-    warn(`docset "${docsetId}" has no root index.md — navigation may be incomplete`);
+    warn(`docset "${docsetId}" has no root index.md: navigation may be incomplete`);
   }
 
   return {

@@ -1,15 +1,15 @@
 /**
- * Content lint runner — Epic 3, Story 3.3
+ * Content lint runner: Epic 3, Story 3.3
  *
  * Unified lint gate for include and variable composition rules.
  * Runs all rules against the docs tree and reports violations with
  * file path and line number. Exits 1 if any errors are found.
  *
  * Rules:
- *   INC-01 — All include directives must reference a registered snippet
- *   INC-02 — No circular include chains
- *   VAR-01 — All {{variables}} must be defined in the scope chain
- *   VAR-02 — Variable values must be string or number (no objects/arrays)
+ *   INC-01: All include directives must reference a registered snippet
+ *   INC-02: No circular include chains
+ *   VAR-01: All {{variables}} must be defined in the scope chain
+ *   VAR-02: Variable values must be string or number (no objects/arrays)
  *
  * Usage:
  *   npx tsx scripts/lint-content.ts
@@ -161,7 +161,7 @@ function lintIncludes(
         level: 'error',
         file: relPath,
         line: i + 1,
-        message: `snippet not in registry: "${includePath}" — add to docs/_snippets/`,
+        message: `snippet not in registry: "${includePath}". Add to docs/_snippets/`,
       });
       continue;
     }
@@ -203,13 +203,13 @@ function lintVariables(
 
       if (!isVariableDefined(name, chain)) {
         if (fallback !== undefined) {
-          // Has fallback — warn only
+          // Has fallback: warn only
           violations.push({
             rule: 'VAR-01',
             level: 'warn',
             file: relPath,
             line: i + 1,
-            message: `variable "{{${name}}}" undefined — inline fallback "${fallback}" will be used`,
+            message: `variable "{{${name}}}" undefined: inline fallback "${fallback}" will be used`,
           });
         } else {
           violations.push({

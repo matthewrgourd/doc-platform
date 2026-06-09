@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import styles from './styles.module.css';
 
-// Inline markdown renderer — no external deps, handles Claude's common output patterns
+// Inline markdown renderer: no external deps, handles Claude's common output patterns
 function renderInline(text: string, key: string): React.ReactNode {
   const parts = text.split(/(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|`[^`]+`|\*[^*\n]+\*)/g);
   return (

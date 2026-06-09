@@ -1,5 +1,5 @@
 /**
- * Operation patch overlay mechanism — Epic 2, Story 2.2
+ * Operation patch overlay mechanism: Epic 2, Story 2.2
  *
  * Reads a normalized OpenAPI spec and an overlay file, merges patches
  * onto matching operations, and emits the merged result.
@@ -118,7 +118,7 @@ function validateOverlay(overlay: Overlay): Diagnostic[] {
   }
 
   if (!Array.isArray(overlay.patches) || overlay.patches.length === 0) {
-    diags.push({level: 'warn', context: 'overlay.patches', message: 'no patches defined — overlay has no effect'});
+    diags.push({level: 'warn', context: 'overlay.patches', message: 'no patches defined: overlay has no effect'});
     return diags;
   }
 
@@ -205,7 +205,7 @@ function applyOverlay(spec: OpenApiSpec, overlay: Overlay): {spec: OpenApiSpec; 
           diags.push({
             level: 'warn',
             context: `patch[${patch.operationId}].parameters[${paramPatch.name}]`,
-            message: `parameter "${paramPatch.name}" not found in operation — patch has no effect`,
+            message: `parameter "${paramPatch.name}" not found in operation: patch has no effect`,
           });
           continue;
         }
@@ -271,7 +271,7 @@ const overlayDiags = validateOverlay(overlay);
 let hasErrors = false;
 for (const d of overlayDiags) {
   const prefix = d.level === 'error' ? 'ERROR' : 'WARN';
-  console[d.level === 'error' ? 'error' : 'warn'](`[apply-overlay] ${prefix}: ${d.context} — ${d.message}`);
+  console[d.level === 'error' ? 'error' : 'warn'](`[apply-overlay] ${prefix}: ${d.context}: ${d.message}`);
   if (d.level === 'error') hasErrors = true;
 }
 if (hasErrors) process.exit(1);
@@ -281,7 +281,7 @@ const {spec: merged, diagnostics: applyDiags} = applyOverlay(spec, overlay);
 
 for (const d of applyDiags) {
   const prefix = d.level === 'error' ? 'ERROR' : 'WARN';
-  console[d.level === 'error' ? 'error' : 'warn'](`[apply-overlay] ${prefix}: ${d.context} — ${d.message}`);
+  console[d.level === 'error' ? 'error' : 'warn'](`[apply-overlay] ${prefix}: ${d.context}: ${d.message}`);
   if (d.level === 'error') hasErrors = true;
 }
 if (hasErrors) process.exit(1);

@@ -9,7 +9,7 @@ title: Bike points
 
 ## OpenAPI description (playground scope)
 
-**[Download `tfl-playground.json`](/openapi/tfl-playground.json)** — includes all playground operations.
+**[Download `tfl-playground.json`](/openapi/tfl-playground.json)**: includes all playground operations.
 
 ## Resource
 
@@ -31,9 +31,9 @@ None required for this list operation on the public API.
 
 | Code | Description |
 |---|---|
-| `200` | Success — JSON array of bike point objects. |
-| `429` | Rate limited — slow down; see [Authentication](./authentication). |
-| `500` | Server error — retry with backoff. |
+| `200` | Success: JSON array of bike point objects. |
+| `429` | Rate limited: slow down; see [Authentication](./authentication). |
+| `500` | Server error: retry with backoff. |
 
 ## Example request
 
@@ -43,5 +43,5 @@ curl "https://api.tfl.gov.uk/BikePoint"
 
 ## Related
 
-- [Quickstart](./quickstart) — runs this operation as step 3
-- [Search stops](/tfl/stoppoints/search) — companion playground operation for stop search
+- [Quickstart](./quickstart): runs this operation as step 3
+- [Search stops](/tfl/stoppoints/search): companion playground operation for stop search

@@ -1,4 +1,4 @@
-# DevDocify — agent guidance
+# DevDocify: agent guidance
 
 This file configures agent behavior for the `doc-platform` repository.
 It supplements `CLAUDE.md` and applies to any AI coding agent working in this repo.
@@ -15,7 +15,7 @@ or config pattern, plan before coding:
 2. Read the relevant worklog (e.g. `post-mvp-epic-N-story-N-M-worklog.md`) to
    understand exactly what was specified.
 3. Read existing files that the new work depends on before writing new code.
-4. Implement only what the story specifies — do not expand scope.
+4. Implement only what the story specifies. Do not expand scope.
 
 After implementing:
 - Confirm `npm run typecheck` passes.
@@ -44,7 +44,7 @@ Before merging any change that modifies OpenAPI specs, auth config, or API playg
 
 - [ ] No real credentials, tokens, or private URLs in committed files.
 - [ ] No `authorization` header examples with real values in OpenAPI specs.
-- [ ] `assistant.config.json` is gitignored — never commit the real config.
+- [ ] `assistant.config.json` is gitignored. Never commit the real config.
 - [ ] SAML and RBAC config files (`saml.config.json`, `rbac.config.json`) are gitignored.
 - [ ] Any new environment variable is documented in the relevant example config file.
 - [ ] `validate-saml-config.ts`, `validate-rbac-config.ts`, and `validate-assistant-quality.ts`

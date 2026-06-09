@@ -104,7 +104,7 @@ jobs:
               sha: context.payload.pull_request.head.sha,
               state: 'failure',
               context: 'preview / vercel',
-              description: 'Preview failed — check workflow logs',
+              description: 'Preview failed: check workflow logs',
             });
 
       # Post or update a single comment per PR with the preview link

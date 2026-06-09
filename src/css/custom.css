@@ -114,7 +114,7 @@
   transform: rotate(90deg);
 }
 
-/* Content — compact heading scale (Stripe-style hierarchy) */
+/* Content: compact heading scale (Stripe-style hierarchy) */
 .markdown h1:first-child {
   font-size: 1.75rem;
   margin-bottom: 0.5rem;

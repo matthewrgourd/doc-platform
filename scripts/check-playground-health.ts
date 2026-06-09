@@ -1,5 +1,5 @@
 /**
- * API playground health check — Epic 2, Story 2.3
+ * API playground health check: Epic 2, Story 2.3
  *
  * Probes curated API endpoints and reports pass/fail per endpoint.
  * Designed to run in CI to catch broken Try-it flows before release.
@@ -16,8 +16,8 @@
  *   npx tsx scripts/check-playground-health.ts --timeout 15000
  *
  * Exit codes:
- *   0 — all probes passed
- *   1 — one or more probes failed
+ *   0: all probes passed
+ *   1: one or more probes failed
  */
 
 import fs from 'fs';
@@ -238,9 +238,9 @@ async function main(): Promise<void> {
     if (result.status === 'pass') {
       console.log(`PASS  (HTTP ${result.httpStatus}, ${result.durationMs}ms)`);
     } else if (probeConfig.allowedToFail) {
-      console.log(`WARN  ${result.message ? `— ${result.message}` : ''}  (${result.durationMs}ms) [allowed to fail]`);
+      console.log(`WARN  ${result.message ? `: ${result.message}` : ''}  (${result.durationMs}ms) [allowed to fail]`);
     } else {
-      console.log(`FAIL  ${result.message ? `— ${result.message}` : ''}  (${result.durationMs}ms)`);
+      console.log(`FAIL  ${result.message ? `: ${result.message}` : ''}  (${result.durationMs}ms)`);
       exitCode = 1;
       if (failFast) break;
     }

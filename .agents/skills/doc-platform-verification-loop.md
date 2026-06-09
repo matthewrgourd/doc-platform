@@ -26,7 +26,7 @@ Match the change to the relevant subset of checks. Do not run all checks for eve
 
 ### 2. Full verification sequence (release candidate)
 
-Run in this order — stop and fix on first failure:
+Run in this order. Stop and fix on first failure:
 
 ```bash
 npm run typecheck
@@ -47,9 +47,9 @@ For each check that ran, note in the PR description:
 Example format:
 ```
 ## Verification evidence
-- `npm run typecheck` — pass
-- `npm run build` — pass, 0 errors, 2 warnings (pre-existing CSS minimizer)
-- `npm run health-check` — pass, 6/6 endpoints returned 200
+- `npm run typecheck`: pass
+- `npm run build`: pass, 0 errors, 2 warnings (pre-existing CSS minimizer)
+- `npm run health-check`: pass, 6/6 endpoints returned 200
 ```
 
 ### 4. Preview link (Vercel)
@@ -65,12 +65,12 @@ Attach the preview URL to the PR. Verify:
 
 If a CI check fails:
 
-1. Read the full job log — do not guess the cause from the job name alone.
+1. Read the full job log. Do not guess the cause from the job name alone.
 2. Check if the failure is pre-existing on `main` before assuming it is caused by your change.
 3. For build failures: run `npm run build` locally to reproduce.
 4. For link check failures: check `onBrokenLinks` setting in `docusaurus.config.ts`.
 5. For health check failures: check `static/openapi/*.json` against the live endpoints.
-6. For typecheck failures: check the import path — scripts use `.js` extensions in imports
+6. For typecheck failures: check the import path. Scripts use `.js` extensions in imports
    (TypeScript resolves these to `.ts` at compile time with `moduleResolution: bundler`).
 
 ## Outputs

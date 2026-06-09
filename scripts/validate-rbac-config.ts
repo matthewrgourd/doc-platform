@@ -1,14 +1,14 @@
 /**
- * RBAC role schema and validator — Epic 5, Story 5.2
+ * RBAC role schema and validator: Epic 5, Story 5.2
  *
  * Defines the four platform roles, their capability sets, and validates
  * a role assignment config file at build/deploy time.
  *
  * Roles (highest to lowest privilege):
- *   admin       — full platform control; configure SSO, manage roles, publish
- *   maintainer  — manage content and publish; cannot change platform config
- *   contributor — draft and edit content; cannot publish or change config
- *   viewer      — read-only access to protected docsets
+ *   admin: full platform control; configure SSO, manage roles, publish
+ *   maintainer: manage content and publish; cannot change platform config
+ *   contributor: draft and edit content; cannot publish or change config
+ *   viewer: read-only access to protected docsets
  *
  * Config file: rbac.config.json at the project root.
  *
@@ -45,11 +45,11 @@ export type RbacAssignment = {
   /** GitHub username or team slug (prefix team slugs with "team:"). */
   principal: string;
   role: RbacRole;
-  /** Optional scope — if omitted, applies to all docsets. */
+  /** Optional scope: if omitted, applies to all docsets. */
   docsetId?: string;
-  /** ISO 8601 timestamp — for audit trail. */
+  /** ISO 8601 timestamp for audit trail. */
   assignedAt: string;
-  /** Who made this assignment — for audit trail. */
+  /** Who made this assignment for audit trail. */
   assignedBy: string;
 };
 
@@ -139,7 +139,7 @@ export function validateRbacConfig(config: RbacConfig): ConfigError[] {
   }
 
   if (config.assignments.length === 0) {
-    errors.push({level: 'warn', field: 'assignments', message: 'no role assignments defined — portal has no access controls'});
+    errors.push({level: 'warn', field: 'assignments', message: 'no role assignments defined: portal has no access controls'});
   }
 
   // Ensure at least one admin
@@ -153,19 +153,19 @@ export function validateRbacConfig(config: RbacConfig): ConfigError[] {
     const ctx = `assignments[${i}]`;
 
     if (!a.principal) {
-      errors.push({level: 'error', field: `${ctx}.principal`, message: 'required — GitHub username or "team:<slug>"'});
+      errors.push({level: 'error', field: `${ctx}.principal`, message: 'required: GitHub username or "team:<slug>"'});
     }
 
     if (!VALID_ROLES.includes(a.role)) {
-      errors.push({level: 'error', field: `${ctx}.role`, message: `"${a.role}" is not a valid role — must be one of: ${VALID_ROLES.join(', ')}`});
+      errors.push({level: 'error', field: `${ctx}.role`, message: `"${a.role}" is not a valid role. Must be one of: ${VALID_ROLES.join(', ')}`});
     }
 
     if (!a.assignedAt || !ISO_8601_RE.test(a.assignedAt)) {
-      errors.push({level: 'error', field: `${ctx}.assignedAt`, message: 'required — ISO 8601 timestamp (e.g. 2026-04-03T09:00:00Z)'});
+      errors.push({level: 'error', field: `${ctx}.assignedAt`, message: 'required: ISO 8601 timestamp (e.g. 2026-04-03T09:00:00Z)'});
     }
 
     if (!a.assignedBy) {
-      errors.push({level: 'error', field: `${ctx}.assignedBy`, message: 'required — GitHub username of assigner (audit trail)'});
+      errors.push({level: 'error', field: `${ctx}.assignedBy`, message: 'required: GitHub username of assigner (audit trail)'});
     }
   }
 
@@ -218,7 +218,7 @@ let hasErrors = false;
 
 for (const e of errors) {
   const prefix = e.level === 'error' ? 'ERROR' : 'WARN';
-  console[e.level === 'error' ? 'error' : 'warn'](`[rbac-config] ${prefix}: ${e.field} — ${e.message}`);
+  console[e.level === 'error' ? 'error' : 'warn'](`[rbac-config] ${prefix}: ${e.field}: ${e.message}`);
   if (e.level === 'error') hasErrors = true;
 }
 
@@ -227,5 +227,5 @@ if (hasErrors) {
 } else {
   const warnCount = errors.filter(e => e.level === 'warn').length;
   const assignmentCount = config.assignments?.length ?? 0;
-  console.log(`[rbac-config] config valid — ${assignmentCount} assignment(s)${warnCount > 0 ? ` (${warnCount} warning(s))` : ''}`);
+  console.log(`[rbac-config] config valid: ${assignmentCount} assignment(s)${warnCount > 0 ? ` (${warnCount} warning(s))` : ''}`);
 }

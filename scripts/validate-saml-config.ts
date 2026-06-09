@@ -1,9 +1,9 @@
 /**
- * SAML SSO configuration schema and validator — Epic 5, Story 5.1
+ * SAML SSO configuration schema and validator: Epic 5, Story 5.1
  *
  * Defines the config shape for SAML 2.0 SSO integration and validates it
  * at build/deploy time. Designed to be consumed by a server-side auth layer
- * (not the static Docusaurus build itself — SSO enforcement happens at the
+ * (not the static Docusaurus build itself. SSO enforcement happens at the
  * hosting/proxy layer).
  *
  * Config file: saml.config.json at the project root (gitignored in production;
@@ -35,9 +35,9 @@ export type SamlDocsetRule = {
 export type SamlConfig = {
   /**
    * Whether SSO is enabled and what scope it protects.
-   *   none    — SSO configured but not enforced (dry-run mode)
-   *   portal  — entire portal requires authentication
-   *   docset  — per-docset rules in `docsetRules` apply
+   *   none: SSO configured but not enforced (dry-run mode)
+   *   portal: entire portal requires authentication
+   *   docset: per-docset rules in `docsetRules` apply
    */
   protectedMode: SamlProtectedMode;
 
@@ -45,12 +45,12 @@ export type SamlConfig = {
   entityId: string;
 
   /**
-   * Assertion Consumer Service URL — where the IdP posts the SAML response.
+   * Assertion Consumer Service URL where the IdP posts the SAML response.
    * Must be HTTPS in production.
    */
   acsUrl: string;
 
-  /** IdP metadata — provide either metadataUrl OR the inline fields below. */
+  /** IdP metadata: provide either metadataUrl OR the inline fields below. */
   idp: {
     /** URL to fetch IdP metadata XML (auto-refreshed on startup). */
     metadataUrl?: string;
@@ -93,13 +93,13 @@ export function validateSamlConfig(config: SamlConfig): ConfigError[] {
   }
 
   if (!config.entityId) {
-    errors.push({level: 'error', field: 'entityId', message: 'required — must be a URI identifying your SP'});
+    errors.push({level: 'error', field: 'entityId', message: 'required: must be a URI identifying your SP'});
   } else if (!config.entityId.startsWith('http')) {
     errors.push({level: 'warn', field: 'entityId', message: 'should be a URI (e.g. https://your-domain.com/saml/sp)'});
   }
 
   if (!config.acsUrl) {
-    errors.push({level: 'error', field: 'acsUrl', message: 'required — Assertion Consumer Service URL'});
+    errors.push({level: 'error', field: 'acsUrl', message: 'required: Assertion Consumer Service URL'});
   } else if (!config.acsUrl.startsWith('https://')) {
     errors.push({level: 'warn', field: 'acsUrl', message: 'should use HTTPS in production'});
   }
@@ -124,7 +124,7 @@ export function validateSamlConfig(config: SamlConfig): ConfigError[] {
       errors.push({
         level: 'error',
         field: 'docsetRules',
-        message: 'required when protectedMode is "docset" — define at least one rule',
+        message: 'required when protectedMode is "docset": define at least one rule',
       });
     } else {
       const seenIds = new Set<string>();
@@ -140,7 +140,7 @@ export function validateSamlConfig(config: SamlConfig): ConfigError[] {
   }
 
   if (config.sessionDurationSeconds !== undefined && config.sessionDurationSeconds < 300) {
-    errors.push({level: 'warn', field: 'sessionDurationSeconds', message: 'very short session (<5 min) — users will re-authenticate frequently'});
+    errors.push({level: 'warn', field: 'sessionDurationSeconds', message: 'very short session (<5 min): users will re-authenticate frequently'});
   }
 
   if (!config.auditLoginFailures) {
@@ -184,7 +184,7 @@ let hasErrors = false;
 
 for (const e of errors) {
   const prefix = e.level === 'error' ? 'ERROR' : 'WARN';
-  console[e.level === 'error' ? 'error' : 'warn'](`[saml-config] ${prefix}: ${e.field} — ${e.message}`);
+  console[e.level === 'error' ? 'error' : 'warn'](`[saml-config] ${prefix}: ${e.field}: ${e.message}`);
   if (e.level === 'error') hasErrors = true;
 }
 
@@ -192,5 +192,5 @@ if (hasErrors) {
   process.exit(1);
 } else {
   const warnCount = errors.filter(e => e.level === 'warn').length;
-  console.log(`[saml-config] config valid — mode: ${config.protectedMode}${warnCount > 0 ? ` (${warnCount} warning(s))` : ''}`);
+  console.log(`[saml-config] config valid: mode: ${config.protectedMode}${warnCount > 0 ? ` (${warnCount} warning(s))` : ''}`);
 }

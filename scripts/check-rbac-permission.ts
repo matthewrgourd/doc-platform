@@ -1,5 +1,5 @@
 /**
- * RBAC permission check — Epic 5, Story 5.5
+ * RBAC permission check: Epic 5, Story 5.5
  *
  * Checks whether a named GitHub actor has a required capability according to
  * rbac.config.json. Exits 0 if authorised, exits 1 if not.
@@ -19,7 +19,7 @@
  *
  * Team membership:
  *   Principals prefixed with "team:" are matched against the actor string
- *   directly — the caller must expand team membership before invoking this script
+ *   directly. The caller must expand team membership before invoking this script
  *   (GitHub Actions: use the GitHub API or a team-membership action to resolve teams).
  *   For CI simplicity, direct username assignments are checked first.
  */
@@ -47,7 +47,7 @@ function checkPermission(
   capability: RbacCapability,
   docsetId?: string,
 ): CheckResult {
-  // Collect all assignments matching this actor (direct username only — see JSDoc on team:)
+  // Collect all assignments matching this actor (direct username only; see JSDoc on team:)
   const matching = config.assignments.filter(a => {
     if (a.principal === actor) return true;
     // Team slug match: the caller is responsible for resolving team membership.
@@ -162,7 +162,7 @@ try {
 const validationErrors = validateRbacConfig(config);
 const hardErrors = validationErrors.filter(e => e.level === 'error');
 if (hardErrors.length > 0) {
-  console.error('[rbac-check] ERROR: rbac.config.json is invalid — run npm run validate-rbac first.');
+  console.error('[rbac-check] ERROR: rbac.config.json is invalid. Run npm run validate-rbac first.');
   for (const e of hardErrors) {
     console.error(`  ${e.field}: ${e.message}`);
   }
@@ -173,7 +173,7 @@ const result = checkPermission(config, actor, capability as RbacCapability, docs
 
 if (result.authorised) {
   const scopeNote = result.scope === 'docset' && docsetId ? ` (docset: ${docsetId})` : ' (portal-level)';
-  console.log(`[rbac-check] AUTHORISED: ${actor} — role: ${result.role}${scopeNote} — capability: ${capability}`);
+  console.log(`[rbac-check] AUTHORISED: ${actor}: role: ${result.role}${scopeNote}; capability: ${capability}`);
   process.exit(0);
 } else {
   const denied = result as {authorised: false; reason: string};

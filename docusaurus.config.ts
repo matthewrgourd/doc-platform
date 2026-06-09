@@ -103,7 +103,7 @@ const config: Config = {
       },
     ],
     // Benchmark mode: inject a synthetic fixture docset when BENCHMARK_SCALE is set.
-    // Used by scripts/benchmark-build.ts — never active in normal builds.
+    // Used by scripts/benchmark-build.ts. Never active in normal builds.
     ...(process.env.BENCHMARK_SCALE
       ? [
           [
@@ -214,7 +214,7 @@ const config: Config = {
     },
     algolia: {
       appId: '56LVNO7TSU',
-      // Search-only API key — safe to expose in the browser bundle.
+      // Search-only API key: safe to expose in the browser bundle.
       // The admin key for index writes lives in ALGOLIA_ADMIN_API_KEY (CI secret only).
       apiKey: '3f045ef234e7f78945663bb72374ddad',
       indexName: 'devdocify',
@@ -222,7 +222,7 @@ const config: Config = {
       // stay relevant to the page the user is viewing.
       contextualSearch: true,
       searchParameters: {
-        // Attributes returned from Algolia — aligned with push-search-index.ts record schema.
+        // Attributes returned from Algolia: aligned with push-search-index.ts record schema.
         attributesToRetrieve: [
           'type',
           'docset',

@@ -1,5 +1,5 @@
 /**
- * Analytics event types — Epic 5, Story 5.6
+ * Analytics event types: Epic 5, Story 5.6
  *
  * Frontend-safe re-declaration of the event schema defined in
  * scripts/validate-analytics-event.ts. Kept separate so the frontend build
@@ -23,7 +23,7 @@ export type ActorType = 'user' | 'bot' | 'anonymous';
 
 export type AnalyticsActor = {
   type: ActorType;
-  /** Opaque session ID — must not be a PII identifier. */
+  /** Opaque session ID: must not be a PII identifier. */
   sessionId: string;
   /** RBAC role at time of event, if authenticated. */
   role?: string;

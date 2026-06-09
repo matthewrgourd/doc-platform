@@ -1,5 +1,5 @@
 /**
- * llms.txt generator — Epic 6, Story 6.2
+ * llms.txt generator: Epic 6, Story 6.2
  *
  * Generates /llms.txt at the site root on build. The llms.txt format
  * (llmstxt.org) is a Markdown file that helps LLMs understand a site's
@@ -225,7 +225,7 @@ const content = buildLlmsTxt(manifest, searchIndex, baseUrl);
 const issues = validateLlmsTxt(content);
 if (issues.length > 0) {
   for (const issue of issues) {
-    console.error(`[llms-txt] ERROR: format validation — ${issue}`);
+    console.error(`[llms-txt] ERROR: format validation: ${issue}`);
   }
   process.exit(1);
 }
@@ -235,7 +235,7 @@ const linkCount = (content.match(/^- \[/gm) ?? []).length;
 
 if (dryRun) {
   console.log(content);
-  console.log(`\n[llms-txt] dry run — ${lineCount} lines, ${linkCount} links (no output written)`);
+  console.log(`\n[llms-txt] dry run: ${lineCount} lines, ${linkCount} links (no output written)`);
 } else {
   const outputDir = path.dirname(OUTPUT_PATH);
   if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, {recursive: true});
