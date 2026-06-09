@@ -1,12 +1,12 @@
 name: RBAC permission check
 
-# Runs on push to main before the deploy jobs in ci.yml.
-# Verifies that the actor pushing to main has the content.publish capability.
+# Runs on push to main. Verifies that the actor pushing to main has the
+# content.publish capability according to rbac.config.json.
 #
-# If rbac.config.json is absent (e.g. in forks or initial setup), the example
-# config is used as a fallback so CI does not fail unexpectedly.
-# In production, rbac.config.json should be provided as a repository secret
-# or environment file and written during the checkout step.
+# If rbac.config.json is absent the check is skipped (exit 0). The example
+# config is a documentation template, not a real config, and must not be used
+# for enforcement. Provide a real rbac.config.json via a repository secret or
+# environment file to activate enforcement.
 
 on:
   push:
@@ -31,15 +31,12 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Use example RBAC config if no real config present
-        run: |
-          if [ ! -f rbac.config.json ]; then
-            echo "[rbac-check] No rbac.config.json found — using example config (CI fallback)"
-            cp rbac.config.example.json rbac.config.json
-          fi
-
       - name: Check publish permission for ${{ github.actor }}
         run: |
+          if [ ! -f rbac.config.json ]; then
+            echo "[rbac-check] No rbac.config.json — skipping (no real config present)"
+            exit 0
+          fi
           npx tsx scripts/check-rbac-permission.ts \
             --actor "${{ github.actor }}" \
             --capability content.publish \
