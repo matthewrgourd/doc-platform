@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Swagger Petstore — DevDocify playground",
+    "title": "Swagger Petstore: DevDocify playground",
     "version": "playground-1.0.0",
     "description": "OpenAPI description for the operations exposed in the DevDocify Petstore API playground.\n\n**Scope:** Covers `GET /pet/findByStatus`, `POST /pet`, `PUT /pet`, `DELETE /pet/{petId}`, `GET /user/login`, and `GET /user/logout`. All operations run against the public sample server at `petstore3.swagger.io` without authentication.\n\n**Audience:** Technical writers, client developers, and tooling. Use it to generate snippets, mocks, or contract tests for the demo surface only.\n\n**Encoding:** Requests and responses use UTF-8. Successful JSON responses use `application/json` unless noted."
   },
@@ -255,7 +255,7 @@
       "get": {
         "tags": ["User session"],
         "summary": "Log in with username and password (sample)",
-        "description": "Returns a **plain-text session token** in the response body for the supplied credentials.\n\n**Warning:** Credentials are passed as **query parameters**, which appear in logs and browser history. This matches the upstream Swagger Petstore sample for teaching only — **do not** copy this pattern for production APIs.\n\n**Response headers:** On success, the sample server may include rate-limit and session expiry hints (see response `headers` below).",
+        "description": "Returns a **plain-text session token** in the response body for the supplied credentials.\n\n**Warning:** Credentials are passed as **query parameters**, which appear in logs and browser history. This matches the upstream Swagger Petstore sample for teaching only. **Do not** copy this pattern for production APIs.\n\n**Response headers:** On success, the sample server may include rate-limit and session expiry hints (see response `headers` below).",
         "operationId": "loginUser",
         "parameters": [
           {

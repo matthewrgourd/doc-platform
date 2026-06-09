@@ -271,7 +271,7 @@ src/
   analytics/
     types.ts                 Frontend-safe analytics event type declarations
     client.ts                emitEvent() backed by @vercel/analytics track(); SSR-safe
-    hooks.ts                 usePageViewAnalytics() — emits page.view on route change
+    hooks.ts                 usePageViewAnalytics(): emits page.view on route change
   components/
     ApiReferenceClient.tsx   Scalar renderer used by API playground routes
   css/custom.css             Custom theme (Stripe-inspired heading hierarchy)

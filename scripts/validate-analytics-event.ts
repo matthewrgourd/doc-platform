@@ -1,5 +1,5 @@
 /**
- * Analytics event schema and validator — Epic 5, Story 5.3
+ * Analytics event schema and validator: Epic 5, Story 5.3
  *
  * Defines the platform analytics event model. Events are emitted by the
  * portal runtime and can be forwarded to any analytics backend
@@ -9,13 +9,13 @@
  * processing events to detect breaking changes.
  *
  * Event types:
- *   page.view          — user viewed a doc page
- *   search.query       — user submitted a search query
- *   search.result.click — user clicked a search result
- *   playground.request — user triggered a Try-it request
- *   playground.error   — Try-it request returned a non-2xx response
- *   nav.version.switch — user switched doc version
- *   link.broken        — a broken internal link was detected at render time
+ *   page.view: user viewed a doc page
+ *   search.query: user submitted a search query
+ *   search.result.click: user clicked a search result
+ *   playground.request: user triggered a Try-it request
+ *   playground.error: Try-it request returned a non-2xx response
+ *   nav.version.switch: user switched doc version
+ *   link.broken: a broken internal link was detected at render time
  *
  * Usage:
  *   npx tsx scripts/validate-analytics-event.ts <event.json>
@@ -44,7 +44,7 @@ export type ActorType = 'user' | 'bot' | 'anonymous';
 
 export type AnalyticsActor = {
   type: ActorType;
-  /** Opaque session ID — must not be a PII identifier. */
+  /** Opaque session ID: must not be a PII identifier. */
   sessionId: string;
   /** RBAC role at time of event, if authenticated. */
   role?: string;
@@ -110,7 +110,7 @@ export type AnalyticsEventPayload =
   | BrokenLinkPayload;
 
 export type AnalyticsEvent = {
-  /** Schema version — increment on breaking payload changes. */
+  /** Schema version: increment on breaking payload changes. */
   schemaVersion: string;
   /** Event type identifier. */
   type: AnalyticsEventType;
@@ -156,11 +156,11 @@ export function validateAnalyticsEvent(event: AnalyticsEvent): ValidationError[]
   }
 
   if (!VALID_EVENT_TYPES.includes(event.type)) {
-    errors.push({level: 'error', field: 'type', message: `"${event.type}" is not a valid event type — must be one of: ${VALID_EVENT_TYPES.join(', ')}`});
+    errors.push({level: 'error', field: 'type', message: `"${event.type}" is not a valid event type. Must be one of: ${VALID_EVENT_TYPES.join(', ')}`});
   }
 
   if (!event.timestamp || !ISO_8601_RE.test(event.timestamp)) {
-    errors.push({level: 'error', field: 'timestamp', message: 'required — ISO 8601 UTC (e.g. 2026-04-03T09:00:00Z)'});
+    errors.push({level: 'error', field: 'timestamp', message: 'required: ISO 8601 UTC (e.g. 2026-04-03T09:00:00Z)'});
   }
 
   if (!event.actor) {
@@ -170,7 +170,7 @@ export function validateAnalyticsEvent(event: AnalyticsEvent): ValidationError[]
       errors.push({level: 'error', field: 'actor.type', message: `must be one of: ${VALID_ACTOR_TYPES.join(', ')}`});
     }
     if (!event.actor.sessionId) {
-      errors.push({level: 'error', field: 'actor.sessionId', message: 'required — use an opaque session ID, not PII'});
+      errors.push({level: 'error', field: 'actor.sessionId', message: 'required: use an opaque session ID, not PII'});
     }
   }
 
@@ -257,12 +257,12 @@ let hasErrors = false;
 
 for (const e of errors) {
   const prefix = e.level === 'error' ? 'ERROR' : 'WARN';
-  console[e.level === 'error' ? 'error' : 'warn'](`[analytics-event] ${prefix}: ${e.field} — ${e.message}`);
+  console[e.level === 'error' ? 'error' : 'warn'](`[analytics-event] ${prefix}: ${e.field}: ${e.message}`);
   if (e.level === 'error') hasErrors = true;
 }
 
 if (hasErrors) {
   process.exit(1);
 } else {
-  console.log(`[analytics-event] event valid — type: ${event.type}`);
+  console.log(`[analytics-event] event valid: type: ${event.type}`);
 }

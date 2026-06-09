@@ -1,11 +1,11 @@
 ---
 sidebar_position: 2
 slug: /how-to/add-playground
-title: How to add an API playground
+title: Add an API playground
 description: "Step-by-step instructions for adding an interactive API playground to a DevDocify docset."
 ---
 
-# How to add an API playground
+# Add an API playground
 
 Follow these steps to add an interactive API playground to a DevDocify docset.
 

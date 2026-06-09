@@ -1,10 +1,10 @@
 /**
- * Include resolution engine — Epic 3, Story 3.1
+ * Include resolution engine: Epic 3, Story 3.1
  *
  * Resolves <!-- include: snippets/<name>.md --> directives in Markdown/MDX
  * files. Snippets must live in docs/_snippets/ (the approved registry).
  *
- * Include syntax (HTML comment — invisible to Docusaurus renderer):
+ * Include syntax (HTML comment, invisible to Docusaurus renderer):
  *   <!-- include: snippets/api-key-warning.md -->
  *
  * Behaviour:
@@ -136,7 +136,7 @@ function resolveIncludes(
         level: 'error',
         file: sourceFile,
         line: i + 1,
-        message: `snippet not found in registry: "${includePath}" — add it to docs/_snippets/`,
+        message: `snippet not found in registry: "${includePath}". Add it to docs/_snippets/`,
       });
       resolved.push(line); // keep original line so output is readable
       continue;
@@ -179,7 +179,7 @@ function processDirectory(
   let processed = 0;
 
   for (const entry of fs.readdirSync(dir, {withFileTypes: true})) {
-    // Skip _snippets — they're the registry, not content to process
+    // Skip _snippets. They're the registry, not content to process.
     if (entry.name === '_snippets') continue;
 
     const fullPath = path.join(dir, entry.name);
@@ -246,7 +246,7 @@ for (const err of errors) {
   const prefix = err.level === 'error' ? 'ERROR' : 'WARN';
   const location = err.line > 0 ? `:${err.line}` : '';
   console[err.level === 'error' ? 'error' : 'warn'](
-    `[resolve-includes] ${prefix}: ${err.file}${location} — ${err.message}`,
+    `[resolve-includes] ${prefix}: ${err.file}${location}: ${err.message}`,
   );
   if (err.level === 'error') hasErrors = true;
 }

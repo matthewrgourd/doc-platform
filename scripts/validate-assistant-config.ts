@@ -1,5 +1,5 @@
 /**
- * AI assistant config schema and validator — Epic 6, Story 6.3
+ * AI assistant config schema and validator: Epic 6, Story 6.3
  *
  * Defines the configuration for the scoped AI assistant MVP. The assistant
  * answers questions grounded in portal content (search index), cites sources
@@ -66,10 +66,10 @@ export type AssistantConfig = {
 
   /**
    * Default scope for the assistant.
-   *   portal  — answers from any indexed content across all docsets
-   *   docset  — restricted to the current docset
-   *   version — restricted to the current docset + version
-   *   page    — restricted to the current page and its linked content
+   *   portal: answers from any indexed content across all docsets
+   *   docset: restricted to the current docset
+   *   version: restricted to the current docset + version
+   *   page: restricted to the current page and its linked content
    */
   defaultScope: AssistantScope;
 
@@ -113,9 +113,9 @@ export function validateAssistantConfig(config: AssistantConfig): ConfigError[] 
   }
 
   if (!config.model) {
-    errors.push({level: 'error', field: 'model', message: 'required — specify a Claude model ID'});
+    errors.push({level: 'error', field: 'model', message: 'required: specify a Claude model ID'});
   } else if (!RECOMMENDED_MODELS.includes(config.model)) {
-    errors.push({level: 'warn', field: 'model', message: `"${config.model}" is not a recommended model — use one of: ${RECOMMENDED_MODELS.join(', ')}`});
+    errors.push({level: 'warn', field: 'model', message: `"${config.model}" is not a recommended model. Use one of: ${RECOMMENDED_MODELS.join(', ')}`});
   }
 
   if (!VALID_SCOPES.includes(config.defaultScope)) {
@@ -127,21 +127,21 @@ export function validateAssistantConfig(config: AssistantConfig): ConfigError[] 
   }
 
   if (config.citationMode === 'none') {
-    errors.push({level: 'warn', field: 'citationMode', message: '"none" disables citations — users cannot verify sources'});
+    errors.push({level: 'warn', field: 'citationMode', message: '"none" disables citations: users cannot verify sources'});
   }
 
   if (!config.systemPromptPrefix || config.systemPromptPrefix.trim().length < 20) {
-    errors.push({level: 'error', field: 'systemPromptPrefix', message: 'required — provide a meaningful system prompt (min 20 chars)'});
+    errors.push({level: 'error', field: 'systemPromptPrefix', message: 'required: provide a meaningful system prompt (min 20 chars)'});
   }
 
   if (!config.safety) {
     errors.push({level: 'error', field: 'safety', message: 'required'});
   } else {
     if (!config.safety.refusePromptInjection) {
-      errors.push({level: 'warn', field: 'safety.refusePromptInjection', message: 'strongly recommended to set true — prevents jailbreak attempts'});
+      errors.push({level: 'warn', field: 'safety.refusePromptInjection', message: 'strongly recommended to set true: prevents jailbreak attempts'});
     }
     if (!config.safety.requireGrounding) {
-      errors.push({level: 'warn', field: 'safety.requireGrounding', message: 'recommended to set true — prevents hallucination on out-of-scope topics'});
+      errors.push({level: 'warn', field: 'safety.requireGrounding', message: 'recommended to set true: prevents hallucination on out-of-scope topics'});
     }
     if (!config.safety.maxContextEntries || config.safety.maxContextEntries < 1) {
       errors.push({level: 'error', field: 'safety.maxContextEntries', message: 'must be >= 1'});
@@ -149,12 +149,12 @@ export function validateAssistantConfig(config: AssistantConfig): ConfigError[] 
       errors.push({level: 'warn', field: 'safety.maxContextEntries', message: 'values above 20 may exceed context window budget'});
     }
     if (!config.safety.outOfScopeFallback) {
-      errors.push({level: 'error', field: 'safety.outOfScopeFallback', message: 'required — fallback message for unanswerable queries'});
+      errors.push({level: 'error', field: 'safety.outOfScopeFallback', message: 'required: fallback message for unanswerable queries'});
     }
   }
 
   if (!config.latencyBudgetMs || config.latencyBudgetMs < 1000) {
-    errors.push({level: 'warn', field: 'latencyBudgetMs', message: 'should be >= 1000ms — very short budgets will clip streaming responses'});
+    errors.push({level: 'warn', field: 'latencyBudgetMs', message: 'should be >= 1000ms: very short budgets will clip streaming responses'});
   }
 
   return errors;
@@ -246,7 +246,7 @@ if (isMain) {
 
   for (const e of errors) {
     const prefix = e.level === 'error' ? 'ERROR' : 'WARN';
-    console[e.level === 'error' ? 'error' : 'warn'](`[assistant-config] ${prefix}: ${e.field} — ${e.message}`);
+    console[e.level === 'error' ? 'error' : 'warn'](`[assistant-config] ${prefix}: ${e.field}: ${e.message}`);
     if (e.level === 'error') hasErrors = true;
   }
 
@@ -254,6 +254,6 @@ if (isMain) {
     process.exit(1);
   } else {
     const warnCount = errors.filter(e => e.level === 'warn').length;
-    console.log(`[assistant-config] config valid — model: ${config.model}, scope: ${config.defaultScope}${warnCount > 0 ? ` (${warnCount} warning(s))` : ''}`);
+    console.log(`[assistant-config] config valid: model: ${config.model}, scope: ${config.defaultScope}${warnCount > 0 ? ` (${warnCount} warning(s))` : ''}`);
   }
 }

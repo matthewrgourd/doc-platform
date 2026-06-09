@@ -1,5 +1,5 @@
 /**
- * Manifest builder benchmark — Epic 1, Story 1.3
+ * Manifest builder benchmark: Epic 1, Story 1.3
  *
  * Generates synthetic fixtures at 1k, 5k, 10k file counts, runs the
  * manifest builder against each, records timing, then cleans up.

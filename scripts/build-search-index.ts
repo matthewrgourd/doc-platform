@@ -1,13 +1,13 @@
 /**
- * Search index builder — Epic 6, Story 6.1
+ * Search index builder: Epic 6, Story 6.1
  *
  * Walks the docs tree and OpenAPI specs to produce a unified search index
  * at build/search-index.json. Entries are faceted by docset, version, and
  * content type so the frontend can filter by product/version.
  *
  * Entry types:
- *   doc       — a Markdown/MDX content page
- *   api-op    — an OpenAPI operation (from static/openapi/*.json)
+ *   doc: a Markdown/MDX content page
+ *   api-op: an OpenAPI operation (from static/openapi/*.json)
  *
  * Doc entry fields:
  *   type, docset, version, slug, title, headings[], excerpt, relativePath
@@ -130,7 +130,7 @@ function slugFromRelPath(relPath: string): string {
 function indexDocs(docsRoot: string): DocSearchEntry[] {
   const entries: DocSearchEntry[] = [];
 
-  // Only walk docset directories — skip root-level files and non-docset folders
+  // Only walk docset directories. Skip root-level files and non-docset folders.
   const rootEntries = fs.readdirSync(docsRoot, {withFileTypes: true});
   const docsetDirs = rootEntries
     .filter(e => e.isDirectory() && !SKIP_FOLDERS.has(e.name))
@@ -203,7 +203,7 @@ function indexApiOps(openapiDir: string): ApiOpSearchEntry[] {
     try {
       spec = JSON.parse(fs.readFileSync(path.join(openapiDir, filename), 'utf8'));
     } catch {
-      console.warn(`[search-index] WARN: failed to parse ${filename} — skipped`);
+      console.warn(`[search-index] WARN: failed to parse ${filename}: skipped`);
       continue;
     }
 
@@ -283,7 +283,7 @@ for (const [docset, count] of [...byDocset.entries()].sort()) {
 }
 
 if (dryRun) {
-  console.log(`[search-index] dry run — ${allEntries.length} entries in ${buildDurationMs}ms (no output written)`);
+  console.log(`[search-index] dry run: ${allEntries.length} entries in ${buildDurationMs}ms (no output written)`);
 } else {
   const outputDir = path.dirname(OUTPUT_PATH);
   if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, {recursive: true});

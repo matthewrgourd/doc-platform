@@ -1,5 +1,5 @@
 /**
- * Synthetic fixture generator — Epic 1, Story 1.3
+ * Synthetic fixture generator: Epic 1, Story 1.3
  *
  * Generates a synthetic docset under docs/_fixture-<scale>/ with a
  * configurable number of files. Used to benchmark the route manifest
@@ -52,7 +52,7 @@ function generateFixture(count: number): string {
       const isIndex = p === 0 && s === 0;
       const filename = isIndex ? 'index.md' : `page-${p + 1}.md`;
       const filePath = path.join(sectionDir, filename);
-      const title = isIndex ? docsetId : `Section ${s + 1} — Page ${p + 1}`;
+      const title = isIndex ? docsetId : `Section ${s + 1}: Page ${p + 1}`;
 
       fs.writeFileSync(
         filePath,

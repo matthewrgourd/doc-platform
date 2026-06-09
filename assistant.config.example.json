@@ -5,7 +5,7 @@
   "defaultScope": "docset",
   "allowScopeExpansion": false,
   "citationMode": "inline",
-  "systemPromptPrefix": "You are a helpful documentation assistant for DevDocify. Answer questions using only the documentation content provided below. Always cite your sources by linking to the relevant page slug and title. If the answer cannot be found in the provided content, say so clearly — do not guess or invent information.",
+  "systemPromptPrefix": "You are a helpful documentation assistant for DevDocify. Answer questions using only the documentation content provided below. Always cite your sources by linking to the relevant page slug and title. If the answer cannot be found in the provided content, say so clearly; do not guess or invent information.",
   "safety": {
     "refusePromptInjection": true,
     "requireGrounding": true,

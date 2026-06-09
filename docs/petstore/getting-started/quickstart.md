@@ -6,7 +6,7 @@ description: "Run your first Petstore API calls in minutes. No authentication re
 
 # Quickstart
 
-Try the [API playground](/petstore/api-playground) operations using curl. The examples cover the full range of HTTP methods available in the playground — GET, POST, PUT, and DELETE — all without authentication.
+Try the [API playground](/petstore/api-playground) operations using curl. The examples cover the full range of HTTP methods available in the playground: GET, POST, PUT, and DELETE. None require authentication.
 
 ## Prerequisites
 
@@ -15,7 +15,7 @@ Try the [API playground](/petstore/api-playground) operations using curl. The ex
 
 ## OpenAPI description
 
-**[Download `petstore-playground.json`](/openapi/petstore-playground.json)** — OpenAPI 3.0.3 description of all playground operations.
+**[Download `petstore-playground.json`](/openapi/petstore-playground.json)**: OpenAPI 3.0.3 description of all playground operations.
 
 ## 1. Find pets by status (GET)
 
@@ -61,10 +61,10 @@ curl "https://petstore3.swagger.io/api/v3/user/logout"
 
 ## Next steps
 
-- [Find pets](/petstore/pets/find-pets) — full reference for `GET /pet/findByStatus`
-- [Add a pet](/petstore/pets/add-pet) — full reference for `POST /pet`
-- [Update a pet](/petstore/pets/update-pet) — full reference for `PUT /pet`
-- [Delete a pet](/petstore/pets/delete-pet) — full reference for `DELETE /pet/{petId}`
-- [Login and logout](/petstore/users/login) — reference for session demo GETs
-- [Authentication](./authentication) — if you extend beyond the playground
-- [Error handling](./error-handling) — HTTP codes and sample error JSON
+- [Find pets](/petstore/pets/find-pets): full reference for `GET /pet/findByStatus`
+- [Add a pet](/petstore/pets/add-pet): full reference for `POST /pet`
+- [Update a pet](/petstore/pets/update-pet): full reference for `PUT /pet`
+- [Delete a pet](/petstore/pets/delete-pet): full reference for `DELETE /pet/{petId}`
+- [Login and logout](/petstore/users/login): reference for session demo GETs
+- [Authentication](./authentication): use this if you extend beyond the playground
+- [Error handling](./error-handling): HTTP codes and sample error JSON

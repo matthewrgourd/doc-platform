@@ -13,7 +13,7 @@ Sending passwords in the query string is **not** a production pattern. The Swagg
 
 ## OpenAPI description (playground scope)
 
-**[Download `petstore-playground.json`](/openapi/petstore-playground.json)** — includes `GET /user/login`, `GET /user/logout`, and `GET /pet/findByStatus` only.
+**[Download `petstore-playground.json`](/openapi/petstore-playground.json)**: includes `GET /user/login`, `GET /user/logout`, and `GET /pet/findByStatus` only.
 
 ## Log in
 
@@ -83,4 +83,4 @@ curl "https://petstore3.swagger.io/api/v3/user/logout"
 
 ## Related
 
-- [Find pets by status](/petstore/pets/find-pets) — companion playground **GET** on pets.
+- [Find pets by status](/petstore/pets/find-pets): companion playground **GET** on pets.

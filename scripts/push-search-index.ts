@@ -1,14 +1,14 @@
 /**
- * Algolia index push — Epic 6, Story 6.4
+ * Algolia index push: Epic 6, Story 6.4
  *
  * Reads build/search-index.json (produced by npm run build-search-index),
  * transforms entries into Algolia records, configures index settings, and
  * pushes via replaceAllObjects.
  *
  * Requires:
- *   ALGOLIA_APP_ID       — Algolia application ID (or falls back to config default)
- *   ALGOLIA_ADMIN_API_KEY — Admin API key (write access). Never commit this value.
- *   ALGOLIA_INDEX_NAME   — Index name (or falls back to config default: 'devdocify')
+ *   ALGOLIA_APP_ID: Algolia application ID (or falls back to config default)
+ *   ALGOLIA_ADMIN_API_KEY: Admin API key (write access). Never commit this value.
+ *   ALGOLIA_INDEX_NAME: Index name (or falls back to config default: 'devdocify')
  *
  * Usage:
  *   npx tsx scripts/push-search-index.ts
@@ -211,7 +211,7 @@ if (!ADMIN_KEY) {
     objects: records as unknown as Record<string, unknown>[],
   });
 
-  console.log(`[push-search-index] done — ${records.length} records in "${INDEX_NAME}"`);
+  console.log(`[push-search-index] done: ${records.length} records in "${INDEX_NAME}"`);
 })().catch(err => {
   console.error(`[push-search-index] ERROR: ${(err as Error).message}`);
   process.exit(1);

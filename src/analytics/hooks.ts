@@ -1,7 +1,7 @@
 /**
- * Analytics React hooks — Epic 5, Story 5.6
+ * Analytics React hooks: Epic 5, Story 5.6
  *
- * usePageViewAnalytics() — emits a page.view event on every route change.
+ * usePageViewAnalytics(): emits a page.view event on every route change.
  * Call once at the app root (Root.tsx).
  */
 
@@ -57,7 +57,7 @@ function parseRoute(pathname: string): Omit<PageViewPayload, 'referrer'> {
 
 /**
  * Emits a page.view analytics event on every route change.
- * Deduplicated — will not double-emit for the same pathname within a render cycle.
+ * Deduplicated: will not double-emit for the same pathname within a render cycle.
  */
 export function usePageViewAnalytics(): void {
   const location = useLocation();

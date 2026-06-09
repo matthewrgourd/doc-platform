@@ -1,7 +1,7 @@
 {
   "name": "@devdocify/cli",
   "version": "0.1.0",
-  "description": "The DevDocify CLI — preview, validate, and ship documentation",
+  "description": "The DevDocify CLI: preview, validate, and ship documentation",
   "type": "module",
   "bin": { "docify": "./bin/docify.js" },
   "engines": { "node": ">=20.17.0" },

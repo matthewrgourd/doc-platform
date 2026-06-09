@@ -1,17 +1,17 @@
 /**
- * Variables precedence engine — Epic 3, Story 3.2
+ * Variables precedence engine: Epic 3, Story 3.2
  *
  * Resolves {{variable_name}} placeholders in Markdown/MDX content using a
  * four-level scope chain (highest to lowest priority):
  *
- *   1. Page — frontmatter `variables:` block in the source file
- *   2. Version — docs/<docset>/<version>/variables.json (versioned docsets)
- *   3. Docset — docs/<docset>/variables.json
- *   4. Portal — variables.json at the docs root
+ *   1. Page: frontmatter `variables:` block in the source file
+ *   2. Version: docs/<docset>/<version>/variables.json (versioned docsets)
+ *   3. Docset: docs/<docset>/variables.json
+ *   4. Portal: variables.json at the docs root
  *
  * Variable syntax:
- *   {{variable_name}}          — simple substitution
- *   {{variable_name|fallback}} — substitution with inline fallback
+ *   {{variable_name}}: simple substitution
+ *   {{variable_name|fallback}}: substitution with inline fallback
  *
  * Variable values must be strings or numbers. Objects/arrays are rejected.
  *
@@ -91,13 +91,13 @@ function loadJsonScope(filePath: string): VariableScope {
         scope[key] = value;
       } else {
         console.warn(
-          `[resolve-variables] WARN: variable "${key}" in ${filePath} has unsupported type "${typeof value}" — skipped`,
+          `[resolve-variables] WARN: variable "${key}" in ${filePath} has unsupported type "${typeof value}": skipped`,
         );
       }
     }
     return scope;
   } catch {
-    console.warn(`[resolve-variables] WARN: failed to parse ${filePath} — skipped`);
+    console.warn(`[resolve-variables] WARN: failed to parse ${filePath}: skipped`);
     return {};
   }
 }
@@ -197,7 +197,7 @@ function resolveVariables(
           file: path.relative(docsRoot, filePath),
           line: i + 1,
           variable: name,
-          message: `variable "{{${name}}}" not defined — using inline fallback "${fallback}"`,
+          message: `variable "{{${name}}}" not defined: using inline fallback "${fallback}"`,
         });
         return fallback;
       }
@@ -207,7 +207,7 @@ function resolveVariables(
         file: path.relative(docsRoot, filePath),
         line: i + 1,
         variable: name,
-        message: `variable "{{${name}}}" not defined in any scope — left unresolved`,
+        message: `variable "{{${name}}}" not defined in any scope: left unresolved`,
       });
       return match; // leave placeholder intact
     });
@@ -282,7 +282,7 @@ const fileCount = processDirectory(docsRoot, docsRoot, outputRoot, errors, dryRu
 for (const err of errors) {
   const prefix = err.level === 'error' ? 'ERROR' : 'WARN';
   console[err.level === 'error' ? 'error' : 'warn'](
-    `[resolve-variables] ${prefix}: ${err.file}:${err.line} — ${err.message}`,
+    `[resolve-variables] ${prefix}: ${err.file}:${err.line}: ${err.message}`,
   );
 }
 
@@ -290,5 +290,5 @@ const mode = dryRun ? ' (dry run)' : ` → ${outputRoot}`;
 const warnCount = errors.filter(e => e.level === 'warn').length;
 console.log(
   `[resolve-variables] processed ${fileCount} file(s)${mode}` +
-    (warnCount > 0 ? ` — ${warnCount} warning(s)` : ''),
+    (warnCount > 0 ? `: ${warnCount} warning(s)` : ''),
 );

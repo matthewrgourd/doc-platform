@@ -10,8 +10,8 @@ Plan routes between two locations using public transport.
 
 ## Key endpoints
 
-- **Journey results:** `GET /Journey/JourneyResults/{from}/to/{to}` — plan a route
-- **Meta:** `GET /Journey/Meta/Modes` — available journey modes
+- **Journey results:** `GET /Journey/JourneyResults/{from}/to/{to}`: plan a route
+- **Meta:** `GET /Journey/Meta/Modes`: available journey modes
 
 ## Parameters
 

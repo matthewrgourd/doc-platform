@@ -23,9 +23,9 @@ None. The endpoint returns the current forecast without any required input.
 
 | Code | Description |
 |---|---|
-| `200` | Success — JSON object with forecast periods and pollutant levels. |
-| `429` | Rate limited — slow down; see [Authentication](./authentication). |
-| `500` | Server error — retry with backoff. |
+| `200` | Success: JSON object with forecast periods and pollutant levels. |
+| `429` | Rate limited: slow down; see [Authentication](./authentication). |
+| `500` | Server error: retry with backoff. |
 
 ## Example request
 
@@ -55,9 +55,9 @@ curl "https://api.tfl.gov.uk/AirQuality"
 }
 ```
 
-Forecast band values are typically `Low`, `Moderate`, `High`, or `Very High`. Parse defensively — additional properties may be present.
+Forecast band values are typically `Low`, `Moderate`, `High`, or `Very High`. Parse defensively because additional properties may be present.
 
 ## Related
 
-- [Quickstart](./quickstart) — runs this operation as step 4
-- [API playground](/tfl/api-playground) — try it in the browser
+- [Quickstart](./quickstart): runs this operation as step 4
+- [API playground](/tfl/api-playground): try it in the browser

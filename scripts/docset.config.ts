@@ -1,5 +1,5 @@
 /**
- * Docset configuration schema — Epic 1, Story 1.2
+ * Docset configuration schema: Epic 1, Story 1.2
  *
  * Each docset under docs/ may optionally have a config that declares:
  *  - display name
@@ -12,10 +12,10 @@
  * Examples: "2024.01", "2024.06-LTS"
  *
  * Lifecycle states:
- *   "active"     — current, fully supported
- *   "lts"        — Long-term support, security/critical fixes only
- *   "deprecated" — approaching end-of-life, users should migrate
- *   "eol"        — no longer supported, kept for reference only
+ *   "active": current, fully supported
+ *   "lts": Long-term support, security/critical fixes only
+ *   "deprecated": approaching end-of-life, users should migrate
+ *   "eol": no longer supported, kept for reference only
  */
 
 // ---------------------------------------------------------------------------
@@ -152,7 +152,7 @@ export function validateDocsetConfig(config: DocsetConfig): ValidationError[] {
 }
 
 // ---------------------------------------------------------------------------
-// Registry — the source of truth for all configured docsets
+// Registry: the source of truth for all configured docsets
 // ---------------------------------------------------------------------------
 
 /**
@@ -208,10 +208,10 @@ export function validateAllDocsetConfigs(): void {
 
   if (allErrors.length > 0) {
     for (const err of allErrors) {
-      console.error(`[docset-config] ERROR: ${err.docsetId}.${err.field} — ${err.message}`);
+      console.error(`[docset-config] ERROR: ${err.docsetId}.${err.field}: ${err.message}`);
     }
     process.exit(1);
   }
 
-  console.log(`[docset-config] validated ${DOCSET_REGISTRY.length} docset configs — OK`);
+  console.log(`[docset-config] validated ${DOCSET_REGISTRY.length} docset configs: OK`);
 }

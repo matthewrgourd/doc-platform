@@ -5,7 +5,7 @@
   "patches": [
     {
       "operationId": "findPetsByStatus",
-      "description": "Pre-fill 'status' with 'available' — the most common playground query.",
+      "description": "Pre-fill 'status' with 'available', the most common playground query.",
       "parameters": [
         {
           "name": "status",

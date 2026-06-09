@@ -1,5 +1,5 @@
 /**
- * OpenAPI ingestion and normalization layer — Epic 2, Story 2.1
+ * OpenAPI ingestion and normalization layer: Epic 2, Story 2.1
  *
  * Reads an OpenAPI 3.x JSON file, validates required structure, and emits
  * a normalized version to build/openapi/<docset>.normalized.json.
@@ -131,7 +131,7 @@ function validateSpec(spec: OpenApiSpec, sourceFile: string): Diagnostic[] {
     diags.push({level: 'error', path: 'info.version', message: 'required'});
   }
   if (!spec.info?.description) {
-    diags.push({level: 'warn', path: 'info.description', message: 'missing — recommended for portal display'});
+    diags.push({level: 'warn', path: 'info.description', message: 'missing: recommended for portal display'});
   }
 
   // Servers
@@ -163,10 +163,10 @@ function validateSpec(spec: OpenApiSpec, sourceFile: string): Diagnostic[] {
           diags.push({level: 'error', path: `${opPath}.operationId`, message: 'required'});
         }
         if (!op.summary) {
-          diags.push({level: 'warn', path: `${opPath}.summary`, message: 'missing — recommended for sidebar display'});
+          diags.push({level: 'warn', path: `${opPath}.summary`, message: 'missing: recommended for sidebar display'});
         }
         if (!op.tags || op.tags.length === 0) {
-          diags.push({level: 'warn', path: `${opPath}.tags`, message: 'missing — operations should have at least one tag'});
+          diags.push({level: 'warn', path: `${opPath}.tags`, message: 'missing: operations should have at least one tag'});
         }
         if (!op.responses || Object.keys(op.responses).length === 0) {
           diags.push({level: 'error', path: `${opPath}.responses`, message: 'required'});
@@ -250,13 +250,13 @@ let hasErrors = false;
 for (const d of diagnostics) {
   const prefix = d.level === 'error' ? 'ERROR' : 'WARN';
   console[d.level === 'error' ? 'error' : 'warn'](
-    `[normalize-openapi] ${prefix}: ${d.path} — ${d.message}`,
+    `[normalize-openapi] ${prefix}: ${d.path}: ${d.message}`,
   );
   if (d.level === 'error') hasErrors = true;
 }
 
 if (hasErrors) {
-  console.error(`[normalize-openapi] ${diagnostics.filter(d => d.level === 'error').length} error(s) found — aborting`);
+  console.error(`[normalize-openapi] ${diagnostics.filter(d => d.level === 'error').length} error(s) found: aborting`);
   process.exit(1);
 }
 

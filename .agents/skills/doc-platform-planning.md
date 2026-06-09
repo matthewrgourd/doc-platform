@@ -12,9 +12,9 @@ Use this skill when:
 ### 1. Read the epic and story context
 
 ```
-_planning/04-delivery/epics-and-stories.md          — full epic/story map
-_planning/04-delivery/sprint-planning/post-mvp-epic-N-plan.md   — sprint plan
-_planning/04-delivery/sprint-planning/post-mvp-epic-N-task-board.md  — current task status
+_planning/04-delivery/epics-and-stories.md          full epic/story map
+_planning/04-delivery/sprint-planning/post-mvp-epic-N-plan.md   sprint plan
+_planning/04-delivery/sprint-planning/post-mvp-epic-N-task-board.md  current task status
 ```
 
 Identify:
@@ -35,7 +35,7 @@ If a dependency is missing, create a planning note before proceeding.
 
 Create `_planning/04-delivery/sprint-planning/post-mvp-epic-N-story-N-M-worklog.md`
 with these sections:
-- Summary (1–2 sentences)
+- Summary (1 to 2 sentences)
 - Work to be done (bullet list matching acceptance criteria)
 - Acceptance criteria checklist (copied from the story, formatted as `- [ ]`)
 
@@ -48,7 +48,7 @@ If the implementation requires a significant architectural choice:
 2. If none exists, draft a new ADR with:
    - Status: Proposed
    - Context (what problem and constraints)
-   - Decision options (2–3, with pros/cons)
+   - Decision options (2 to 3, with pros/cons)
    - Decision (chosen option with rationale)
    - Consequences (what changes, what new risks)
 3. Get the ADR reviewed before implementation begins.

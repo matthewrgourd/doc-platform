@@ -2,7 +2,7 @@ import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 
 /**
  * Auto-generated sidebar for synthetic benchmark fixture docsets.
- * Used only when BENCHMARK_SCALE is set — never active in normal builds.
+ * Used only when BENCHMARK_SCALE is set. Never active in normal builds.
  * See scripts/benchmark-build.ts.
  */
 const sidebars: SidebarsConfig = {

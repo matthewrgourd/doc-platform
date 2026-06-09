@@ -9,7 +9,7 @@ title: Search stops
 
 ## OpenAPI description (playground scope)
 
-**[Download `tfl-playground.json`](/openapi/tfl-playground.json)** — documents this path plus `GET /Line/Mode/{modes}/Status` and `GET /BikePoint` only.
+**[Download `tfl-playground.json`](/openapi/tfl-playground.json)**: documents this path plus `GET /Line/Mode/{modes}/Status` and `GET /BikePoint` only.
 
 ## Resource
 
@@ -33,8 +33,8 @@ The response is a **search result** object containing matches (with identifiers,
 
 | Code | Description |
 |---|---|
-| `200` | Success — JSON object with matches (may be empty). |
-| `400` | Bad request — invalid or empty query after decoding. |
+| `200` | Success: JSON object with matches. The array may be empty. |
+| `400` | Bad request: invalid or empty query after decoding. |
 | `404` | No matches. |
 | `429` | Rate limited. |
 | `500` | Server error. |
@@ -51,5 +51,5 @@ The payload includes structured matches; typical fields on each match include `i
 
 ## Related
 
-- [Bike points](/tfl/getting-started/bike-point) — companion playground **GET** for cycle hire
-- [Line status by mode](/tfl/lines/status) — companion playground **GET** for disruptions
+- [Bike points](/tfl/getting-started/bike-point): companion playground **GET** for cycle hire
+- [Line status by mode](/tfl/lines/status): companion playground **GET** for disruptions

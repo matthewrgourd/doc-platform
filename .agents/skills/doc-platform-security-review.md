@@ -16,7 +16,7 @@ Use this skill when a PR touches:
 Scan the diff for:
 - [ ] No real API keys, tokens, passwords, or private URLs in any committed file
 - [ ] No `authorization` or `x-api-key` header values in OpenAPI specs (use `<YOUR_TOKEN>` placeholders)
-- [ ] `assistant.config.json` is absent from the commit (gitignored — only `*.example.json` is committed)
+- [ ] `assistant.config.json` is absent from the commit. It is gitignored, and only `*.example.json` is committed.
 - [ ] `saml.config.json` and `rbac.config.json` are absent from the commit
 - [ ] No `.env` files committed
 - [ ] `build/` directory not committed
@@ -27,7 +27,7 @@ If any of these fail, block the PR and remove the secret before proceeding.
 
 For changes to `static/openapi/*.json` or `openapi/*.json`:
 
-- [ ] Run `npm run normalize-openapi -- --input <file>` — must pass with no errors
+- [ ] Run `npm run normalize-openapi -- --input <file>`: must pass with no errors
 - [ ] `servers[].url` values use HTTPS in production specs
 - [ ] No internal hostnames, staging URLs, or localhost in production specs
 - [ ] Example request/response bodies do not contain real user data or PII
@@ -37,10 +37,10 @@ For changes to `static/openapi/*.json` or `openapi/*.json`:
 
 For changes to `.github/workflows/`:
 
-- [ ] No secret value is hardcoded — all sensitive values use `${{ secrets.NAME }}`
+- [ ] No secret value is hardcoded. All sensitive values use `${{ secrets.NAME }}`
 - [ ] New secrets are documented in `_planning/05-validation/ci-secrets-and-permissions.md`
 - [ ] Workflows that create PRs or push commits use scoped tokens, not `GITHUB_TOKEN` with broad permissions
-- [ ] `docs-draft-update.yml`: confirm the `--draft` flag is present on `gh pr create` — auto-merge must not be possible
+- [ ] `docs-draft-update.yml`: confirm the `--draft` flag is present on `gh pr create`. Auto-merge must not be possible
 - [ ] No `pull_request_target` trigger without explicit `head.repo.full_name` checks
 
 ### 4. Docs content review

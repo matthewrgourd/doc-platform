@@ -13,7 +13,7 @@
  *
  * Design decision: remote rendering (plantuml.com) rather than build-time Java.
  * Trade-off: no Java dependency in CI; external service required at page-load time.
- * Mitigation: Kroki.io (self-hostable) is a drop-in alternative — change PLANTUML_BASE_URL.
+ * Mitigation: Kroki.io (self-hostable) is a drop-in alternative. Change PLANTUML_BASE_URL.
  */
 
 import type {Plugin} from 'unified';
@@ -24,15 +24,15 @@ import {deflateRawSync} from 'zlib';
 const PLANTUML_BASE_URL = 'https://www.plantuml.com/plantuml/svg';
 
 // ---------------------------------------------------------------------------
-// PlantUML encoding — DEFLATE raw + 6-bit base64 variant
+// PlantUML encoding: DEFLATE raw + 6-bit base64 variant
 // ---------------------------------------------------------------------------
 
 function encode6bit(b: number): string {
-  if (b < 10) return String.fromCharCode(48 + b);       // '0'–'9'
+  if (b < 10) return String.fromCharCode(48 + b);       // '0'-'9'
   b -= 10;
-  if (b < 26) return String.fromCharCode(65 + b);       // 'A'–'Z'
+  if (b < 26) return String.fromCharCode(65 + b);       // 'A'-'Z'
   b -= 26;
-  if (b < 26) return String.fromCharCode(97 + b);       // 'a'–'z'
+  if (b < 26) return String.fromCharCode(97 + b);       // 'a'-'z'
   b -= 26;
   if (b === 0) return '-';
   if (b === 1) return '_';

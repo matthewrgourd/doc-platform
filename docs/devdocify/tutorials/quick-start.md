@@ -128,4 +128,6 @@ Vercel runs a build on every push to `main` and creates preview deployments for 
 - [Add a docset](/docs/how-to/add-docset)
 - [Add an API playground](/docs/how-to/add-playground)
 - [Configure search](/docs/how-to/configure-search)
+- [Configure enterprise controls](/docs/how-to/configure-enterprise-controls)
+- [Add PlantUML diagrams](/docs/how-to/add-plantuml-diagrams)
 - [CLI reference](/docs/reference/cli)

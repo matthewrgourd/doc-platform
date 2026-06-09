@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Platzi Fake Store API — DevDocify playground",
+    "title": "Platzi Fake Store API: DevDocify playground",
     "version": "playground-1.0.0",
     "description": "Curated OpenAPI subset for the DevDocify Platzi playground. This file documents a stable demo-focused surface of the public API hosted at api.escuelajs.co."
   },

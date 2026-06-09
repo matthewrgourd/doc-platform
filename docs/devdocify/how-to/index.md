@@ -1,11 +1,11 @@
 ---
 sidebar_position: 1
 slug: /how-to
-title: How-to guides
-description: "How-to guides for DevDocify: add a docset, add a playground, configure Algolia search, and deploy to Vercel."
+title: Task guides
+description: "How-to guides for DevDocify: add a docset, add a playground, configure Algolia search, configure enterprise controls, add PlantUML diagrams, and deploy to Vercel."
 ---
 
-# How-to guides
+# Task guides
 
 Use how-to guides when you need to complete a specific task quickly and you already know the basics.
 
@@ -29,10 +29,18 @@ Use how-to guides when you need to complete a specific task quickly and you alre
   </div>
   <div className="docs-card">
     <h3><a href="/docs/how-to/configure-search">Configure search</a></h3>
-    <p>Apply for Algolia DocSearch and configure contextual search across your docsets.</p>
+    <p>Configure contextual search and push the structured docs and API index to Algolia.</p>
+  </div>
+  <div className="docs-card">
+    <h3><a href="/docs/how-to/configure-enterprise-controls">Configure enterprise controls</a></h3>
+    <p>Set up SAML configuration, RBAC publish checks, assistant quality validation, and analytics schemas.</p>
+  </div>
+  <div className="docs-card">
+    <h3><a href="/docs/how-to/add-plantuml-diagrams">Add PlantUML diagrams</a></h3>
+    <p>Add architecture diagrams with fenced PlantUML blocks that render as SVG images.</p>
   </div>
   <div className="docs-card">
     <h3><a href="/docs/how-to/deploy">Deploy to Vercel</a></h3>
-    <p>Set up continuous deployment with Vercel, including preview deployments on pull requests.</p>
+    <p>Set up continuous deployment with Vercel, preview deployments, and CI quality gates.</p>
   </div>
 </div>

@@ -1,7 +1,7 @@
 name: Docs draft update
 
 # Triggered by chat-devdocify when a monitored change is merged to its main
-# branch. Creates a draft PR in doc-platform for human review — never publishes
+# branch. Creates a draft PR in doc-platform for human review. Never publishes
 # content directly. Auto-approval is not permitted.
 #
 # Required secret: DOCS_DRAFT_TOKEN
@@ -126,7 +126,7 @@ jobs:
           2. Identify which documentation sections are stale or incorrect.
           3. Edit the affected doc pages directly (do not publish this draft file).
           4. Remove this draft file before merging.
-          5. Ensure the build passes (`npm run build`) — broken links will fail CI.
+          5. Ensure the build passes (`npm run build`): broken links will fail CI.
 
           If this draft is not actionable, close the PR with a rationale comment.
           If regeneration is needed, re-trigger the `chat-devdocify-change` dispatch.
@@ -159,7 +159,7 @@ jobs:
             -e "s|COMMIT_MESSAGE_PLACEHOLDER|${MSG}|g" \
             "$DRAFT_PATH"
 
-          # Insert file/section lists (multi-line — use python3)
+          # Insert file/section lists (multi-line: use python3)
           python3 - "$DRAFT_PATH" "$FILES_MD" "$SECTIONS_MD" <<'PYEOF'
           import sys
 
@@ -213,7 +213,7 @@ jobs:
             --draft \
             --title "docs(draft): pending update from chat-devdocify@${SHA}" \
             --body "$(cat <<EOF
-          ## Automated docs draft — human approval required
+          ## Automated docs draft: human approval required
 
           > **Auto-approval is not permitted.** This PR must be reviewed and approved by a human before merge.
 
