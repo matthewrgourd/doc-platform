@@ -1,11 +1,11 @@
 ---
 sidebar_position: 1
 slug: /tutorials
-title: Tutorials
+title: Start here
 description: "Step-by-step DevDocify tutorials that take you from installing the CLI to a validated, deployed documentation site."
 ---
 
-# Tutorials
+# Start here
 
 Use tutorials when you want a guided learning path where each step builds on the previous one.
 

@@ -9,6 +9,26 @@ description: "How to add PlantUML diagrams to DevDocify docs with fenced code bl
 
 Use PlantUML when you need sequence, component, or deployment diagrams that are easier to maintain as text than as static images.
 
+:::tip Mermaid is built in
+For flowcharts, sequence diagrams, and state machines, [Mermaid](#mermaid-diagrams-built-in) renders natively in Docusaurus without an external service. Use PlantUML when you need diagram types that Mermaid does not support.
+:::
+
+## Live example
+
+The following PlantUML block renders as an SVG image at build time:
+
+```plantuml Search index flow
+@startuml
+skinparam componentStyle rectangle
+skinparam backgroundColor transparent
+
+[Docusaurus build] --> [build-search-index.ts] : postbuild
+[build-search-index.ts] --> [build/search-index.json]
+[build/search-index.json] --> [push-search-index.ts] : CI deploy
+[push-search-index.ts] --> [Algolia index]
+@enduml
+```
+
 ## Prerequisites
 
 - Your docs page uses Markdown or MDX.
@@ -64,3 +84,19 @@ By default, rendering uses `https://www.plantuml.com/plantuml/svg`. If you need 
 - Diagram does not appear: confirm the page uses a docset configured with `remarkPlantuml`.
 - Image request fails: confirm the rendering endpoint is reachable from the browser.
 - Alt text is too generic: add concise text after `plantuml` in the opening fence.
+
+## Mermaid diagrams (built in)
+
+Mermaid renders natively in Docusaurus without an external service. Use it for flowcharts, sequence diagrams, state machines, and entity relationship diagrams.
+
+```mermaid
+sequenceDiagram
+    participant Browser
+    participant Docusaurus
+    participant Algolia
+    Browser->>Docusaurus: Load page
+    Browser->>Algolia: Search query
+    Algolia-->>Browser: Faceted results
+```
+
+Add a Mermaid diagram using a `mermaid` fenced block. No plugin or external endpoint is needed.

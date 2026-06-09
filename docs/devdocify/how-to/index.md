@@ -1,11 +1,11 @@
 ---
 sidebar_position: 1
 slug: /how-to
-title: How-to guides
+title: Task guides
 description: "How-to guides for DevDocify: add a docset, add a playground, configure Algolia search, configure enterprise controls, add PlantUML diagrams, and deploy to Vercel."
 ---
 
-# How-to guides
+# Task guides
 
 Use how-to guides when you need to complete a specific task quickly and you already know the basics.
 
