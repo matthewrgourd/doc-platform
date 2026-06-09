@@ -214,10 +214,28 @@ const config: Config = {
     },
     algolia: {
       appId: '56LVNO7TSU',
+      // Search-only API key — safe to expose in the browser bundle.
+      // The admin key for index writes lives in ALGOLIA_ADMIN_API_KEY (CI secret only).
       apiKey: '3f045ef234e7f78945663bb72374ddad',
       indexName: 'devdocify',
+      // contextualSearch uses the current docset/version as facet filters so results
+      // stay relevant to the page the user is viewing.
       contextualSearch: true,
-      searchParameters: {},
+      searchParameters: {
+        // Attributes returned from Algolia — aligned with push-search-index.ts record schema.
+        attributesToRetrieve: [
+          'type',
+          'docset',
+          'version',
+          'slug',
+          'title',
+          'summary',
+          'excerpt',
+          'operationId',
+          'method',
+          'path',
+        ],
+      },
     },
     prism: {
       theme: prismThemes.github,
