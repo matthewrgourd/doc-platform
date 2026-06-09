@@ -20,11 +20,20 @@ Live site: [https://www.devdocify.com](https://www.devdocify.com)
 - **Variable substitution engine** - resolves `{{variable}}` / `{{variable|fallback}}` with a portal > docset > version > page scope chain
 - **Content linter** - validates includes and variables across the docs tree with actionable file:line error output
 - **Mermaid diagrams** - sequence diagrams, state machines, and flowcharts rendered natively
+- **PlantUML diagrams** - fenced ` ```plantuml ` blocks rendered as SVG via remote encoding; no Java dependency in CI
 - **Tabbed code samples** - Node.js, Python, Go across all guides
-- **Algolia DocSearch** - full-text search with contextual scoping per docset
+- **Algolia search** - docset/version-aware index with API operations indexed separately; index built in `postbuild` and pushed to Algolia on deploy
+- **`llms.txt` generation** - generated at `postbuild` with canonical URLs for all docs and API reference routes
 - **AI assistant panel** - floating chat panel powered by Claude, answering questions in context
+- **Analytics emission** - structured event schema with typed payloads; `page.view` and interaction events emitted via Vercel Analytics
+- **SAML SSO config generator** - `scripts/generate-nginx-auth-config.ts` produces nginx `auth_request` snippets for portal-wide or per-docset enforcement
+- **RBAC enforcement** - role/capability schema validated in CI; `rbac-check` workflow gates pushes to main on `content.publish` capability
+- **Assistant quality gate** - eight policy rules enforced in CI; regression prompt categories and fallback policy validated on every PR
+- **Link integrity** - internal broken links fail the build; redirects supported via `@docusaurus/plugin-client-redirects`; external links checked weekly
+- **Lighthouse CI** - performance, accessibility, and best-practices audits on every build
+- **Docs-draft automation** - `.github/workflows/docs-draft-update.yml` proposes doc updates when target code changes, with mandatory human approval before merge
 - **Dark mode** - automatic, respects system preferences
-- **CI/CD** - GitHub Actions pipeline with typecheck, build, and optional Docker push
+- **CI/CD** - GitHub Actions pipeline with typecheck, lint, build, health checks, Lighthouse, Docker push, Algolia push, and staging deploy
 - **Optional self-hosted deployment** - Docker, nginx, Prometheus + Grafana for containerized or on-prem deployments
 
 ## Docs taxonomy (Diataxis)
@@ -125,20 +134,63 @@ make monitoring-down    # tear down
 
 ## Available commands
 
+**Core dev**
+
 ```bash
-npm start                    # dev server
-npm run build                # production build (runs manifest builder then Docusaurus)
-npm run serve                # serve production build locally
-npm run typecheck            # TypeScript type-check
-npm run manifest             # build route manifest manually
-npm run normalize-openapi    # validate and normalize OpenAPI specs
-npm run apply-overlay        # apply overlay patches to a normalized spec
-npm run health-check         # probe live API endpoints
-npm run resolve-includes     # resolve include directives in a file
-npm run resolve-variables    # resolve variable references in a file
-npm run lint-content         # run full content lint (includes + variables)
-npm run generate-fixture     # generate synthetic docs fixture for benchmarking
-npm run benchmark            # benchmark manifest builder at scale
+npm start                         # dev server
+npm run build                     # production build (runs postbuild: manifest + search index + llms.txt)
+npm run serve                     # serve production build locally
+npm run typecheck                 # TypeScript type-check
+```
+
+**Content quality (CI gates)**
+
+```bash
+npm run lint-content              # validate includes and variables across the docs tree
+npm run health-check              # probe live API endpoints
+npm run validate-assistant-quality  # enforce assistant policy rules (8 rules, CI gate)
+```
+
+**Config validation**
+
+```bash
+npm run validate-saml             # validate saml.config.json schema
+npm run validate-rbac             # validate rbac.config.json schema
+npm run validate-analytics-event  # validate an analytics event payload
+npm run validate-assistant        # validate assistant.config.json schema
+npm run check-rbac-permission     # check actor capability against rbac.config.json
+npm run generate-nginx-auth-config  # generate nginx auth_request config from saml.config.json
+```
+
+**OpenAPI tooling**
+
+```bash
+npm run normalize-openapi         # validate and normalize OpenAPI specs
+npm run apply-overlay             # apply overlay patches to a normalized spec
+```
+
+**Build outputs**
+
+```bash
+npm run manifest                  # build route manifest manually
+npm run build-search-index        # build Algolia search index from docs tree
+npm run push-search-index         # push built index to Algolia (requires ALGOLIA_ADMIN_API_KEY)
+npm run generate-llms-txt         # generate llms.txt with canonical doc and API route URLs
+```
+
+**Content resolution**
+
+```bash
+npm run resolve-includes          # resolve include directives in a file
+npm run resolve-variables         # resolve variable references in a file
+```
+
+**Benchmarks**
+
+```bash
+npm run generate-fixture          # generate synthetic docs fixture for benchmarking
+npm run benchmark                 # benchmark manifest builder at scale
+npm run benchmark-build           # full Docusaurus build benchmark at configurable fixture scale
 ```
 
 ## CI/CD pipeline
@@ -146,12 +198,21 @@ npm run benchmark            # benchmark manifest builder at scale
 `ci.yml` runs on every push and PR to `main`:
 
 ```
-typecheck ──┐
-            ├──▶ build ──▶ docker (push to GHCR) ──▶ deploy-staging
-lint ───────┘
+typecheck ──────┐
+lint ───────────┼──▶ validate-assistant ──▶ build ──▶ lighthouse
+                │                               └──▶ health-check
+                │                               └──▶ docker ──▶ deploy-staging  (push only)
+                │                               └──▶ push-search-index          (push only)
+                └──────────────────────────────────────────────────────────────────────────
 ```
 
-Docker and deploy-staging only run on push to `main`, not on PRs. PRs get a Vercel preview URL posted as a comment via `preview.yml`.
+`rbac-check.yml` runs separately on push to `main`, gating deploys on `content.publish` capability.
+
+`link-check.yml` runs on a weekly schedule to check external links.
+
+`docs-draft-update.yml` proposes doc updates when monitored code changes, with a mandatory human approval gate.
+
+Docker, deploy-staging, and push-search-index only run on push to `main`, not on PRs. PRs get a Vercel preview URL posted as a comment via `preview.yml`.
 
 ## Project structure
 
@@ -185,41 +246,66 @@ openapi/
     tfl.overlay.json       Overlay patches for TfL spec
   health-checks.json       Endpoint probe config for health check script
 scripts/
-  build-route-manifest.ts  Walks docs tree, emits build/route-manifest.json
-  docset.config.ts         Docset registry, CalVer schema, and validation
-  normalize-openapi.ts     Validates and normalizes OpenAPI 3.x specs
-  apply-overlay.ts         Applies operationId-matched overlay patches
-  check-playground-health.ts  Probes live endpoints, fails on broken required probes
-  resolve-includes.ts      Resolves include directives inline
-  resolve-variables.ts     Resolves variable references with scope-chain lookup
-  lint-content.ts          Validates includes and variables across the docs tree
-  generate-fixture.ts      Generates synthetic docs fixtures for benchmarking
-  benchmark-manifest.ts    Benchmarks manifest builder at 1k/5k/10k file scale
+  build-route-manifest.ts       Walks docs tree, emits build/route-manifest.json
+  docset.config.ts              Docset registry, CalVer schema, and validation
+  normalize-openapi.ts          Validates and normalizes OpenAPI 3.x specs
+  apply-overlay.ts              Applies operationId-matched overlay patches
+  check-playground-health.ts    Probes live endpoints, fails on broken required probes
+  resolve-includes.ts           Resolves include directives inline
+  resolve-variables.ts          Resolves variable references with scope-chain lookup
+  lint-content.ts               Validates includes and variables across the docs tree
+  build-search-index.ts         Builds Algolia search index (docs + API ops, with facets)
+  push-search-index.ts          Pushes built index to Algolia via replaceAllObjects
+  generate-llms-txt.ts          Generates llms.txt with canonical doc and API route URLs
+  validate-saml-config.ts       Validates saml.config.json schema
+  validate-rbac-config.ts       Validates rbac.config.json schema and exports hasCapability()
+  check-rbac-permission.ts      CLI: checks actor capability against rbac.config.json
+  generate-nginx-auth-config.ts Generates nginx auth_request config from saml.config.json
+  validate-analytics-event.ts   Validates analytics event payloads against schema
+  validate-assistant-config.ts  Validates assistant.config.json schema
+  validate-assistant-quality.ts Enforces assistant quality policy (8 rules, CI gate)
+  generate-fixture.ts           Generates synthetic docs fixtures for benchmarking
+  benchmark-manifest.ts         Benchmarks manifest builder at 1k/5k/10k file scale
+  benchmark-build.ts            Full Docusaurus build benchmark at configurable fixture scale
 src/
+  analytics/
+    types.ts                 Frontend-safe analytics event type declarations
+    client.ts                emitEvent() backed by @vercel/analytics track(); SSR-safe
+    hooks.ts                 usePageViewAnalytics() — emits page.view on route change
   components/
-    ApiReferenceClient.tsx  Scalar renderer used by API playground routes
-  css/custom.css           Custom theme (Stripe-inspired heading hierarchy)
-  pages/index.tsx          Site overview homepage
+    ApiReferenceClient.tsx   Scalar renderer used by API playground routes
+  css/custom.css             Custom theme (Stripe-inspired heading hierarchy)
+  pages/index.tsx            Site overview homepage
   pages/petstore/api-playground.tsx  Petstore API playground page route
   pages/tfl/api-playground.tsx       TfL API playground page route
   pages/platzi/api-playground.tsx    Platzi API playground page route
-  pages/status.mdx         Service status page
-  pages/support.mdx        Support page
-  pages/privacy.mdx        Privacy notice page
-  pages/terms.mdx          Terms of use page
-  theme/Navbar/...         Swizzled navbar and mobile menu behavior
+  pages/status.mdx           Service status page
+  pages/support.mdx          Support page
+  pages/privacy.mdx          Privacy notice page
+  pages/terms.mdx            Terms of use page
+  remark/
+    remark-plantuml.ts       Remark plugin: renders ```plantuml blocks as remote SVG images
+  theme/
+    Navbar/...               Swizzled navbar and mobile menu behavior
+    Root.tsx                 App root; mounts analytics hooks
 static/
   openapi/
-    petstore-playground.json  Curated Petstore demo spec (playground subset)
-    tfl-playground.json       Curated TfL demo spec (playground subset)
-    platzi-playground.json    Curated Platzi demo spec (products, users, auth, locations)
+    petstore-playground.json   Curated Petstore demo spec (playground subset)
+    tfl-playground.json        Curated TfL demo spec (playground subset)
+    platzi-playground.json     Curated Platzi demo spec (products, users, auth, locations)
 .github/workflows/
-  ci.yml                   Typecheck, build, Docker push, and deploy (gated by branch)
-  preview.yml              PR preview comment (posts Vercel deployment URL)
-vercel.json                Vercel build config (install, output dir)
-Dockerfile                 Optional: multi-stage build (node + nginx)
-docker-compose.yml         Optional: local containers and monitoring
-Makefile                   Docker and monitoring commands
+  ci.yml                     Typecheck, lint, build, Lighthouse, health check, Docker, Algolia push, staging deploy
+  preview.yml                PR preview comment (posts Vercel deployment URL)
+  rbac-check.yml             Gates pushes to main on content.publish RBAC capability
+  link-check.yml             Weekly external link integrity check
+  docs-draft-update.yml      Proposes doc updates on code changes; requires human approval
+rbac.config.example.json     Example RBAC config (roles, capabilities, principals)
+saml.config.example.json     Example SAML SSO config (IdP metadata, protected modes)
+assistant.config.example.json  Example assistant quality config (rules, thresholds)
+vercel.json                  Vercel build config (install, output dir)
+Dockerfile                   Optional: multi-stage build (node + nginx)
+docker-compose.yml           Optional: local containers and monitoring
+Makefile                     Docker and monitoring commands
 ```
 
 ## Stack
@@ -232,7 +318,7 @@ Makefile                   Docker and monitoring commands
 | Typography | [Inter](https://fonts.google.com/specimen/Inter) + [Fira Code](https://fonts.google.com/specimen/Fira+Code) |
 | API playground | [Scalar](https://scalar.com/) |
 | Hosting | [Vercel](https://vercel.com/) |
-| Diagrams | [Mermaid](https://mermaid.js.org/) |
+| Diagrams | [Mermaid](https://mermaid.js.org/), [PlantUML](https://plantuml.com/) |
 | CI/CD | GitHub Actions |
 | Optional | Docker, nginx, Prometheus, Grafana, GHCR |
 
