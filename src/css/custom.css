@@ -432,6 +432,16 @@ table tbody tr:nth-child(even) {
   border-color: rgba(165, 180, 252, 0.45);
 }
 
+/* Diagrams */
+
+/* PlantUML diagrams are rendered as <img> tags pointing to an external SVG
+   endpoint. The SVG uses a transparent background with dark strokes and text,
+   which are invisible in dark mode. Invert the image so strokes and text
+   become light, then hue-rotate to restore any colour intent. */
+[data-theme='dark'] img[src*="plantuml"] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 /* Footer */
 .footer__title {
   text-transform: uppercase;

@@ -130,6 +130,9 @@ const config: Config = {
       defaultMode: 'light',
       respectPrefersColorScheme: true,
     },
+    mermaid: {
+      theme: {light: 'default', dark: 'dark'},
+    },
     tableOfContents: {
       minHeadingLevel: 2,
       maxHeadingLevel: 3,
