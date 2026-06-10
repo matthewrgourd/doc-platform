@@ -39,9 +39,10 @@ docify --version
 
 ## Step 2: Create a project
 
-Scaffold a new DevDocify project in a directory called `my-docs`:
+Navigate to the directory where you want your project, then scaffold it:
 
 ```bash
+cd ~
 docify new my-docs
 ```
 
