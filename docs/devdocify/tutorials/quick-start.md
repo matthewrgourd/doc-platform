@@ -23,13 +23,19 @@ A new documentation site running locally, with content validation and broken-lin
 
 ## Step 1: Install the CLI
 
-Install the Docify CLI globally:
+If `@devdocify/cli` is published to npm, install it globally:
 
 ```bash
 npm install -g @devdocify/cli
 ```
 
-Confirm it's available:
+If you are working from a local clone of the `doc-platform` repository, link the CLI instead:
+
+```bash
+cd packages/cli && npm install && npm link
+```
+
+Confirm it is available:
 
 ```bash
 docify --version
@@ -60,6 +66,8 @@ npm install
 docify dev
 ```
 
+Or without the CLI: `npm start`.
+
 Open [http://localhost:3000](http://localhost:3000) in your browser. You should see your new docs site.
 
 Edit `docs/index.md` and save. The browser should reload automatically.
@@ -76,11 +84,9 @@ Run the content linter to catch common issues before you build:
 docify validate
 ```
 
-If your `package.json` doesn't have a `lint-content` script yet, add one:
+Or without the CLI: `npm run lint-content`.
 
-```json
-"lint-content": "echo \"No linter configured\""
-```
+The scaffolded project includes a placeholder `lint-content` script. Replace it with a real linter when you are ready.
 
 ---
 
@@ -92,7 +98,7 @@ Build the site and check every internal link:
 docify broken-links
 ```
 
-Fix any broken links reported before continuing.
+Without the CLI, `npm run build` catches broken links because the scaffolded config sets `onBrokenLinks: 'throw'`. Fix any broken links reported before continuing.
 
 ---
 
@@ -103,6 +109,8 @@ Build a production bundle:
 ```bash
 docify build
 ```
+
+Or without the CLI: `npm run build`.
 
 Deploy to Vercel:
 

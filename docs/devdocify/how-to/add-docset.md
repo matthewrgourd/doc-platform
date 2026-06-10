@@ -103,12 +103,25 @@ docify validate
 docify build
 ```
 
+Without the CLI, use `npm run` directly:
+
+```bash
+npm run lint-content
+npm run build
+```
+
 ## 8. Verify in the browser
 
 Run the dev server and verify the new docset route and sidebar:
 
 ```bash
 docify dev
+```
+
+Or without the CLI:
+
+```bash
+npm start
 ```
 
 Open `http://localhost:3000/myproduct/getting-started` and confirm the sidebar loads your `navigation.json` entries.
