@@ -1,0 +1,24 @@
+{
+  "name": "my-docs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "serve": "docusaurus serve",
+    "lint-content": "echo \"No linter configured yet\""
+  },
+  "dependencies": {
+    "@docusaurus/core": "^3.5.2",
+    "@docusaurus/preset-classic": "^3.5.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@docusaurus/types": "^3.5.2",
+    "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": ">=20.17.0"
+  }
+}
