@@ -86,6 +86,7 @@ Scaffolds a new DevDocify project in `<directory>`. Creates the directory and wr
 
 - `package.json`
 - `docusaurus.config.ts`
+- `sidebars.ts`
 - `docs/index.md`
 - `src/css/custom.css`
 - `.gitignore`

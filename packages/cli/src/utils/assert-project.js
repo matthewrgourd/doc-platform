@@ -24,4 +24,11 @@ export function assertProject() {
     );
     process.exit(1);
   }
+
+  if (!existsSync(join(cwd, 'node_modules'))) {
+    console.error(
+      chalk.red('✖ node_modules not found. Run ' + chalk.bold('npm install') + ' first.')
+    );
+    process.exit(1);
+  }
 }

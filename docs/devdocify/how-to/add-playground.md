@@ -87,10 +87,10 @@ Run:
 docify build
 ```
 
-If you only want to check link integrity:
+Without the CLI, use `npm run` directly:
 
 ```bash
-docify broken-links
+npm run build
 ```
 
 ## 7. Verify behavior
@@ -99,6 +99,12 @@ Start local dev and test at least one request in the playground UI:
 
 ```bash
 docify dev
+```
+
+Or without the CLI:
+
+```bash
+npm start
 ```
 
 Confirm the route loads and the sample requests return expected responses.
