@@ -23,13 +23,7 @@ A new documentation site running locally, with content validation and broken-lin
 
 ## Step 1: Install the CLI
 
-If `@devdocify/cli` is published to npm, install it globally:
-
-```bash
-npm install -g @devdocify/cli
-```
-
-If you are working from a local clone of the `doc-platform` repository, link the CLI instead:
+From the root of the `doc-platform` repository, link the CLI globally:
 
 ```bash
 cd packages/cli && npm install && npm link
