@@ -1,0 +1,34 @@
+{
+  "_comment": "Copy this file to domains.config.json and configure your domains. Never commit domains.config.json.",
+  "primaryDomain": "www.devdocify.com",
+  "aliases": [
+    {
+      "domain": "devdocify.com",
+      "redirectToPrimary": true
+    }
+  ],
+  "docsetDomains": [
+    {
+      "_comment": "Optional: serve a docset on its own subdomain. Readers visiting docs.example.com see the docset at /.",
+      "domain": "docs.example.com",
+      "docsetId": "devdocify",
+      "basePath": "/"
+    }
+  ],
+  "legacyRedirects": [
+    {
+      "_comment": "Redirect traffic from a retired domain to the current site, preserving the URL path.",
+      "fromDomain": "old-docs.example.com",
+      "toDomain": "www.devdocify.com",
+      "statusCode": 308,
+      "preservePath": true
+    }
+  ],
+  "dns": {
+    "_comment": "Reference only. Actual DNS records must be configured at your DNS provider.",
+    "expectedRecords": [
+      {"type": "CNAME", "name": "www", "value": "cname.vercel-dns.com"},
+      {"type": "A", "name": "@", "value": "76.76.21.21"}
+    ]
+  }
+}

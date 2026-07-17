@@ -31,6 +31,9 @@
     "validate-assistant-quality": "npx tsx scripts/validate-assistant-quality.ts",
     "generate-nginx-auth-config": "npx tsx scripts/generate-nginx-auth-config.ts",
     "check-rbac-permission": "npx tsx scripts/check-rbac-permission.ts",
+    "validate-domains": "npx tsx scripts/validate-domains-config.ts",
+    "manage-domains": "npx tsx scripts/manage-vercel-domains.ts",
+    "generate-domain-redirects": "npx tsx scripts/generate-domain-redirects.ts",
     "test": "npx tsx --test scripts/__tests__/*.test.ts"
   },
   "dependencies": {
