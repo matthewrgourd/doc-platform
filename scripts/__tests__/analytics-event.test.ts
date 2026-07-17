@@ -13,7 +13,7 @@ function validEvent(overrides?: Partial<AnalyticsEvent>): AnalyticsEvent {
     type: 'page.view',
     timestamp: '2026-04-03T09:00:00Z',
     actor: {type: 'user', sessionId: 'abc-123'},
-    payload: {docset: 'tfl', version: 'latest', slug: '/tfl/getting-started', title: 'Getting Started'},
+    payload: {docset: 'tfl', version: 'latest', slug: '/tfl/getting-started'},
     ...overrides,
   };
 }
