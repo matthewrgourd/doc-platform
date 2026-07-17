@@ -24,6 +24,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import {fileURLToPath} from 'node:url';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -219,6 +220,8 @@ function parseArgs(): {eventFile: string | null; printSchema: boolean} {
   return {eventFile, printSchema};
 }
 
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+
 const {eventFile, printSchema} = parseArgs();
 
 if (printSchema) {
@@ -266,3 +269,5 @@ if (hasErrors) {
 } else {
   console.log(`[analytics-event] event valid: type: ${event.type}`);
 }
+
+} // end main guard

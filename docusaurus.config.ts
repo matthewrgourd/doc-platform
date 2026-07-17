@@ -95,11 +95,14 @@ const config: Config = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        // Add redirect rules here when pages are moved or removed.
-        // Example: { from: '/docs/old-path', to: '/docs/new-path' }
-        redirects: [],
-        // Uncomment to redirect entire path prefixes:
-        // createRedirects(existingPath) { ... }
+        redirects: [
+          {from: '/docs/getting-started', to: '/docs/tutorials/quick-start'},
+          {from: '/docs/start-here', to: '/docs/tutorials/quick-start'},
+          {from: '/docs/api', to: '/docs/reference'},
+          {from: '/tfl/playground', to: '/tfl/api-playground'},
+          {from: '/petstore/playground', to: '/petstore/api-playground'},
+          {from: '/platzi/playground', to: '/platzi/api-playground'},
+        ],
       },
     ],
     // Benchmark mode: inject a synthetic fixture docset when BENCHMARK_SCALE is set.

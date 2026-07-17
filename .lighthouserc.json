@@ -9,6 +9,7 @@
         "http://localhost:3000/",
         "http://localhost:3000/docs",
         "http://localhost:3000/docs/tutorials/quick-start",
+        "http://localhost:3000/petstore/api-playground",
         "http://localhost:3000/tfl/api-playground"
       ]
     },
