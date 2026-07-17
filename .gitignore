@@ -23,6 +23,8 @@ CLAUDE.md
 
 # Generated operator configs (environment-specific, must not be committed)
 nginx-auth.conf.generated
+domains.config.json
+vercel.redirects.json
 
 # Vercel
 .vercel/

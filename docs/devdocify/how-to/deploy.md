@@ -105,10 +105,110 @@ For link-specific validation, run:
 npm run lint-content
 ```
 
-## Custom domain
+## Custom domains
 
-To attach a custom domain:
+DevDocify supports single-domain, multi-domain, and legacy domain redirect configurations. Domain setup is managed through `domains.config.json` and automated via the Vercel API.
+
+### Single domain
+
+To attach one custom domain:
 
 1. Go to **Settings > Domains** in your Vercel project.
 2. Enter your domain and follow the DNS configuration instructions.
 3. Vercel provisions a TLS certificate automatically.
+
+Or use the CLI:
+
+```bash
+VERCEL_TOKEN=<token> VERCEL_PROJECT_ID=<id> npm run manage-domains add docs.example.com
+```
+
+### Multi-domain setup
+
+For multiple domains (e.g. apex redirect, per-docset subdomains), use the domain configuration file.
+
+1. Copy the example config:
+
+```bash
+cp domains.config.example.json domains.config.json
+```
+
+2. Edit `domains.config.json` with your domains:
+
+```json
+{
+  "primaryDomain": "docs.example.com",
+  "aliases": [
+    { "domain": "example.com", "redirectToPrimary": true }
+  ],
+  "docsetDomains": [
+    { "domain": "api.example.com", "docsetId": "petstore", "basePath": "/" }
+  ]
+}
+```
+
+3. Validate the configuration:
+
+```bash
+npm run validate-domains -- --config domains.config.json
+```
+
+4. Sync all domains to Vercel:
+
+```bash
+VERCEL_TOKEN=<token> VERCEL_PROJECT_ID=<id> npm run manage-domains sync --config domains.config.json
+```
+
+5. Check verification status:
+
+```bash
+VERCEL_TOKEN=<token> VERCEL_PROJECT_ID=<id> npm run manage-domains list
+```
+
+### Legacy domain redirects
+
+When migrating from an old domain, configure redirects so existing bookmarks and external links continue working.
+
+Add entries to the `legacyRedirects` array in `domains.config.json`:
+
+```json
+{
+  "legacyRedirects": [
+    {
+      "fromDomain": "old-docs.example.com",
+      "toDomain": "docs.example.com",
+      "statusCode": 308,
+      "preservePath": true
+    }
+  ]
+}
+```
+
+Generate the Vercel redirect rules:
+
+```bash
+npm run generate-domain-redirects -- --config domains.config.json --output vercel.redirects.json
+```
+
+Merge the generated `redirects` array into your `vercel.json`.
+
+### DNS configuration
+
+Configure DNS records at your DNS provider. Common patterns:
+
+| Domain type | Record | Name | Value |
+|---|---|---|---|
+| Subdomain (www, docs, api) | CNAME | `www` | `cname.vercel-dns.com` |
+| Apex domain | A | `@` | `76.76.21.21` |
+
+After adding DNS records, verify the domain:
+
+```bash
+VERCEL_TOKEN=<token> VERCEL_PROJECT_ID=<id> npm run manage-domains verify docs.example.com
+```
+
+### Troubleshooting
+
+- **Domain not verifying.** DNS propagation can take up to 48 hours. Run `npm run manage-domains verify <domain>` to check status and see required DNS records.
+- **SSL certificate pending.** Vercel provisions TLS certificates automatically after DNS verification. Allow a few minutes after verification completes.
+- **Redirect loops.** Run `npm run validate-domains` to detect redirect chains or circular references in your domain configuration.
