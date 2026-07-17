@@ -18,6 +18,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import {fileURLToPath} from 'node:url';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -186,6 +187,8 @@ function parseArgs(): {configPath: string; listRoles: boolean} {
   return {configPath, listRoles};
 }
 
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+
 const {configPath, listRoles} = parseArgs();
 
 if (listRoles) {
@@ -229,3 +232,5 @@ if (hasErrors) {
   const assignmentCount = config.assignments?.length ?? 0;
   console.log(`[rbac-config] config valid: ${assignmentCount} assignment(s)${warnCount > 0 ? ` (${warnCount} warning(s))` : ''}`);
 }
+
+} // end main guard

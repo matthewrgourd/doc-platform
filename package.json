@@ -30,7 +30,8 @@
     "validate-assistant": "npx tsx scripts/validate-assistant-config.ts",
     "validate-assistant-quality": "npx tsx scripts/validate-assistant-quality.ts",
     "generate-nginx-auth-config": "npx tsx scripts/generate-nginx-auth-config.ts",
-    "check-rbac-permission": "npx tsx scripts/check-rbac-permission.ts"
+    "check-rbac-permission": "npx tsx scripts/check-rbac-permission.ts",
+    "test": "npx tsx --test scripts/__tests__/*.test.ts"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",
