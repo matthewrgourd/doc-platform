@@ -32,9 +32,11 @@ Live site: [https://www.devdocify.com](https://www.devdocify.com)
 - **Link integrity** - internal broken links fail the build; redirects supported via `@docusaurus/plugin-client-redirects`; external links checked weekly
 - **Lighthouse CI** - performance, accessibility, and best-practices audits on every build
 - **Docs-draft automation** - `.github/workflows/docs-draft-update.yml` proposes doc updates when target code changes, with mandatory human approval before merge
+- **Custom domain management** - domain config schema with validation, Vercel API provisioning, legacy redirect generation, and DNS verification checks
+- **Admin dashboard** - standalone Next.js app with Supabase Auth for portal config, deployments, analytics, and user management
 - **Dark mode** - automatic, respects system preferences
 - **CI/CD** - GitHub Actions pipeline with typecheck, lint, build, health checks, Lighthouse, Docker push, Algolia push, and staging deploy
-- **Optional self-hosted deployment** - Docker, nginx, Prometheus + Grafana for containerized or on-prem deployments
+- **Optional self-hosted deployment** - Docker, nginx, Prometheus + Grafana, or Helm chart for Kubernetes
 
 ## Docs taxonomy (Diataxis)
 
@@ -132,6 +134,46 @@ make monitoring-up
 make monitoring-down    # tear down
 ```
 
+**Kubernetes** (requires Helm):
+
+```bash
+helm install devdocify charts/devdocify
+```
+
+The chart deploys the nginx docs image with liveness/readiness probes on `/health`, a ClusterIP Service on port 80, and optional Ingress and HorizontalPodAutoscaler. See `charts/devdocify/values.yaml` for all configurable values.
+
+## Admin dashboard
+
+The `admin/` directory contains a standalone Next.js app for platform administration. It uses Supabase for authentication.
+
+**Prerequisites:**
+
+1. Copy the example env file and fill in your Supabase credentials:
+
+```bash
+cp admin/.env.local.example admin/.env.local
+```
+
+2. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `admin/.env.local`.
+
+**Run locally:**
+
+```bash
+cd admin
+npm install
+npm run dev
+```
+
+The dashboard runs at `http://localhost:3100`. Sign in with your Supabase email/password credentials.
+
+**Build for production:**
+
+```bash
+cd admin
+npm run build
+npm run start
+```
+
 ## Available commands
 
 **Core dev**
@@ -158,6 +200,7 @@ npm run validate-saml             # validate saml.config.json schema
 npm run validate-rbac             # validate rbac.config.json schema
 npm run validate-analytics-event  # validate an analytics event payload
 npm run validate-assistant        # validate assistant.config.json schema
+npm run validate-domains          # validate domains.config.json schema
 npm run check-rbac-permission     # check actor capability against rbac.config.json
 npm run generate-nginx-auth-config  # generate nginx auth_request config from saml.config.json
 ```
@@ -217,6 +260,15 @@ Docker, deploy-staging, and push-search-index only run on push to `main`, not on
 ## Project structure
 
 ```
+admin/                       Admin dashboard (Next.js + Supabase Auth)
+  src/app/                   App routes (login, dashboard)
+  src/components/            Sidebar navigation
+  src/lib/supabase/          Supabase client/server helpers
+charts/
+  devdocify/                 Helm chart for Kubernetes deployment
+    templates/               K8s manifests (Deployment, Service, Ingress, HPA)
+    Chart.yaml               Chart metadata
+    values.yaml              Default values
 docs/
   _snippets/               Shared content snippets (resolved via include directives)
   devdocify/               DevDocify product docs
@@ -264,6 +316,9 @@ scripts/
   validate-analytics-event.ts   Validates analytics event payloads against schema
   validate-assistant-config.ts  Validates assistant.config.json schema
   validate-assistant-quality.ts Enforces assistant quality policy (8 rules, CI gate)
+  validate-domains-config.ts    Validates domains.config.json schema
+  manage-vercel-domains.ts      Provisions custom domains on Vercel via API (--dry-run supported)
+  generate-domain-redirects.ts  Generates Vercel redirect rules from legacy domain config
   generate-fixture.ts           Generates synthetic docs fixtures for benchmarking
   benchmark-manifest.ts         Benchmarks manifest builder at 1k/5k/10k file scale
   benchmark-build.ts            Full Docusaurus build benchmark at configurable fixture scale
@@ -302,6 +357,7 @@ static/
 rbac.config.example.json     Example RBAC config (roles, capabilities, principals)
 saml.config.example.json     Example SAML SSO config (IdP metadata, protected modes)
 assistant.config.example.json  Example assistant quality config (rules, thresholds)
+domains.config.example.json  Example custom domain config (primary, aliases, redirects)
 vercel.json                  Vercel build config (install, output dir)
 Dockerfile                   Optional: multi-stage build (node + nginx)
 docker-compose.yml           Optional: local containers and monitoring
@@ -319,8 +375,9 @@ Makefile                     Docker and monitoring commands
 | API playground | [Scalar](https://scalar.com/) |
 | Hosting | [Vercel](https://vercel.com/) |
 | Diagrams | [Mermaid](https://mermaid.js.org/), [PlantUML](https://plantuml.com/) |
+| Admin dashboard | [Next.js 15](https://nextjs.org/) + [Supabase](https://supabase.com/) |
 | CI/CD | GitHub Actions |
-| Optional | Docker, nginx, Prometheus, Grafana, GHCR |
+| Optional | Docker, nginx, Helm, Prometheus, Grafana, GHCR |
 
 ## License
 
