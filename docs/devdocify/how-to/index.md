@@ -2,7 +2,7 @@
 sidebar_position: 1
 slug: /how-to
 title: Task guides
-description: "How-to guides for DevDocify: add a docset, add a playground, configure Algolia search, configure enterprise controls, add PlantUML diagrams, and deploy to Vercel."
+description: "How-to guides for DevDocify: add a docset, add a playground, configure Algolia search, configure enterprise controls, add PlantUML diagrams, deploy, and set up the admin dashboard."
 ---
 
 # Task guides
@@ -40,7 +40,11 @@ Use how-to guides when you need to complete a specific task quickly and you alre
     <p>Add architecture diagrams with fenced PlantUML blocks that render as SVG images.</p>
   </div>
   <div className="docs-card">
-    <h3><a href="/docs/how-to/deploy">Deploy to Vercel</a></h3>
-    <p>Set up continuous deployment with Vercel, preview deployments, and CI quality gates.</p>
+    <h3><a href="/docs/how-to/deploy">Deploy</a></h3>
+    <p>Deploy to Vercel with CI quality gates, or self-host with Docker or the Helm chart for Kubernetes.</p>
+  </div>
+  <div className="docs-card">
+    <h3><a href="/docs/how-to/admin-dashboard">Set up the admin dashboard</a></h3>
+    <p>Configure and run the admin dashboard for portal management, deployment monitoring, analytics, and user access control.</p>
   </div>
 </div>

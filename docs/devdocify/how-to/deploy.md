@@ -212,3 +212,78 @@ VERCEL_TOKEN=<token> VERCEL_PROJECT_ID=<id> npm run manage-domains verify docs.e
 - **Domain not verifying.** DNS propagation can take up to 48 hours. Run `npm run manage-domains verify <domain>` to check status and see required DNS records.
 - **SSL certificate pending.** Vercel provisions TLS certificates automatically after DNS verification. Allow a few minutes after verification completes.
 - **Redirect loops.** Run `npm run validate-domains` to detect redirect chains or circular references in your domain configuration.
+
+## Self-hosted deployment
+
+For containerized or on-premises deployments, DevDocify includes a Docker image and a Helm chart for Kubernetes.
+
+### Docker
+
+Build and run the production image locally. Requires [Colima](https://github.com/abiosoft/colima) or Docker Desktop.
+
+```bash
+make docker-run              # build and run on port 8080
+```
+
+Or use Docker Compose for a full stack with monitoring:
+
+```bash
+make docker-compose-up       # production build via compose
+make monitoring-up           # add Prometheus + Grafana
+```
+
+| Service | URL |
+|---|---|
+| Docs site | http://localhost:8080 |
+| Prometheus | http://localhost:9090 |
+| Grafana | http://localhost:3001 |
+
+### Kubernetes with Helm
+
+The `charts/devdocify/` Helm chart deploys the docs site to any Kubernetes cluster.
+
+1. Install the chart:
+
+```bash
+helm install devdocify charts/devdocify
+```
+
+2. Verify the pods are running:
+
+```bash
+kubectl get pods -l app.kubernetes.io/name=devdocify
+```
+
+3. Access the site via port-forward:
+
+```bash
+kubectl port-forward svc/devdocify 8080:80
+```
+
+The site is available at `http://localhost:8080`.
+
+#### Configuration
+
+Override values with `--set` or a custom values file:
+
+```bash
+helm install devdocify charts/devdocify \
+  --set replicaCount=3 \
+  --set ingress.enabled=true \
+  --set ingress.hosts[0].host=docs.example.com
+```
+
+Key values:
+
+| Value | Default | Description |
+|---|---|---|
+| `replicaCount` | `2` | Number of pod replicas |
+| `image.repository` | `ghcr.io/matthewrgourd/doc-platform` | Container image |
+| `image.tag` | Chart `appVersion` | Image tag |
+| `service.port` | `80` | Service port |
+| `ingress.enabled` | `true` | Create an Ingress resource |
+| `autoscaling.enabled` | `false` | Enable HorizontalPodAutoscaler |
+| `autoscaling.minReplicas` | `2` | Minimum replicas when autoscaling |
+| `autoscaling.maxReplicas` | `10` | Maximum replicas when autoscaling |
+
+The chart includes liveness and readiness probes on `/health`, which nginx serves with a 200 response.

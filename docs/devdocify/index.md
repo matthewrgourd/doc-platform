@@ -52,6 +52,14 @@ DevDocify is a multi-docset documentation platform built on Docusaurus. It inclu
     <h3>Quality gates</h3>
     <p>Type checks, content linting, assistant policy validation, Lighthouse CI, and playground health checks run before release.</p>
   </div>
+  <div className="docs-card">
+    <h3>Custom domains</h3>
+    <p>Attach custom domains with automated Vercel provisioning, legacy redirects, and DNS verification checks.</p>
+  </div>
+  <div className="docs-card">
+    <h3>Admin dashboard</h3>
+    <p>A web interface for portal configuration, deployment monitoring, analytics, and user access management.</p>
+  </div>
 </div>
 
 ## Start here
