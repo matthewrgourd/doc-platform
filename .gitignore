@@ -2,6 +2,7 @@
 /node_modules
 packages/*/node_modules
 packages/*/package-lock.json
+admin/node_modules
 
 # Production
 /build
@@ -9,6 +10,7 @@ packages/*/package-lock.json
 # Generated files
 .docusaurus
 .cache-loader
+*.tsbuildinfo
 
 # Local-only documentation (not published)
 docs/tool-delegation-strategy.md
