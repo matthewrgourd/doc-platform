@@ -31,6 +31,23 @@ export default function LoginPage() {
     }
   }
 
+  async function handleGitHubLogin() {
+    setLoading(true);
+    setError(null);
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "github",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="login-container">
       <div className="login-card">
@@ -57,6 +74,16 @@ export default function LoginPage() {
             {loading ? "Signing in..." : "Sign in"}
           </button>
         </form>
+        <div className="login-divider">
+          <span>or</span>
+        </div>
+        <button
+          className="github-button"
+          onClick={handleGitHubLogin}
+          disabled={loading}
+        >
+          Continue with GitHub
+        </button>
       </div>
     </div>
   );
