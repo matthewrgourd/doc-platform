@@ -1,6 +1,10 @@
 import {describe, it} from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
 import {
+  DOCSET_REGISTRY,
+  docsetRoutePrefix,
   isValidCalVer,
   resolveLatestVersion,
   validateDocsetConfig,
@@ -177,5 +181,29 @@ describe('validateDocsetConfig', () => {
       ],
     };
     assert.deepEqual(validateDocsetConfig(config), []);
+  });
+});
+
+describe('docsetRoutePrefix', () => {
+  it('uses routeBasePath when set', () => {
+    assert.equal(docsetRoutePrefix('devdocify'), 'docs');
+  });
+
+  it('falls back to the docset id', () => {
+    assert.equal(docsetRoutePrefix('tfl'), 'tfl');
+    assert.equal(docsetRoutePrefix('not-registered'), 'not-registered');
+  });
+
+  // llms.txt and the search index build URLs from the registry. If it drifts
+  // from the docs plugins, every generated link for that docset 404s.
+  it('matches routeBasePath in docusaurus.config.ts for every docset', () => {
+    const config = fs.readFileSync(path.resolve(process.cwd(), 'docusaurus.config.ts'), 'utf8');
+    const plugin = /id:\s*'([^']+)',\s*path:\s*'docs\/[^']+',\s*routeBasePath:\s*'([^']+)'/g;
+    const fromConfig = new Map([...config.matchAll(plugin)].map(m => [m[1], m[2]]));
+
+    for (const docset of DOCSET_REGISTRY) {
+      assert.ok(fromConfig.has(docset.id), `${docset.id} not found in docusaurus.config.ts`);
+      assert.equal(docsetRoutePrefix(docset.id), fromConfig.get(docset.id), docset.id);
+    }
   });
 });

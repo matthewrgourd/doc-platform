@@ -69,6 +69,11 @@ export type DocsetConfig = {
   /** Human-readable display name, e.g. "Transport for London". */
   name: string;
   /**
+   * URL prefix the docset is served under. Must match the docs plugin's
+   * routeBasePath in docusaurus.config.ts. Defaults to the id.
+   */
+  routeBasePath?: string;
+  /**
    * Ordered list of versions. Omit or leave empty for unversioned docsets.
    * Versions should be listed newest first.
    */
@@ -175,6 +180,7 @@ export const DOCSET_REGISTRY: DocsetConfig[] = [
   {
     id: 'devdocify',
     name: 'DevDocify',
+    routeBasePath: 'docs',
   },
   {
     id: 'tfl',
@@ -193,6 +199,14 @@ export const DOCSET_REGISTRY: DocsetConfig[] = [
 // ---------------------------------------------------------------------------
 // Build-time validation entry point
 // ---------------------------------------------------------------------------
+
+/**
+ * Returns the URL prefix (no slashes) a docset is served under. Docsets not
+ * in the registry are served under their folder name.
+ */
+export function docsetRoutePrefix(docsetId: string): string {
+  return DOCSET_REGISTRY.find(d => d.id === docsetId)?.routeBasePath ?? docsetId;
+}
 
 /**
  * Validates all registered docset configs. Throws on any error.

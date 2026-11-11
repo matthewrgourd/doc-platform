@@ -16,7 +16,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import {validateAllDocsetConfigs} from './docset.config.js';
+import {docsetRoutePrefix, validateAllDocsetConfigs} from './docset.config.js';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -107,6 +107,7 @@ function isVersionSegment(name: string): boolean {
 function walkDocset(docsetId: string, docsetDir: string): DocsetManifest {
   const routes: RouteEntry[] = [];
   const versions = new Set<string>();
+  const routePrefix = docsetRoutePrefix(docsetId);
 
   function walk(dir: string, segments: string[]): void {
     const entries = fs.readdirSync(dir, {withFileTypes: true});
@@ -122,11 +123,11 @@ function walkDocset(docsetId: string, docsetDir: string): DocsetManifest {
 
         // Detect version: if first segment is a CalVer string, it's the version.
         let version = 'unversioned';
-        let routeSegments = [docsetId, ...segments, entry.name];
+        let routeSegments = [routePrefix, ...segments, entry.name];
 
         if (segments.length > 0 && isVersionSegment(segments[0])) {
           version = segments[0];
-          routeSegments = [docsetId, ...segments, entry.name];
+          routeSegments = [routePrefix, ...segments, entry.name];
         }
 
         versions.add(version);
@@ -164,7 +165,7 @@ function walkDocset(docsetId: string, docsetDir: string): DocsetManifest {
   }
 
   // Every docset must have a root index
-  const hasIndex = routes.some(r => r.isIndex && r.slug === `/${docsetId}`);
+  const hasIndex = routes.some(r => r.isIndex && r.slug === `/${routePrefix}`);
   if (!hasIndex) {
     warn(`docset "${docsetId}" has no root index.md: navigation may be incomplete`);
   }
