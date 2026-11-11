@@ -38,9 +38,9 @@
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",
-    "@docusaurus/plugin-client-redirects": "^3.9.2",
+    "@docusaurus/plugin-client-redirects": "3.9.2",
     "@docusaurus/preset-classic": "3.9.2",
-    "@docusaurus/theme-mermaid": "^3.9.2",
+    "@docusaurus/theme-mermaid": "3.9.2",
     "@mdx-js/react": "^3.0.0",
     "@scalar/docusaurus": "^0.5.23",
     "@vercel/analytics": "^2.0.1",

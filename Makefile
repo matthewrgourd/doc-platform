@@ -49,7 +49,8 @@ docker-compose-dev: ## Run dev server via docker compose (hot reload)
 docker-compose-down: ## Stop all docker compose services
 	docker compose --profile dev --profile monitoring down
 
-monitoring-up: ## Start docs + Prometheus + Grafana monitoring stack
+monitoring-up: ## Start docs + Prometheus + Grafana monitoring stack (needs GRAFANA_ADMIN_PASSWORD)
+	@test -n "$$GRAFANA_ADMIN_PASSWORD" || { echo "Set GRAFANA_ADMIN_PASSWORD first, e.g. export GRAFANA_ADMIN_PASSWORD=\$$(openssl rand -base64 18)"; exit 1; }
 	docker compose --profile monitoring up --build -d
 
 monitoring-down: ## Stop monitoring stack

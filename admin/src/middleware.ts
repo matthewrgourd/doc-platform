@@ -29,13 +29,38 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user && !request.nextUrl.pathname.startsWith("/login")) {
+  const { pathname } = request.nextUrl;
+  const isPublic = pathname.startsWith("/login") || pathname.startsWith("/auth/callback");
+
+  if (!user && !isPublic) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
+    url.search = "";
     return NextResponse.redirect(url);
   }
 
+  // Being signed in is not enough: Supabase lets anyone create an account
+  // with the public anon key. Only allowlisted emails get in. Fails closed.
+  if (user && !isAllowedEmail(user.email)) {
+    await supabase.auth.signOut();
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.search = "?error=unauthorized";
+    const redirect = NextResponse.redirect(url);
+    supabaseResponse.cookies.getAll().forEach((cookie) => redirect.cookies.set(cookie));
+    return redirect;
+  }
+
   return supabaseResponse;
+}
+
+function isAllowedEmail(email: string | undefined): boolean {
+  if (!email) return false;
+  const allowed = (process.env.ADMIN_ALLOWED_EMAILS ?? "")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+  return allowed.includes(email.toLowerCase());
 }
 
 export const config = {
