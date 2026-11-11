@@ -15,9 +15,24 @@ updates:
     schedule:
       interval: monthly
     open-pull-requests-limit: 5
+    groups:
+      # Docusaurus fails to build when its packages are on different versions,
+      # and React must stay on a version Docusaurus supports.
+      docusaurus:
+        patterns: ['@docusaurus/*', 'react', 'react-dom', '@types/react', '@types/react-dom']
+    ignore:
+      # Types track the Node major we run (24), not the newest one.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
 
   - package-ecosystem: npm
     directory: /admin
     schedule:
       interval: monthly
     open-pull-requests-limit: 5
+    groups:
+      react:
+        patterns: ['react', 'react-dom', '@types/react', '@types/react-dom']
+    ignore:
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
