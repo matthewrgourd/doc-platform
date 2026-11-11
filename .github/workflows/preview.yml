@@ -18,9 +18,11 @@ jobs:
       statuses: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '20'
           cache: npm
@@ -38,7 +40,7 @@ jobs:
 
       # Report pending status so reviewers see the check immediately
       - name: Set pending deployment status
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         with:
           script: |
             await github.rest.repos.createCommitStatus({
@@ -54,7 +56,7 @@ jobs:
       # This step polls the Vercel API until the deployment is ready.
       - name: Get Vercel preview URL
         id: deploy
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -80,7 +82,9 @@ jobs:
 
       - name: Set success deployment status
         if: success()
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        env:
+          PREVIEW_URL: ${{ steps.deploy.outputs.url }}
         with:
           script: |
             await github.rest.repos.createCommitStatus({
@@ -90,12 +94,12 @@ jobs:
               state: 'success',
               context: 'preview / vercel',
               description: 'Preview ready',
-              target_url: '${{ steps.deploy.outputs.url }}',
+              target_url: process.env.PREVIEW_URL,
             });
 
       - name: Set failure deployment status
         if: failure()
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         with:
           script: |
             await github.rest.repos.createCommitStatus({
@@ -110,10 +114,12 @@ jobs:
       # Post or update a single comment per PR with the preview link
       - name: Post preview comment
         if: success()
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        env:
+          PREVIEW_URL: ${{ steps.deploy.outputs.url }}
         with:
           script: |
-            const url = '${{ steps.deploy.outputs.url }}';
+            const url = process.env.PREVIEW_URL;
             const sha = context.payload.pull_request.head.sha.slice(0, 7);
             const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const body = [
@@ -158,7 +164,7 @@ jobs:
 
       - name: Post failure comment
         if: failure()
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         with:
           script: |
             const sha = context.payload.pull_request.head.sha.slice(0, 7);

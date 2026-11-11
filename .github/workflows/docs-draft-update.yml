@@ -58,7 +58,7 @@ jobs:
       DOC_SECTIONS: ${{ github.event_name == 'repository_dispatch' && toJson(github.event.client_payload.doc_sections) || github.event.inputs.doc_sections }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           token: ${{ secrets.DOCS_DRAFT_TOKEN || secrets.GITHUB_TOKEN }}
 
