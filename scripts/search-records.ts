@@ -132,6 +132,9 @@ export const DOCSEARCH_INDEX_SETTINGS = {
   attributesToHighlight: ['hierarchy', 'content'],
   attributesToSnippet: ['content:10'],
   customRanking: ['desc(weight.pageRank)', 'desc(weight.level)', 'asc(weight.position)'],
+  // A query word that matches nothing ("journey planner") would otherwise
+  // return zero hits; retry with words optional, as DocSearch indices do.
+  removeWordsIfNoResults: 'allOptional' as const,
   // API operations share their playground URL, so de-duplicating by URL would
   // hide all but one of them.
   distinct: false,
