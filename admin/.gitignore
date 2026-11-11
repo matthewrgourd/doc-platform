@@ -13,3 +13,7 @@ out
 
 # Misc
 .DS_Store
+
+# TypeScript
+next-env.d.ts
+*.tsbuildinfo
