@@ -23,6 +23,7 @@
 import fs from 'fs';
 import path from 'path';
 import {docsetRoutePrefix} from './docset.config.js';
+import {extractExcerpt, extractHeadings, type DocHeading} from './search-records.js';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -36,7 +37,7 @@ export type DocSearchEntry = {
   version: string;
   slug: string;
   title: string;
-  headings: string[];
+  headings: DocHeading[];
   excerpt: string;
   relativePath: string;
 };
@@ -96,27 +97,6 @@ function extractFrontmatterTitle(content: string): string | null {
   return match ? match[1].trim() : null;
 }
 
-function extractHeadings(content: string): string[] {
-  // Strip frontmatter first
-  const body = content.replace(/^---\n[\s\S]*?\n---\n/, '');
-  const matches = body.matchAll(/^#{1,3}\s+(.+)$/gm);
-  return Array.from(matches, m => m[1].trim()).slice(0, 10);
-}
-
-function extractExcerpt(content: string): string {
-  // Strip frontmatter and markdown syntax for a plain-text excerpt
-  const body = content
-    .replace(/^---\n[\s\S]*?\n---\n/, '')
-    .replace(/^#{1,6}\s+.+$/gm, '')       // headings
-    .replace(/<!--.*?-->/gs, '')            // HTML comments (includes directives)
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links → text
-    .replace(/[*_`~]/g, '')                // inline formatting
-    .replace(/\n{2,}/g, ' ')              // collapse whitespace
-    .trim();
-
-  return body.slice(0, EXCERPT_LENGTH) + (body.length > EXCERPT_LENGTH ? '…' : '');
-}
-
 function slugFromRelPath(relPath: string): string {
   const segments = relPath.replace(/\\/g, '/').split('/');
   const last = segments[segments.length - 1];
@@ -160,7 +140,7 @@ function indexDocs(docsRoot: string): DocSearchEntry[] {
       const content = fs.readFileSync(fullPath, 'utf8');
       const title = extractFrontmatterTitle(content) ?? segments[segments.length - 1].replace(/\.(md|mdx)$/, '');
       const headings = extractHeadings(content);
-      const excerpt = extractExcerpt(content);
+      const excerpt = extractExcerpt(content, EXCERPT_LENGTH);
       const slug = slugFromRelPath(relPath);
 
       entries.push({
