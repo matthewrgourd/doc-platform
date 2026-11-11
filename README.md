@@ -121,14 +121,17 @@ make docker-compose-dev      # dev server with hot reload
 **Monitoring** (Prometheus + Grafana):
 
 ```bash
+export GRAFANA_ADMIN_PASSWORD=$(openssl rand -base64 18)
 make monitoring-up
 ```
+
+Prometheus, Grafana and the exporter listen on localhost only.
 
 | Service | URL |
 |---|---|
 | Docs site | http://localhost:8080 |
 | Prometheus | http://localhost:9090 |
-| Grafana | http://localhost:3001 (admin / admin) |
+| Grafana | http://localhost:3001 (admin / `$GRAFANA_ADMIN_PASSWORD`) |
 
 ```bash
 make monitoring-down    # tear down

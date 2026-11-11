@@ -229,8 +229,11 @@ Or use Docker Compose for a full stack with monitoring:
 
 ```bash
 make docker-compose-up       # production build via compose
+export GRAFANA_ADMIN_PASSWORD=$(openssl rand -base64 18)
 make monitoring-up           # add Prometheus + Grafana
 ```
+
+Prometheus, Grafana, and the nginx exporter listen on localhost only. Sign in to Grafana as `admin` with the password you exported.
 
 | Service | URL |
 |---|---|
