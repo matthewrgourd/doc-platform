@@ -22,6 +22,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import {docsetRoutePrefix} from './docset.config.js';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -123,6 +124,7 @@ function slugFromRelPath(relPath: string): string {
 
   const clean = segments.map(s => s.replace(/\.(md|mdx)$/, ''));
   if (isIndex) clean.pop();
+  clean[0] = docsetRoutePrefix(clean[0]);
 
   return '/' + clean.join('/');
 }
@@ -218,8 +220,8 @@ function indexApiOps(openapiDir: string): ApiOpSearchEntry[] {
         const summary = (op.summary as string | undefined) ?? '';
         const tags = (op.tags as string[] | undefined) ?? [];
 
-        // Slug: /docset/api-reference/operationId
-        const slug = `/${docset}/api-reference/${operationId}`;
+        // Operations have no page of their own; link to the docset's playground
+        const slug = `/${docsetRoutePrefix(docset)}/api-playground`;
 
         entries.push({
           type: 'api-op',
