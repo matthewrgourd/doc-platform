@@ -1,3 +1,4 @@
+import path from "node:path";
 import type { NextConfig } from "next";
 
 const securityHeaders = [
@@ -11,6 +12,9 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // The repo root has its own lockfile; without this Next 16 guesses the
+  // workspace root and warns on every build.
+  turbopack: { root: path.resolve(__dirname) },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
