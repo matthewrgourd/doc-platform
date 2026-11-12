@@ -8,7 +8,7 @@
       "source": "/(.*)",
       "headers": [
         { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Content-Security-Policy", "value": "frame-ancestors 'self'" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'sha256-WJOct5vEUCm/OV1uqP93SArBzeywkWbgpLxasUIrx+A=' 'sha256-ba4RNVMZbnzJ+bbEeCl1KN1RZYpnTDHkn4DOmtwhl6k=' 'sha256-u1TYnaoQNoeq1d62kw0BdDbZiBJKcbfH/S7+IAQdcwQ=' 'sha256-MQlw1epr25pQQb9bKBc8HnqC/7desKeyLYCxqHV2hqY=' 'sha256-gDSv+JwxQ6JyQViZIaD2tm54PpvZ+zm0MGe4aFSsnAU=' 'sha256-iziFwht6BmfBbW4MwDMO8p3EodHXSvCYyQrsm/v19NQ='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com https://fonts.scalar.com; connect-src 'self' https://*.algolia.net https://*.algolianet.com https://insights.algolia.io https://chat.devdocify.com https://petstore3.swagger.io https://api.tfl.gov.uk https://api.escuelajs.co; worker-src 'self' blob:; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }

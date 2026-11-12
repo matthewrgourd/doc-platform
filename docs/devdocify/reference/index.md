@@ -11,9 +11,7 @@ Use reference pages when you need exact facts, supported options, and stable tec
 
 <div className="docs-hero-block">
   <p className="docs-eyebrow">System contracts</p>
-  <p className="docs-hero-copy">
-    CLI commands, navigation schema, route model, automation scripts, and configuration entry points.
-  </p>
+  <p className="docs-hero-copy">CLI commands, navigation schema, route model, automation scripts, and configuration entry points.</p>
 </div>
 
 ## Reference pages

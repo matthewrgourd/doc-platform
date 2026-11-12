@@ -25,6 +25,9 @@ const config: Config = {
 
   url: 'https://www.devdocify.com',
   baseUrl: '/',
+  // Diagnostic banner for a misconfigured baseUrl. It is an inline script, which
+  // the Content-Security-Policy in vercel.json would otherwise have to allow.
+  baseUrlIssueBanner: false,
 
   onBrokenLinks: 'throw',
 

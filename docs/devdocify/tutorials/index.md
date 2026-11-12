@@ -11,10 +11,7 @@ Use tutorials when you want a guided learning path where each step builds on the
 
 <div className="docs-hero-block">
   <p className="docs-eyebrow">Learning journey</p>
-  <p className="docs-hero-copy">
-    Follow the quick-start tutorial to go from zero to a running DevDocify site using the CLI.
-    Then explore the product docsets to see how multi-docset navigation works in practice.
-  </p>
+  <p className="docs-hero-copy">Follow the quick-start tutorial to go from zero to a running DevDocify site using the CLI. Then explore the product docsets to see how multi-docset navigation works in practice.</p>
 </div>
 
 ## Tutorial path

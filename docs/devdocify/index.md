@@ -11,10 +11,7 @@ DevDocify is a multi-docset documentation platform built on Docusaurus. It inclu
 
 <div className="docs-hero-block">
   <p className="docs-eyebrow">Platform documentation</p>
-  <p className="docs-hero-copy">
-    Everything you need to add docsets, configure search, run local previews, and ship
-    documentation with confidence.
-  </p>
+  <p className="docs-hero-copy">Everything you need to add docsets, configure search, run local previews, and ship documentation with confidence.</p>
 </div>
 
 ## What's included
