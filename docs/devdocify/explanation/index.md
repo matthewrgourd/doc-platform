@@ -11,10 +11,7 @@ Use explanation pages when you want context on platform design choices and trade
 
 <div className="docs-hero-block">
   <p className="docs-eyebrow">Rationale</p>
-  <p className="docs-hero-copy">
-    These decisions prioritize clarity for readers and maintainable delivery workflows for the
-    team.
-  </p>
+  <p className="docs-hero-copy">These decisions prioritize clarity for readers and maintainable delivery workflows for the team.</p>
 </div>
 
 ## Why root and docs are split

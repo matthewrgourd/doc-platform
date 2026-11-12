@@ -154,10 +154,31 @@ function MarkdownContent({ children, className }: { children: string; className?
 const WIDGET_API = 'https://chat.devdocify.com/api/widget-chat';
 const REQUEST_TIMEOUT_MS = 45000;
 const REQUEST_TIMEOUT_MESSAGE = 'The AI request timed out. Please try again.';
+// Mirrors the widget-chat limits (chat-devdocify lib/ai/widget.ts): requests
+// over them are rejected, so older turns are dropped before sending.
+const MAX_HISTORY_MESSAGES = 20;
+const MAX_HISTORY_CHARS = 24000;
+const MAX_INPUT_CHARS = 4000;
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+}
+
+/** Thrown for responses whose text should be shown to the reader as-is. */
+class ChatRequestError extends Error {}
+
+function trimHistory(messages: Message[]): Message[] {
+  const history = messages.filter((m) => m.content.trim() !== '');
+  let chars = history.reduce((sum, m) => sum + m.content.length, 0);
+  // The model API requires the conversation to start with a user turn.
+  while (
+    history.length > 1 &&
+    (history.length > MAX_HISTORY_MESSAGES || chars > MAX_HISTORY_CHARS || history[0].role !== 'user')
+  ) {
+    chars -= history.shift()!.content.length;
+  }
+  return history;
 }
 
 function ChatWidget() {
@@ -197,10 +218,13 @@ function ChatWidget() {
       const res = await fetch(WIDGET_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: next }),
+        body: JSON.stringify({ messages: trimHistory(next) }),
         signal: ctrl.signal,
       });
 
+      if (res.status === 429) {
+        throw new ChatRequestError(await res.text());
+      }
       if (!res.ok || !res.body) {
         throw new Error('Request failed');
       }
@@ -235,7 +259,9 @@ function ChatWidget() {
       const message =
         (err as Error).name === 'AbortError' && didTimeout
           ? REQUEST_TIMEOUT_MESSAGE
-          : 'Sorry, something went wrong. Please try again.';
+          : err instanceof ChatRequestError && err.message
+            ? err.message
+            : 'Sorry, something went wrong. Please try again.';
       if ((err as Error).name !== 'AbortError' || didTimeout) {
         setMessages((prev) => {
           const updated = [...prev];
@@ -318,6 +344,7 @@ function ChatWidget() {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={onKeyDown}
           placeholder="Ask a question…"
+          maxLength={MAX_INPUT_CHARS}
           rows={1}
           disabled={streaming}
           aria-label="Message input"

@@ -11,9 +11,7 @@ Use how-to guides when you need to complete a specific task quickly and you alre
 
 <div className="docs-hero-block">
   <p className="docs-eyebrow">Task guides</p>
-  <p className="docs-hero-copy">
-    Focused, step-oriented instructions for common DevDocify platform tasks.
-  </p>
+  <p className="docs-hero-copy">Focused, step-oriented instructions for common DevDocify platform tasks.</p>
 </div>
 
 ## Available guides
