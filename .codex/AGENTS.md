@@ -29,9 +29,9 @@ After implementing:
 - All build/validation scripts live in `scripts/` and are TypeScript (`.ts`).
 - Scripts are invoked via `npx tsx scripts/<name>.ts` and are exposed as npm scripts
   in `package.json`.
-- New scripts must export their core logic as named functions so they can be imported
-  by other scripts without triggering CLI side-effects. See `validate-assistant-config.ts`
-  for the `isMain` guard pattern.
+- Put logic that other scripts or tests reuse in a side-effect-free module, and keep the
+  CLI entry point separate. See `search-records.ts`, imported by `build-search-index.ts`,
+  `push-search-index.ts`, and its test.
 - OpenAPI specs live in `static/openapi/` (curated demo specs) and `openapi/` (raw inputs).
 - Docset content lives in `docs/<docset>/`.
 - Sidebar files are `sidebars<Docset>.ts` at the repo root.
@@ -44,11 +44,9 @@ Before merging any change that modifies OpenAPI specs, auth config, or API playg
 
 - [ ] No real credentials, tokens, or private URLs in committed files.
 - [ ] No `authorization` header examples with real values in OpenAPI specs.
-- [ ] `assistant.config.json` is gitignored. Never commit the real config.
-- [ ] SAML and RBAC config files (`saml.config.json`, `rbac.config.json`) are gitignored.
+- [ ] `saml.config.json` is gitignored. Never commit the real config.
 - [ ] Any new environment variable is documented in the relevant example config file.
-- [ ] `validate-saml-config.ts`, `validate-rbac-config.ts`, and `validate-assistant-quality.ts`
-     all pass against example configs.
+- [ ] `validate-saml-config.ts` passes against the example config.
 
 ---
 
@@ -64,7 +62,6 @@ Before marking a story done:
 | Route manifest | `npm run manifest` |
 | Playground health | `npm run health-check` |
 | Search index | `npm run build-search-index` |
-| Assistant quality | `npm run validate-assistant-quality` |
 | Full build | `npm run build` |
 
 Run only the checks relevant to the change. A full `npm run build` is required before

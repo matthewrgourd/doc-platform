@@ -2,7 +2,7 @@
 sidebar_position: 1
 slug: /how-to
 title: Task guides
-description: "How-to guides for DevDocify: add a docset, add a playground, configure Algolia search, configure enterprise controls, add PlantUML diagrams, deploy, and set up the admin dashboard."
+description: "How-to guides for DevDocify: add a docset, add a playground, configure Algolia search, configure SAML access, add PlantUML diagrams, deploy, and set up the admin dashboard."
 ---
 
 # Task guides
@@ -30,8 +30,8 @@ Use how-to guides when you need to complete a specific task quickly and you alre
     <p>Configure contextual search and push the structured docs and API index to Algolia.</p>
   </div>
   <div className="docs-card">
-    <h3><a href="/docs/how-to/configure-enterprise-controls">Configure enterprise controls</a></h3>
-    <p>Set up SAML configuration, RBAC publish checks, assistant quality validation, and analytics schemas.</p>
+    <h3><a href="/docs/how-to/configure-enterprise-controls">Configure SAML access</a></h3>
+    <p>Protect the whole portal or selected docsets with SAML SSO and generate the nginx auth config.</p>
   </div>
   <div className="docs-card">
     <h3><a href="/docs/how-to/add-plantuml-diagrams">Add PlantUML diagrams</a></h3>

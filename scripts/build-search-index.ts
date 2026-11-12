@@ -22,7 +22,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import {docsetRoutePrefix} from './docset.config.js';
+import {docRoutePath, docsetRoutePrefix} from './docset.config.js';
 import {extractExcerpt, extractHeadings, type DocHeading} from './search-records.js';
 
 // ---------------------------------------------------------------------------
@@ -97,18 +97,6 @@ function extractFrontmatterTitle(content: string): string | null {
   return match ? match[1].trim() : null;
 }
 
-function slugFromRelPath(relPath: string): string {
-  const segments = relPath.replace(/\\/g, '/').split('/');
-  const last = segments[segments.length - 1];
-  const isIndex = last === 'index.md' || last === 'index.mdx';
-
-  const clean = segments.map(s => s.replace(/\.(md|mdx)$/, ''));
-  if (isIndex) clean.pop();
-  clean[0] = docsetRoutePrefix(clean[0]);
-
-  return '/' + clean.join('/');
-}
-
 function indexDocs(docsRoot: string): DocSearchEntry[] {
   const entries: DocSearchEntry[] = [];
 
@@ -141,7 +129,7 @@ function indexDocs(docsRoot: string): DocSearchEntry[] {
       const title = extractFrontmatterTitle(content) ?? segments[segments.length - 1].replace(/\.(md|mdx)$/, '');
       const headings = extractHeadings(content);
       const excerpt = extractExcerpt(content, EXCERPT_LENGTH);
-      const slug = slugFromRelPath(relPath);
+      const slug = docRoutePath(relPath);
 
       entries.push({
         type: 'doc',

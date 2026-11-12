@@ -4,7 +4,7 @@
 
 Use this skill when a PR touches:
 - OpenAPI specs (`static/openapi/`, `openapi/`)
-- Auth config (`saml.config.*.json`, `rbac.config.*.json`, `assistant.config.*.json`)
+- Auth config (`saml.config.*.json`)
 - GitHub Actions workflows (`.github/workflows/`)
 - Docs content that references auth flows, credentials, or endpoint URLs
 - Any new environment variable or secret
@@ -16,8 +16,7 @@ Use this skill when a PR touches:
 Scan the diff for:
 - [ ] No real API keys, tokens, passwords, or private URLs in any committed file
 - [ ] No `authorization` or `x-api-key` header values in OpenAPI specs (use `<YOUR_TOKEN>` placeholders)
-- [ ] `assistant.config.json` is absent from the commit. It is gitignored, and only `*.example.json` is committed.
-- [ ] `saml.config.json` and `rbac.config.json` are absent from the commit
+- [ ] `saml.config.json` is absent from the commit. It is gitignored, and only `*.example.json` is committed.
 - [ ] No `.env` files committed
 - [ ] `build/` directory not committed
 
@@ -50,18 +49,8 @@ For new or changed docs pages that reference auth or credentials:
 - [ ] All credential examples use obviously fake values (`sk-XXXX`, `your-api-key`, `<token>`)
 - [ ] No screenshots or code blocks contain real tokens
 - [ ] SAML setup docs reference IdP vendor docs rather than embedding private metadata
-- [ ] Pages that describe protected routes are consistent with the RBAC config schema
 
-### 5. Assistant config review
-
-For changes to `assistant.config.example.json` or `scripts/validate-assistant-*.ts`:
-
-- [ ] `npm run validate-assistant-quality` passes against the example config
-- [ ] `citationMode` is not `"none"` in the example
-- [ ] `safety.refusePromptInjection` and `safety.requireGrounding` are both `true` in the example
-- [ ] `latencyBudgetMs` does not exceed 45000
-
-### 6. Evidence line for PR
+### 5. Evidence line for PR
 
 Add a security section to the PR description:
 
@@ -70,7 +59,6 @@ Add a security section to the PR description:
 - No secrets in diff: confirmed
 - OpenAPI specs: normalize-openapi pass, no real credentials
 - Workflows: scoped tokens, no hardcoded secrets
-- Assistant config: validate-assistant-quality pass
 ```
 
 Leave items out if they are not relevant to the change.

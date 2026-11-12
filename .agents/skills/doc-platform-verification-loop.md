@@ -19,8 +19,7 @@ Match the change to the relevant subset of checks. Do not run all checks for eve
 | Docusaurus config, sidebars, docs content | `typecheck`, `lint-content`, `build` |
 | GitHub Actions workflow | YAML syntax only (no local runner needed) |
 | OpenAPI spec | `normalize-openapi`, `health-check` |
-| Assistant config schema | `validate-assistant`, `validate-assistant-quality` |
-| SAML/RBAC config | `validate-saml`, `validate-rbac` |
+| SAML config | `validate-saml` |
 | Route or content structure change | `manifest`, `build` |
 | Any release candidate | full sequence below |
 
@@ -31,7 +30,6 @@ Run in this order. Stop and fix on first failure:
 ```bash
 npm run typecheck
 npm run lint-content
-npm run validate-assistant-quality
 npm run manifest
 npm run build
 npm run health-check

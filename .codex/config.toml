@@ -23,9 +23,7 @@ always_include = [
 [safety]
 # Never commit secrets, real configs, or binary build artifacts.
 deny_commit_patterns = [
-  "assistant.config.json",
   "saml.config.json",
-  "rbac.config.json",
   ".env",
   "*.env",
   "build/",

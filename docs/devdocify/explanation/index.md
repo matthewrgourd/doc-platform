@@ -2,7 +2,7 @@
 sidebar_position: 1
 slug: /explanation
 title: Explanation
-description: "Architecture decisions and design rationale behind DevDocify, including multi-docset structure, Diataxis information architecture, enterprise controls, search indexing, and preview-first delivery."
+description: "Architecture decisions and design rationale behind DevDocify, including multi-docset structure, Diataxis information architecture, SAML access, search indexing, and preview-first delivery."
 ---
 
 # Explanation
@@ -38,11 +38,10 @@ Use explanation pages when you want context on platform design choices and trade
 - The generated index gives Algolia stable facets for `docset`, `version`, and `type`.
 - CI can skip the push safely when production Algolia credentials are unavailable.
 
-## Why enterprise controls are separate from the static build
+## Why SAML access is separate from the static build
 
 - SAML enforcement happens at the proxy or platform layer, not inside generated HTML.
-- RBAC publish checks run in CI where the GitHub actor and repository policy are available.
-- Analytics events use a typed client so frontend code can emit structured payloads without importing Node-only validators.
+- The same build output can be served openly or behind SSO without rebuilding.
 
 ## Why diagrams are text-first
 
@@ -62,9 +61,7 @@ package "doc-platform" {
   [Route manifest builder] as manifest
   [OpenAPI normalizer] as openapi
   [Search index builder] as search
-  [Analytics client] as analytics
-  [AI assistant embed] as embed
-  [SAML and RBAC scripts] as access
+  [AI assistant panel] as embed
 }
 
 package "chat-devdocify" {
@@ -85,9 +82,7 @@ site --> manifest : postbuild
 site --> openapi : postbuild
 site --> search : postbuild
 search --> algolia : push on main
-site --> analytics : runtime events
 site --> embed : runtime
-ci --> access : validate
 embed --> api : streaming
 api --> claude : prompt
 ci --> site : build + lint

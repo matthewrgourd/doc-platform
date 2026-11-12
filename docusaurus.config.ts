@@ -58,7 +58,13 @@ const config: Config = {
         },
         blog: false,
         theme: {
-          customCss: './src/css/custom.css',
+          // Fonts are self-hosted from npm, so visitors' browsers never contact
+          // Google Fonts and the CSP does not need to allow it.
+          customCss: [
+            require.resolve('@fontsource-variable/inter'),
+            require.resolve('@fontsource-variable/fira-code'),
+            './src/css/custom.css',
+          ],
         },
       } satisfies Preset.Options,
     ],

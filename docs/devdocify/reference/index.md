@@ -39,9 +39,7 @@ Use reference pages when you need exact facts, supported options, and stable tec
 - Navigation contract loader: `navigation-contract.ts`
 - Navigation definitions: `docs/*/navigation.json`
 - SAML config example: `saml.config.example.json`
-- RBAC config example: `rbac.config.example.json`
-- Assistant config example: `assistant.config.example.json`
-- Workflows: `.github/workflows/ci.yml`, `.github/workflows/preview.yml`, `.github/workflows/rbac-check.yml`, `.github/workflows/link-check.yml`, `.github/workflows/docs-draft-update.yml`
+- Workflows: `.github/workflows/ci.yml`, `.github/workflows/preview.yml`, `.github/workflows/link-check.yml`, `.github/workflows/docs-draft-update.yml`
 
 ## Automation scripts
 
@@ -53,8 +51,6 @@ Use reference pages when you need exact facts, supported options, and stable tec
 | `scripts/generate-llms-txt.ts` | Generates `llms.txt` with canonical docs and API route URLs. |
 | `scripts/validate-saml-config.ts` | Validates SAML configuration. |
 | `scripts/generate-nginx-auth-config.ts` | Generates nginx `auth_request` configuration from SAML settings. |
-| `scripts/validate-rbac-config.ts` | Validates RBAC role assignments. |
-| `scripts/check-rbac-permission.ts` | Checks whether an actor has a capability such as `content.publish`. |
-| `scripts/validate-analytics-event.ts` | Validates analytics event payloads and prints the event schema. |
-| `scripts/validate-assistant-quality.ts` | Enforces assistant policy and grounding requirements. |
+| `scripts/check-csp.ts` | Fails the build when an inline script is not allowed by the Content-Security-Policy, or `nginx.conf` and `vercel.json` disagree. |
+| `scripts/check-built-urls.ts` | Fails the build when a route manifest, search index, or `llms.txt` URL has no built page. |
 | `scripts/benchmark-build.ts` | Benchmarks full Docusaurus builds at synthetic fixture scale. |
