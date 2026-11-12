@@ -25,17 +25,15 @@ Live site: [https://www.devdocify.com](https://www.devdocify.com)
 - **Algolia search** - docset/version-aware index with API operations indexed separately; index built in `postbuild` and pushed to Algolia on deploy
 - **`llms.txt` generation** - generated at `postbuild` with canonical URLs for all docs and API reference routes
 - **AI assistant panel** - floating chat panel powered by Claude, answering questions in context
-- **Analytics emission** - structured event schema with typed payloads; `page.view` and interaction events emitted via Vercel Analytics
+- **Analytics** - Vercel Web Analytics and Speed Insights
 - **SAML SSO config generator** - `scripts/generate-nginx-auth-config.ts` produces nginx `auth_request` snippets for portal-wide or per-docset enforcement
-- **RBAC enforcement** - role/capability schema validated in CI; `rbac-check` workflow gates pushes to main on `content.publish` capability
-- **Assistant quality gate** - eight policy rules enforced in CI; regression prompt categories and fallback policy validated on every PR
 - **Link integrity** - internal broken links fail the build; redirects supported via `@docusaurus/plugin-client-redirects`; external links checked weekly
 - **Lighthouse CI** - performance, accessibility, and best-practices audits on every build
 - **Docs-draft automation** - `.github/workflows/docs-draft-update.yml` proposes doc updates when target code changes, with mandatory human approval before merge
 - **Custom domain management** - domain config schema with validation, Vercel API provisioning, legacy redirect generation, and DNS verification checks
 - **Admin dashboard** - standalone Next.js app with Supabase Auth for portal config, deployments, analytics, and user management
 - **Dark mode** - automatic, respects system preferences
-- **CI/CD** - GitHub Actions pipeline with typecheck, lint, build, health checks, Lighthouse, Docker push, Algolia push, and staging deploy
+- **CI/CD** - GitHub Actions pipeline with typecheck, lint, build, health checks, Lighthouse, Docker push, and Algolia push
 - **Optional self-hosted deployment** - Docker, nginx, Prometheus + Grafana, or Helm chart for Kubernetes
 
 ## Docs taxonomy (Diataxis)
@@ -193,18 +191,13 @@ npm run typecheck                 # TypeScript type-check
 ```bash
 npm run lint-content              # validate includes and variables across the docs tree
 npm run health-check              # probe live API endpoints
-npm run validate-assistant-quality  # enforce assistant policy rules (8 rules, CI gate)
 ```
 
 **Config validation**
 
 ```bash
 npm run validate-saml             # validate saml.config.json schema
-npm run validate-rbac             # validate rbac.config.json schema
-npm run validate-analytics-event  # validate an analytics event payload
-npm run validate-assistant        # validate assistant.config.json schema
 npm run validate-domains          # validate domains.config.json schema
-npm run check-rbac-permission     # check actor capability against rbac.config.json
 npm run generate-nginx-auth-config  # generate nginx auth_request config from saml.config.json
 ```
 
@@ -244,21 +237,18 @@ npm run benchmark-build           # full Docusaurus build benchmark at configura
 `ci.yml` runs on every push and PR to `main`:
 
 ```
-typecheck ──────┐
-lint ───────────┼──▶ validate-assistant ──▶ build ──▶ lighthouse
-                │                               └──▶ health-check
-                │                               └──▶ docker ──▶ deploy-staging  (push only)
-                │                               └──▶ push-search-index          (push only)
-                └──────────────────────────────────────────────────────────────────────────
+typecheck ──┐
+lint ───────┴──▶ build ──▶ lighthouse
+                       └──▶ health-check
+                       └──▶ docker             (push only)
+                       └──▶ push-search-index  (push only)
 ```
-
-`rbac-check.yml` runs separately on push to `main`, gating deploys on `content.publish` capability.
 
 `link-check.yml` runs on a weekly schedule to check external links.
 
 `docs-draft-update.yml` proposes doc updates when monitored code changes, with a mandatory human approval gate.
 
-Docker, deploy-staging, and push-search-index only run on push to `main`, not on PRs. PRs get a Vercel preview URL posted as a comment via `preview.yml`.
+Docker and push-search-index only run on push to `main`, not on PRs. PRs get a Vercel preview URL posted as a comment via `preview.yml`.
 
 ## Project structure
 
@@ -312,13 +302,10 @@ scripts/
   build-search-index.ts         Builds Algolia search index (docs + API ops, with facets)
   push-search-index.ts          Pushes built index to Algolia via replaceAllObjects
   generate-llms-txt.ts          Generates llms.txt with canonical doc and API route URLs
+  check-csp.ts                  Fails the build if an inline script is missing from the CSP
+  check-built-urls.ts           Fails the build if a manifest, search or llms.txt URL has no page
   validate-saml-config.ts       Validates saml.config.json schema
-  validate-rbac-config.ts       Validates rbac.config.json schema and exports hasCapability()
-  check-rbac-permission.ts      CLI: checks actor capability against rbac.config.json
   generate-nginx-auth-config.ts Generates nginx auth_request config from saml.config.json
-  validate-analytics-event.ts   Validates analytics event payloads against schema
-  validate-assistant-config.ts  Validates assistant.config.json schema
-  validate-assistant-quality.ts Enforces assistant quality policy (8 rules, CI gate)
   validate-domains-config.ts    Validates domains.config.json schema
   manage-vercel-domains.ts      Provisions custom domains on Vercel via API (--dry-run supported)
   generate-domain-redirects.ts  Generates Vercel redirect rules from legacy domain config
@@ -352,14 +339,11 @@ static/
     tfl-playground.json        Curated TfL demo spec (playground subset)
     platzi-playground.json     Curated Platzi demo spec (products, users, auth, locations)
 .github/workflows/
-  ci.yml                     Typecheck, lint, build, Lighthouse, health check, Docker, Algolia push, staging deploy
+  ci.yml                     Typecheck, lint, build, Lighthouse, health check, Docker, Algolia push
   preview.yml                PR preview comment (posts Vercel deployment URL)
-  rbac-check.yml             Gates pushes to main on content.publish RBAC capability
   link-check.yml             Weekly external link integrity check
   docs-draft-update.yml      Proposes doc updates on code changes; requires human approval
-rbac.config.example.json     Example RBAC config (roles, capabilities, principals)
 saml.config.example.json     Example SAML SSO config (IdP metadata, protected modes)
-assistant.config.example.json  Example assistant quality config (rules, thresholds)
 domains.config.example.json  Example custom domain config (primary, aliases, redirects)
 vercel.json                  Vercel build config (install, output dir)
 Dockerfile                   Optional: multi-stage build (node + nginx)

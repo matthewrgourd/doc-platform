@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   DOCSET_REGISTRY,
+  docRoutePath,
   docsetRoutePrefix,
   isValidCalVer,
   resolveLatestVersion,
@@ -205,5 +206,21 @@ describe('docsetRoutePrefix', () => {
       assert.ok(fromConfig.has(docset.id), `${docset.id} not found in docusaurus.config.ts`);
       assert.equal(docsetRoutePrefix(docset.id), fromConfig.get(docset.id), docset.id);
     }
+  });
+});
+
+describe('docRoutePath', () => {
+  it('maps a docs file to the URL Docusaurus serves', () => {
+    assert.equal(docRoutePath('devdocify/how-to/deploy.md'), '/docs/how-to/deploy');
+    assert.equal(docRoutePath('tfl/getting-started/bike-point.mdx'), '/tfl/getting-started/bike-point');
+  });
+
+  it('maps index files to their folder', () => {
+    assert.equal(docRoutePath('devdocify/index.md'), '/docs');
+    assert.equal(docRoutePath('petstore/pets/index.mdx'), '/petstore/pets');
+  });
+
+  it('accepts Windows path separators', () => {
+    assert.equal(docRoutePath('devdocify\\reference\\cli.md'), '/docs/reference/cli');
   });
 });
