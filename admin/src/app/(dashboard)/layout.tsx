@@ -8,7 +8,13 @@ export default function DashboardLayout({
   return (
     <div className="dashboard-layout">
       <Sidebar />
-      <main className="main-content">{children}</main>
+      <main className="main-content">
+        <p className="sample-data-notice" role="note">
+          <strong>Sample data.</strong> These pages are a demo: the numbers,
+          deployments and users are not live, and changes are not saved.
+        </p>
+        {children}
+      </main>
     </div>
   );
 }
