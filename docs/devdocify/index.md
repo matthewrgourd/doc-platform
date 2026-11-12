@@ -2,7 +2,7 @@
 sidebar_position: 1
 slug: /
 title: DevDocify docs
-description: "Learn how DevDocify works. Tutorials, how-to guides, reference, and explanation for building and shipping developer documentation with multi-docset support, a CLI, interactive API playgrounds, enterprise controls, and CI quality gates."
+description: "Learn how DevDocify works. Tutorials, how-to guides, reference, and explanation for building and shipping developer documentation with multi-docset support, a CLI, interactive API playgrounds, SAML access, and CI quality gates."
 ---
 
 # DevDocify docs
@@ -11,10 +11,7 @@ DevDocify is a multi-docset documentation platform built on Docusaurus. It inclu
 
 <div className="docs-hero-block">
   <p className="docs-eyebrow">Platform documentation</p>
-  <p className="docs-hero-copy">
-    Everything you need to add docsets, configure search, run local previews, and ship
-    documentation with confidence.
-  </p>
+  <p className="docs-hero-copy">Everything you need to add docsets, configure search, run local previews, and ship documentation with confidence.</p>
 </div>
 
 ## What's included
@@ -41,8 +38,8 @@ DevDocify is a multi-docset documentation platform built on Docusaurus. It inclu
     <p>Interactive OpenAPI explorers embedded in product docsets, with pre-filled defaults for fast onboarding.</p>
   </div>
   <div className="docs-card">
-    <h3>Enterprise controls</h3>
-    <p>SAML configuration, RBAC publish checks, and typed analytics events for protected documentation workflows.</p>
+    <h3>SAML access</h3>
+    <p>SAML SSO for the whole portal or selected docsets, with generated nginx auth configuration.</p>
   </div>
   <div className="docs-card">
     <h3>Diagram support</h3>
@@ -68,7 +65,7 @@ DevDocify is a multi-docset documentation platform built on Docusaurus. It inclu
   <a href="/docs/tutorials/quick-start">Quick start with the CLI</a>
   <a href="/docs/how-to">How-to guides for specific tasks</a>
   <a href="/docs/reference/cli">CLI reference</a>
-  <a href="/docs/how-to/configure-enterprise-controls">Enterprise controls</a>
+  <a href="/docs/how-to/configure-enterprise-controls">SAML access</a>
   <a href="/docs/explanation">Architecture and design rationale</a>
 </div>
 

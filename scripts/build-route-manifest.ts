@@ -16,7 +16,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import {docsetRoutePrefix, validateAllDocsetConfigs} from './docset.config.js';
+import {docRoutePath, docsetRoutePrefix, validateAllDocsetConfigs} from './docset.config.js';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -90,12 +90,6 @@ function warn(message: string): void {
   console.warn(`[route-manifest] WARN: ${message}`);
 }
 
-function slugify(segments: string[]): string {
-  return '/' + segments
-    .map(s => s.replace(/\.(md|mdx)$/, '').replace(/[^a-z0-9-_]/gi, '-'))
-    .join('/');
-}
-
 function isVersionSegment(name: string): boolean {
   return CALVER_RE.test(name);
 }
@@ -122,23 +116,11 @@ function walkDocset(docsetId: string, docsetDir: string): DocsetManifest {
         const relativePath = path.join(docsetId, ...allSegments);
 
         // Detect version: if first segment is a CalVer string, it's the version.
-        let version = 'unversioned';
-        let routeSegments = [routePrefix, ...segments, entry.name];
-
-        if (segments.length > 0 && isVersionSegment(segments[0])) {
-          version = segments[0];
-          routeSegments = [routePrefix, ...segments, entry.name];
-        }
-
+        const version = segments.length > 0 && isVersionSegment(segments[0]) ? segments[0] : 'unversioned';
         versions.add(version);
 
         const isIndex = entry.name === 'index.md' || entry.name === 'index.mdx';
-        // Strip index filename from slug
-        const slugSegments = isIndex
-          ? routeSegments.slice(0, -1)
-          : routeSegments.map(s => s.replace(/\.(md|mdx)$/, ''));
-
-        const slug = slugify(slugSegments);
+        const slug = docRoutePath(relativePath);
 
         // Validate slug characters
         if (/[^a-z0-9\-_/]/i.test(slug)) {
