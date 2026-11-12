@@ -71,18 +71,11 @@ The GitHub Actions pipeline runs these checks before release:
 |---|---|
 | `typecheck` | Runs TypeScript checks. |
 | `lint` | Validates includes and variables in the docs tree. |
-| `validate-assistant` | Validates assistant safety and quality policy. |
 | `build` | Builds the Docusaurus site and uploads the build artifact. |
 | `lighthouse` | Runs Lighthouse CI against the built site. |
 | `health-check` | Probes configured API playground endpoints. |
 
-Pushes to `main` also run Docker image publishing, staging deploy, and the optional Algolia index push. Pull requests skip those push-only jobs.
-
-## RBAC publish gate
-
-`rbac-check.yml` runs separately on pushes to `main`. It checks whether the GitHub actor has `content.publish` in `rbac.config.json`.
-
-If `rbac.config.json` is absent, the workflow exits successfully and logs that no real config is present. The example config is not used for enforcement.
+Pushes to `main` also run Docker image publishing and the optional Algolia index push. Pull requests skip those push-only jobs.
 
 ## Preview deployments
 

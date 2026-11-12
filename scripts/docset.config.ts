@@ -209,6 +209,19 @@ export function docsetRoutePrefix(docsetId: string): string {
 }
 
 /**
+ * URL path Docusaurus serves for a docs file, given its path under docs/
+ * ("devdocify/how-to/deploy.md" -> "/docs/how-to/deploy"). index files map to
+ * their folder. Front-matter `slug:` and number prefixes are not read here;
+ * scripts/check-built-urls.ts fails the build when a page's real URL differs.
+ */
+export function docRoutePath(relPath: string): string {
+  const segments = relPath.replace(/\\/g, '/').replace(/\.mdx?$/, '').split('/');
+  if (segments[segments.length - 1] === 'index') segments.pop();
+  segments[0] = docsetRoutePrefix(segments[0]);
+  return '/' + segments.join('/');
+}
+
+/**
  * Validates all registered docset configs. Throws on any error.
  * Called from the manifest builder or build scripts.
  */
