@@ -7,9 +7,11 @@ export default function PlatziApiPlaygroundPage(): React.JSX.Element {
   return (
     <Layout title="Platzi API playground">
       <section className="container padding-top--md">
+        <h1>Platzi API playground</h1>
         <p>
-          Curated demo playground against the Platzi Fake Store API. For scope and caveats, read the{' '}
-          <Link to="/platzi/getting-started/playground">Platzi playground guide</Link>.
+          Send requests to the Platzi Fake Store API: products, categories, users and locations. Only the profile endpoint needs a sign-in token.{' '}
+          Read the{' '}
+          <Link to="/platzi/getting-started/playground">Platzi playground guide</Link> for scope and caveats.
         </p>
       </section>
       <ApiReferenceClient

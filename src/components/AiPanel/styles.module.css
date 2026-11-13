@@ -137,6 +137,32 @@
   margin: 0;
 }
 
+.suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 18rem;
+}
+
+.suggestion {
+  padding: 0.45rem 0.75rem;
+  font-size: 0.82rem;
+  text-align: left;
+  color: var(--ifm-font-color-base);
+  background: none;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: color var(--ifm-transition-fast), border-color var(--ifm-transition-fast);
+}
+
+.suggestion:hover,
+.suggestion:focus-visible {
+  color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+}
+
 .message {
   max-width: 88%;
   padding: 0.6rem 0.85rem;

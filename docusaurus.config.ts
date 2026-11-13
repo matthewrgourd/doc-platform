@@ -132,10 +132,11 @@ const config: Config = {
   ],
 
   themeConfig: {
+    image: 'img/social-card.png',
     metadata: [
       {name: 'og:type', content: 'website'},
       {name: 'og:site_name', content: 'DevDocify'},
-      {name: 'twitter:card', content: 'summary'},
+      {name: 'twitter:card', content: 'summary_large_image'},
       {name: 'twitter:site', content: '@devdocify'},
     ],
     colorMode: {
@@ -159,22 +160,14 @@ const config: Config = {
           activeBasePath: '/docs',
         },
         {
-          to: '/tfl/getting-started',
-          label: 'TfL',
+          type: 'dropdown',
+          label: 'Demos',
           position: 'left',
-          activeBasePath: '/tfl',
-        },
-        {
-          to: '/petstore/getting-started',
-          label: 'Petstore',
-          position: 'left',
-          activeBasePath: '/petstore',
-        },
-        {
-          to: '/platzi/getting-started',
-          label: 'Platzi',
-          position: 'left',
-          activeBasePath: '/platzi',
+          items: [
+            {to: '/tfl/getting-started', label: 'TfL', activeBasePath: '/tfl'},
+            {to: '/petstore/getting-started', label: 'Petstore', activeBasePath: '/petstore'},
+            {to: '/platzi/getting-started', label: 'Platzi', activeBasePath: '/platzi'},
+          ],
         },
       ],
     },
@@ -182,21 +175,21 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Petstore',
+          title: 'Petstore demo',
           items: [
             {label: 'Getting started', to: '/petstore/getting-started'},
             {label: 'API playground', to: '/petstore/api-playground'},
           ],
         },
         {
-          title: 'TfL',
+          title: 'TfL demo',
           items: [
             {label: 'Getting started', to: '/tfl/getting-started'},
             {label: 'API playground', to: '/tfl/api-playground'},
           ],
         },
         {
-          title: 'Platzi',
+          title: 'Platzi demo',
           items: [
             {label: 'Getting started', to: '/platzi/getting-started'},
             {label: 'API playground', to: '/platzi/api-playground'},
@@ -205,16 +198,8 @@ const config: Config = {
         {
           title: 'Resources',
           items: [
-            {label: 'Status', to: '/status'},
+            {label: 'Service levels', to: '/status'},
             {label: 'Support', to: '/support'},
-          ],
-        },
-        {
-          title: 'Planned',
-          items: [
-            {label: 'Customers', to: '/customers'},
-            {label: 'Blog', to: '/blog'},
-            {label: 'Pricing', to: '/pricing'},
           ],
         },
         {
@@ -225,7 +210,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `© ${new Date().getFullYear()} Matthew Gourd`,
+      copyright: `© ${new Date().getFullYear()} DevDocify · Built by <a href="https://github.com/matthewrgourd">Matthew Gourd</a>`,
     },
     algolia: {
       appId: '313Y2RFH0L',

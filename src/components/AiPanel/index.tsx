@@ -159,6 +159,11 @@ const REQUEST_TIMEOUT_MESSAGE = 'The AI request timed out. Please try again.';
 const MAX_HISTORY_MESSAGES = 20;
 const MAX_HISTORY_CHARS = 24000;
 const MAX_INPUT_CHARS = 4000;
+const SUGGESTED_QUESTIONS = [
+  'How do I add a new docset?',
+  'How does the API playground work?',
+  'Can I put docs behind SAML SSO?',
+];
 
 interface Message {
   role: 'user' | 'assistant';
@@ -193,8 +198,8 @@ function ChatWidget() {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const send = useCallback(async () => {
-    const text = input.trim();
+  const send = useCallback(async (preset?: string) => {
+    const text = (preset ?? input).trim();
     if (!text || streaming) return;
 
     const userMsg: Message = { role: 'user', content: text };
@@ -314,7 +319,19 @@ function ChatWidget() {
                 fill="currentColor"
               />
             </svg>
-            <p>Ask me anything about DevDocify</p>
+            <p>Ask about setting up, writing or deploying DevDocify docs</p>
+            <div className={styles.suggestions}>
+              {SUGGESTED_QUESTIONS.map((question) => (
+                <button
+                  key={question}
+                  className={styles.suggestion}
+                  onClick={() => send(question)}
+                  type="button"
+                >
+                  {question}
+                </button>
+              ))}
+            </div>
           </div>
         )}
         {messages.map((msg, i) => (
@@ -363,7 +380,7 @@ function ChatWidget() {
         ) : (
           <button
             className={styles.sendBtn}
-            onClick={send}
+            onClick={() => send()}
             disabled={!input.trim()}
             type="button"
             aria-label="Send"

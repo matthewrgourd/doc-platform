@@ -7,9 +7,11 @@ export default function PetstoreApiPlaygroundPage(): React.JSX.Element {
   return (
     <Layout title="Petstore API playground">
       <section className="container padding-top--md">
+        <h1>Petstore API playground</h1>
         <p>
-          Curated no-auth demo playground. For intent, limits, and expected outcomes, read the{' '}
-          <Link to="/petstore/getting-started/playground">Petstore playground guide</Link>.
+          Try six operations from the classic OpenAPI Petstore sample. No API key needed: pick an operation, check the sample values and select Send.{' '}
+          Read the{' '}
+          <Link to="/petstore/getting-started/playground">Petstore playground guide</Link> for what each operation does and its limits.
         </p>
       </section>
       <ApiReferenceClient

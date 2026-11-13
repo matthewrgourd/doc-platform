@@ -1,11 +1,12 @@
 ---
 sidebar_position: 1
 slug: /getting-started
-title: Overview
+title: Petstore API overview
+sidebar_label: Overview
 description: "Get started with the Petstore sample API. Test common REST API workflows, including finding pets, placing orders, and managing users, through the interactive API playground."
 ---
 
-# Overview
+# Petstore API overview
 
 Petstore is a sample API that helps you test common API workflows, including finding pets, managing user sessions, and placing orders.
 

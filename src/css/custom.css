@@ -252,9 +252,89 @@ table tbody tr:nth-child(even) {
   font-size: 0.92rem;
 }
 
-.home-routes h2,
-.home-planned h2 {
+.home-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.home-tertiary {
+  margin: -1rem 0 0;
+  font-size: 0.95rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.home-showcase {
+  margin: 0;
+  border: 1px solid rgba(99, 91, 255, 0.22);
+  border-radius: 0.8rem;
+  overflow: hidden;
+  background: #0f172a;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+}
+
+.home-showcase-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.9rem;
+  background: #1e293b;
+  color: #e2e8f0;
+  font-size: 0.85rem;
+}
+
+.home-showcase-bar code {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-showcase-method {
+  font-weight: 700;
+  color: #5eead4;
+}
+
+.home-showcase-status {
+  margin-left: auto;
+  font-weight: 600;
+  color: #86efac;
+  white-space: nowrap;
+}
+
+.home-showcase-body {
+  margin: 0;
+  overflow-x: auto;
+  border-radius: 0;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.home-showcase figcaption {
+  padding: 0.6rem 0.9rem;
+  border-top: 1px solid #1e293b;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.home-showcase figcaption a {
+  color: #a5b4fc;
+}
+
+.home-routes h2 {
   font-size: 1.6rem;
+}
+
+.home-routes-intro {
+  max-width: 640px;
+  color: var(--ifm-color-emphasis-700);
 }
 
 .home-route-grid {
@@ -290,10 +370,20 @@ table tbody tr:nth-child(even) {
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
 }
 
-.home-planned-links {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+.home-route-card .home-route-meta {
+  margin-top: auto;
+  padding-top: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary-dark);
+}
+
+[data-theme='dark'] .home-route-card .home-route-meta {
+  color: var(--ifm-color-primary-light);
+}
+
+[data-theme='dark'] .home-tertiary {
+  color: var(--ifm-color-emphasis-600);
 }
 
 [data-theme='dark'] .home-shell {
@@ -495,11 +585,12 @@ table tbody tr:nth-child(even) {
     padding-top: 2.5rem;
   }
 
+  .home-hero-grid,
   .home-proof-grid,
   .home-route-grid,
   .docs-card-grid,
   .docs-link-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .home-route-card {
