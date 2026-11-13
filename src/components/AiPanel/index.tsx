@@ -21,9 +21,10 @@ function renderInline(text: string, key: string): React.ReactNode {
             </a>
           );
         }
-        if (part.startsWith('**') && part.endsWith('**')) return <strong key={i}>{part.slice(2, -2)}</strong>;
+        // Render emphasis contents too, so links the model wraps in ** or * still work
+        if (part.startsWith('**') && part.endsWith('**')) return <strong key={i}>{renderInline(part.slice(2, -2), `${key}-b${i}`)}</strong>;
         if (part.startsWith('`') && part.endsWith('`')) return <code key={i} className={styles.inlineCode}>{part.slice(1, -1)}</code>;
-        if (part.startsWith('*') && part.endsWith('*')) return <em key={i}>{part.slice(1, -1)}</em>;
+        if (part.startsWith('*') && part.endsWith('*')) return <em key={i}>{renderInline(part.slice(1, -1), `${key}-e${i}`)}</em>;
         return part;
       })}
     </React.Fragment>
