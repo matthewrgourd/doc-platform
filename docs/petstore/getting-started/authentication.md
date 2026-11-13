@@ -5,13 +5,16 @@ title: Authentication
 
 # Authentication
 
-The Petstore demo playground doesn't require authentication. It uses public GET examples with prefilled values.
+The Petstore demo playground doesn't require authentication. It uses public examples with prefilled values.
 
 ## Playground behavior
 
 The [API playground](/petstore/api-playground) includes these unauthenticated demo endpoints:
 
 - `GET /pet/findByStatus`
+- `POST /pet`
+- `PUT /pet`
+- `DELETE /pet/{petId}`
 - `GET /user/login`
 - `GET /user/logout`
 
