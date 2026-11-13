@@ -6,8 +6,8 @@ Live site: [https://www.devdocify.com](https://www.devdocify.com)
 
 ## Features
 
-- **Multi-docset site** - TfL, Petstore, and Platzi as selectable products with separate doc sections and API playgrounds
-- **Site overview homepage** - explains the tech stack and links to each product
+- **Multi-docset site** - TfL, Petstore, and Platzi as demo products under a **Demos** menu, each with separate doc sections and an API playground
+- **Homepage** - states what the platform does, shows a sample playground response, and links to the platform docs, quick start, and each demo
 - **Interactive API playground** - powered by Scalar, with "Try it" request builder and curated unauthenticated examples
 - **Curated demo specs** - each API playground uses a local OpenAPI subset aligned to its demo routes
 - **Context-aware spec download links** - "Download API spec" appears only on API playground routes and points to the corresponding local demo spec
@@ -24,7 +24,7 @@ Live site: [https://www.devdocify.com](https://www.devdocify.com)
 - **Tabbed code samples** - Node.js, Python, Go across all guides
 - **Algolia search** - docset/version-aware index with API operations indexed separately; index built in `postbuild` and pushed to Algolia on deploy
 - **`llms.txt` generation** - generated at `postbuild` with canonical URLs for all docs and API reference routes
-- **AI assistant panel** - floating chat panel powered by Claude, answering questions in context
+- **AI assistant panel** - floating chat panel powered by Claude, answering questions in context, with suggested questions to start
 - **Analytics** - Vercel Web Analytics and Speed Insights
 - **SAML SSO config generator** - `scripts/generate-nginx-auth-config.ts` produces nginx `auth_request` snippets for portal-wide or per-docset enforcement
 - **Link integrity** - internal broken links fail the build; redirects supported via `@docusaurus/plugin-client-redirects`; external links checked weekly
@@ -324,7 +324,7 @@ src/
   pages/petstore/api-playground.tsx  Petstore API playground page route
   pages/tfl/api-playground.tsx       TfL API playground page route
   pages/platzi/api-playground.tsx    Platzi API playground page route
-  pages/status.mdx           Service status page
+  pages/status.mdx           Service levels page
   pages/support.mdx          Support page
   pages/privacy.mdx          Privacy notice page
   pages/terms.mdx            Terms of use page
