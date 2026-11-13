@@ -5,11 +5,11 @@ title: Find pets by status
 
 # Find pets by status
 
-`GET /pet/findByStatus` returns pets whose inventory `status` matches a query parameter. This is the **Pets** operation included in the [API playground](/petstore/api-playground) and in the downloadable description below.
+`GET /pet/findByStatus` returns pets whose inventory `status` matches a query parameter. This is the **Pets** operation included in the [API playground](/petstore/api-playground) and in the downloadable description that follows.
 
 ## OpenAPI description (playground scope)
 
-The machine-readable contract for the demo **GET** operations (this endpoint plus user login and logout) is maintained in this repository:
+The machine-readable contract for the demo **GET** operations (this endpoint plus user login and logout) lives in this repository:
 
 **[Download `petstore-playground.json`](/openapi/petstore-playground.json)** (JSON, OpenAPI 3.0.3)
 
@@ -17,7 +17,7 @@ It documents only those three paths. Other operations on the public sample serve
 
 ## Resource
 
-A **pet** is an item in the sample store with a name, photo URLs, optional category and tags, and a `status` of `available`, `pending`, or `sold`.
+A **pet** is an item in the sample store. It has a name, photo URLs, an optional category and tags, and a `status` of `available`, `pending`, or `sold`.
 
 ## Operation
 
@@ -43,7 +43,7 @@ A **pet** is an item in the sample store with a name, photo URLs, optional categ
 
 | Code | Description | Body |
 |---|---|---|
-| `200` | Success | JSON array of pet objects (may be empty). |
+| `200` | Success | JSON array of pet objects (can be empty). |
 | `400` | Bad request | Often JSON with `code`, `type`, and `message` (for example invalid `status`). |
 | `500` | Server error | Retry with backoff. |
 

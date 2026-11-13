@@ -140,7 +140,7 @@ Prints guidance for accessing Algolia search analytics.
 docify analytics
 ```
 
-No network requests are made. The command prints the Algolia dashboard URL and describes what analytics are available.
+The command makes no network requests. It prints the Algolia dashboard URL and describes what analytics are available.
 
 ---
 
@@ -152,7 +152,7 @@ Prints guidance for running accessibility tests with axe-core.
 docify a11y
 ```
 
-No network requests are made. The command explains how to run `npx axe-cli <url>` against a local or deployed site.
+The command makes no network requests. It explains how to run `npx axe-cli <url>` against a local or deployed site.
 
 ---
 
@@ -194,7 +194,7 @@ docify config --reset
 
 ## Project detection
 
-Most commands require the current directory to contain a `docusaurus.config.ts` or `docusaurus.config.js` file. If neither is found, the command prints a helpful error and exits with code 1.
+Most commands require the current directory to contain a `docusaurus.config.ts` or `docusaurus.config.js` file. If neither file exists, the command prints an error and exits with code 1.
 
 Commands that skip this check: `new`, `update`, `config`, `score`, `analytics`, `a11y`.
 

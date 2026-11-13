@@ -42,7 +42,7 @@ Sending passwords in the query string is **not** a production pattern. The Swagg
 | Header | Description |
 |---|---|
 | `X-Rate-Limit` | Calls per hour allowed (sample server). |
-| `X-Expires-After` | UTC date/time after which the session may expire. |
+| `X-Expires-After` | UTC date and time after which the session can expire. |
 
 ### Example
 

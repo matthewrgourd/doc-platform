@@ -7,9 +7,11 @@ export default function TflApiPlaygroundPage(): React.JSX.Element {
   return (
     <Layout title="TfL API playground">
       <section className="container padding-top--md">
+        <h1>TfL API playground</h1>
         <p>
-          Curated no-auth demo playground. For intent, limits, and expected outcomes, read the{' '}
-          <Link to="/tfl/getting-started/playground">TfL playground guide</Link>.
+          Run live requests against five Transport for London (TfL) endpoints. You don't need an API key. Each operation has sample values, so select an operation and then select <strong>Send</strong>.{' '}
+          Read the{' '}
+          <Link to="/tfl/getting-started/playground">TfL playground guide</Link> for what each endpoint returns and its limits.
         </p>
       </section>
       <ApiReferenceClient

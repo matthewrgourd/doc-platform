@@ -51,6 +51,6 @@ Use reference pages when you need exact facts, supported options, and stable tec
 | `scripts/generate-llms-txt.ts` | Generates `llms.txt` with canonical docs and API route URLs. |
 | `scripts/validate-saml-config.ts` | Validates SAML configuration. |
 | `scripts/generate-nginx-auth-config.ts` | Generates nginx `auth_request` configuration from SAML settings. |
-| `scripts/check-csp.ts` | Fails the build when an inline script is not allowed by the Content-Security-Policy, or `nginx.conf` and `vercel.json` disagree. |
+| `scripts/check-csp.ts` | Fails the build when the Content-Security-Policy doesn't allow an inline script, or `nginx.conf` and `vercel.json` disagree. |
 | `scripts/check-built-urls.ts` | Fails the build when a route manifest, search index, or `llms.txt` URL has no built page. |
 | `scripts/benchmark-build.ts` | Benchmarks full Docusaurus builds at synthetic fixture scale. |

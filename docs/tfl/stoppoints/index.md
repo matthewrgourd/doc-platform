@@ -19,7 +19,7 @@ These aren't in the downloadable playground spec:
 - **Arrivals**: `GET /StopPoint/{ids}/Arrivals`. See the [arrivals guide](/tfl/stoppoints/arrivals).
 - **By ID**: `GET /StopPoint/{ids}` for stop details.
 
-Cycle hire listing for the demo is documented under [Bike points](/tfl/getting-started/bike-point) (`GET /BikePoint`).
+For the demo's cycle hire listing, see [Bike points](/tfl/getting-started/bike-point) (`GET /BikePoint`).
 
 ## Guides
 

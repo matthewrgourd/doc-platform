@@ -28,7 +28,7 @@ Use explanation pages when you want context on platform design choices and trade
 
 ## Why docs-as-code is central
 
-- Versioned docs changes can be reviewed in pull requests.
+- Reviewers check each docs change in a pull request.
 - Build, content, assistant, Lighthouse, and playground health checks run before merge.
 - Preview workflows make UI/content regressions visible before production.
 
@@ -41,11 +41,11 @@ Use explanation pages when you want context on platform design choices and trade
 ## Why SAML access is separate from the static build
 
 - SAML enforcement happens at the proxy or platform layer, not inside generated HTML.
-- The same build output can be served openly or behind SSO without rebuilding.
+- You can serve the same build output openly or behind SSO, without a rebuild.
 
 ## Why diagrams are text-first
 
-- Mermaid and PlantUML source can be reviewed in pull requests.
+- Reviewers check Mermaid and PlantUML source in pull requests, like any other text.
 - PlantUML blocks render without adding a Java dependency to CI.
 - Architecture diagrams stay close to the docs that explain the system behavior.
 

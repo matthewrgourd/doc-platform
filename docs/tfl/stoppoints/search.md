@@ -33,7 +33,7 @@ The response is a **search result** object containing matches (with identifiers,
 
 | Code | Description |
 |---|---|
-| `200` | Success: JSON object with matches. The array may be empty. |
+| `200` | Success: JSON object with matches. The array can be empty. |
 | `400` | Bad request: invalid or empty query after decoding. |
 | `404` | No matches. |
 | `429` | Rate limited. |

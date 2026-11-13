@@ -12,7 +12,7 @@ Common response patterns in this demo API:
 - `400`: Bad request (missing/invalid payload or parameters).
 - `401`: Missing or invalid bearer token for protected endpoints.
 - `404`: Resource not found.
-- `429`: Rate limiting may be applied.
+- `429`: The server applies rate limiting.
 - `5xx`: Upstream server error.
 
 ## Expected example: profile without token

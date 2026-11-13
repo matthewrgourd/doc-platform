@@ -55,7 +55,7 @@ curl "https://api.tfl.gov.uk/AirQuality"
 }
 ```
 
-Forecast band values are typically `Low`, `Moderate`, `High`, or `Very High`. Parse defensively because additional properties may be present.
+Forecast band values are typically `Low`, `Moderate`, `High`, or `Very High`. Parse the response defensively, because it can include additional properties.
 
 ## Related
 

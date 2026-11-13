@@ -30,7 +30,7 @@ const sections: MenuSection[] = [
     apiPlaygroundPath: '',
   },
   {
-    heading: 'TfL',
+    heading: 'TfL demo',
     groups: [
       {
         label: 'Getting started',
@@ -68,7 +68,7 @@ const sections: MenuSection[] = [
     apiPlaygroundPath: '/tfl/api-playground',
   },
   {
-    heading: 'Petstore',
+    heading: 'Petstore demo',
     groups: [
       {
         label: 'Getting started',
@@ -113,7 +113,7 @@ const sections: MenuSection[] = [
     apiPlaygroundPath: '/petstore/api-playground',
   },
   {
-    heading: 'Platzi',
+    heading: 'Platzi demo',
     groups: [
       {
         label: 'Getting started',
@@ -215,26 +215,6 @@ export default function NavbarMobilePrimaryMenu(): ReactNode {
           </ul>
         </li>
       ))}
-      <li className="menu__list-item menu__list-item--show">
-        <span className="menu__link">Planned</span>
-        <ul className="menu__list" style={{height: 'auto', overflow: 'visible'}}>
-          {[
-            {label: 'Customers', to: '/customers'},
-            {label: 'Blog', to: '/blog'},
-            {label: 'Pricing', to: '/pricing'},
-          ].map((item) => (
-            <li className="menu__list-item" key={item.to}>
-              <Link
-                className={`menu__link${isActivePath(pathname, item.to) ? ' menu__link--active' : ''}`}
-                to={item.to}
-                aria-current={isActivePath(pathname, item.to) ? 'page' : undefined}
-                onClick={() => mobileSidebar.toggle()}>
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </li>
       {downloadSpecHref && (
         <li className="menu__list-item">
           <a

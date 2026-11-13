@@ -13,7 +13,7 @@ Navigation for each docset is defined in one file:
 - `docs/petstore/navigation.json`
 - `docs/platzi/navigation.json`
 
-These files are loaded and validated by `navigation-contract.ts` and then consumed by each sidebar entrypoint.
+`navigation-contract.ts` loads and validates these files. Each sidebar entry point then reads them.
 
 ## Supported node types
 

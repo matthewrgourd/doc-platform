@@ -1,11 +1,12 @@
 ---
 sidebar_position: 1
 slug: /getting-started
-title: Overview
+title: TfL API overview
+sidebar_label: Overview
 description: "Get started with the Transport for London (TfL) Unified API. Access real-time data for line status, stop search, cycle hire, air quality, and journey planning."
 ---
 
-# Overview
+# TfL API overview
 
 The Transport for London (TfL) Unified API provides real-time transport data, including line status, stop search, cycle hire locations, air quality, and journey planning.
 
@@ -46,7 +47,7 @@ sequenceDiagram
 
 ## Base URL
 
-All API requests are made to:
+Send all API requests to:
 
 ```
 https://api.tfl.gov.uk
@@ -64,7 +65,7 @@ Use the [API playground](/tfl/api-playground) to run curated demo endpoints in t
 - `GET /AirQuality`
 - `GET /Journey/JourneyResults/{from}/to/{to}`
 
-These playground examples are configured with sample values and don't require authentication.
+These playground examples use sample values and don't require authentication.
 
 ## Downloadable OpenAPI (playground only)
 

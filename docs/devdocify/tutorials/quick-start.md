@@ -29,7 +29,7 @@ From the root of the `doc-platform` repository, link the CLI globally:
 cd packages/cli && npm install && npm link
 ```
 
-Confirm it is available:
+Confirm that it's available:
 
 ```bash
 docify --version
@@ -63,11 +63,11 @@ docify dev
 
 Or without the CLI: `npm start`.
 
-Open [http://localhost:3000](http://localhost:3000) in your browser. You should see your new docs site.
+Open [http://localhost:3000](http://localhost:3000) in your browser. Your new docs site appears.
 
-Edit `docs/index.md` and save. The browser should reload automatically.
+Edit `docs/index.md` and save. The browser reloads automatically.
 
-Press `Ctrl+C` to stop the dev server when you are done.
+When you're done, press `Ctrl+C` to stop the dev server.
 
 ---
 

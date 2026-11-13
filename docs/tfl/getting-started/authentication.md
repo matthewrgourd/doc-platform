@@ -15,7 +15,7 @@ The [API playground](/tfl/api-playground) includes these unauthenticated demo en
 - `GET /StopPoint/Search/{query}`
 - `GET /BikePoint`
 
-Their contract is defined only in **[tfl-playground.json](/openapi/tfl-playground.json)** (downloadable from this site). That file isn't the full TfL Unified API description.
+Only **[tfl-playground.json](/openapi/tfl-playground.json)** (downloadable from this site) defines their contract. That file isn't the full TfL Unified API description.
 
 ## Rate limits
 

@@ -15,7 +15,7 @@ curl "https://petstore3.swagger.io/api/v3/store/order/1"
 
 ## Valid IDs
 
-For the public Petstore server, use IDs `<= 5` or `> 10` for valid responses. IDs between 6 and 10 may generate exceptions.
+For the public Petstore server, use IDs `<= 5` or `> 10` for valid responses. IDs from 6 to 10 can generate exceptions.
 
 ## Response
 
