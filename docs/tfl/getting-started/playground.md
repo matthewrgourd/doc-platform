@@ -15,9 +15,9 @@ The TfL playground demonstrates interactive API exploration with practical trans
 
 ## Scope and limits
 
-- The playground and its OpenAPI file describe **three GET operations** only.
-- Defaults are tuned for fast successful responses.
-- The demo is intended for onboarding and platform evaluation.
+- The playground and its OpenAPI file describe **five GET operations** only.
+- The defaults give fast, successful responses.
+- Use the demo for onboarding and platform evaluation.
 
 ## OpenAPI description
 
@@ -41,7 +41,7 @@ Defaults are pre-filled to reduce setup time:
 
 ## Expected response behavior
 
-Requests should return useful data without requiring user-provided credentials.
+Requests return useful data. You don't need to supply credentials.
 
 ## Related routes
 

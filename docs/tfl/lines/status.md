@@ -13,7 +13,7 @@ title: Line status by mode
 
 ## Resource
 
-Each item in the response array represents a **line** with identifiers, display name, mode, and nested `lineStatuses` (severity, disruption text, and related metadata). Additional fields may appear; clients should tolerate unknown properties.
+Each item in the response array is a **line**. It has identifiers, a display name, a mode, and nested `lineStatuses` (severity, disruption text, and related metadata). The response can include additional fields, so make sure your client accepts unknown properties.
 
 ## Operation
 

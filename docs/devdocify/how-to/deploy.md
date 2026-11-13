@@ -11,13 +11,13 @@ DevDocify deploys to Vercel as a static Docusaurus site. This guide covers proje
 
 ## Prerequisites
 
-- Your project is in a GitHub repository.
-- You have a [Vercel account](https://vercel.com).
-- Dependencies install successfully with `npm install --legacy-peer-deps`.
+- A GitHub repository for your project
+- A [Vercel account](https://vercel.com)
+- Project dependencies that install without errors (`npm install --legacy-peer-deps`)
 
 ## 1. Push to GitHub
 
-Make sure your project is committed and pushed:
+Commit your project and push it to GitHub:
 
 ```bash
 git add .
@@ -51,7 +51,7 @@ Add sensitive values under **Settings > Environment Variables** in the Vercel da
 
 | Variable | Where to set it | Required |
 |---|---|---|
-| `ALGOLIA_ADMIN_API_KEY` | GitHub Actions secret | Only when CI should push search index updates |
+| `ALGOLIA_ADMIN_API_KEY` | GitHub Actions secret | Only when you want CI to push search index updates |
 | `ALGOLIA_APP_ID` | GitHub Actions secret or environment variable | Optional, overrides the script default |
 | `ALGOLIA_INDEX_NAME` | GitHub Actions secret or environment variable | Optional, overrides `devdocify` |
 
@@ -100,7 +100,7 @@ npm run lint-content
 
 ## Custom domains
 
-DevDocify supports single-domain, multi-domain, and legacy domain redirect configurations. Domain setup is managed through `domains.config.json` and automated via the Vercel API.
+DevDocify supports single-domain, multi-domain, and legacy domain redirect configurations. You manage domain setup in `domains.config.json`, and the Vercel API applies it.
 
 ### Single domain
 
@@ -250,7 +250,7 @@ helm install devdocify charts/devdocify
 kubectl get pods -l app.kubernetes.io/name=devdocify
 ```
 
-3. Access the site via port-forward:
+3. Forward a local port to the site:
 
 ```bash
 kubectl port-forward svc/devdocify 8080:80

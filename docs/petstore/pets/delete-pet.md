@@ -15,7 +15,7 @@ curl -X DELETE "https://petstore3.swagger.io/api/v3/pet/1"
 
 ## API key (optional)
 
-Some servers may require an API key in the header for delete operations:
+Some servers require an API key in the header for delete operations:
 
 ```bash
 curl -X DELETE "https://petstore3.swagger.io/api/v3/pet/1" \

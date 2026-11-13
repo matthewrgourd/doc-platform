@@ -5,19 +5,19 @@ const demos = [
   {
     name: 'TfL',
     to: '/tfl/getting-started',
-    summary: 'Transport for London: line status, stops, bike points, journeys',
+    summary: 'Transport for London: line status, stops, bike points, and journeys',
     meta: '5 endpoints · No auth needed',
   },
   {
     name: 'Petstore',
     to: '/petstore/getting-started',
-    summary: 'The classic OpenAPI sample: pets, orders, users',
+    summary: 'The classic OpenAPI sample: pets, orders, and users',
     meta: '6 endpoints · No auth needed',
   },
   {
     name: 'Platzi',
     to: '/platzi/getting-started',
-    summary: 'Fake retail store: products, categories, users, locations',
+    summary: 'Fake retail store: products, categories, users, and locations',
     meta: '8 endpoints · Auth on 1',
   },
 ];
@@ -26,7 +26,7 @@ export default function Home(): React.JSX.Element {
   return (
     <Layout
       title="Multi-docset developer documentation platform"
-      description="DevDocify gives every product you ship its own docset in one portal, with search, an AI assistant, live API playgrounds and CI quality gates. Deploy it to Vercel in minutes."
+      description="DevDocify gives every product you ship its own docset in one portal, with search, an AI assistant, live API playgrounds, and CI quality gates. Deploy it to Vercel in minutes."
     >
       <main className="home-shell">
         <section className="home-hero">
@@ -36,7 +36,7 @@ export default function Home(): React.JSX.Element {
                 <p className="home-eyebrow">For teams that ship more than one API</p>
                 <h1>Developer docs for every product you ship</h1>
                 <p className="home-subtitle">
-                  One portal, a separate docset for each product, and search, an AI assistant and
+                  One portal, a separate docset for each product, and search, an AI assistant, and
                   live API playgrounds built in. Deploy it to Vercel in minutes.
                 </p>
 
@@ -86,7 +86,7 @@ export default function Home(): React.JSX.Element {
               <div className="home-proof-card">
                 <h2>Docs readers can find their way around</h2>
                 <p>
-                  Tutorials, how-to guides, reference and explanation are kept apart, so every
+                  Tutorials, how-to guides, reference, and explanation stay separate, so every
                   reader lands on the right kind of page.
                 </p>
               </div>
@@ -97,7 +97,7 @@ export default function Home(): React.JSX.Element {
               <div className="home-proof-card">
                 <h2>Nothing ships broken</h2>
                 <p>
-                  Link checks, content linting and Lighthouse run on every pull request before a
+                  Link checks, content linting, and Lighthouse run on every pull request before a
                   release goes out.
                 </p>
               </div>

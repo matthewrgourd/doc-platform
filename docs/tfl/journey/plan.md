@@ -32,7 +32,7 @@ title: Plan a journey
 |---|---|
 | `200` | Success: JSON object with an array of journey options. |
 | `300` | Disambiguation: `from` or `to` matched multiple locations; response lists candidates. |
-| `400` | Bad request: `from` or `to` could not be resolved. |
+| `400` | Bad request: the API couldn't resolve `from` or `to`. |
 | `429` | Rate limited: see [Authentication](../getting-started/authentication). |
 | `500` | Server error: retry with backoff. |
 

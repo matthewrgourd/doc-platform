@@ -7,7 +7,7 @@ description: "How to configure Algolia search for a DevDocify site, including co
 
 # Configure search
 
-DevDocify uses Algolia for contextual search across docsets. The site config exposes a search-only API key to the browser, while CI can push a structured index that includes both documentation pages and API operations.
+DevDocify uses Algolia for contextual search across docsets. The site config gives the browser a search-only API key. Separately, CI can push a structured index that includes documentation pages and API operations.
 
 ## Prerequisites
 
@@ -57,7 +57,7 @@ npm run build
 npm run push-search-index -- --dry-run
 ```
 
-The dry run prints record counts by docset and a sample Algolia record. It does not call the Algolia API.
+The dry run prints record counts by docset and a sample Algolia record. It doesn't call the Algolia API.
 
 The push script converts the index into [DocSearch](https://docsearch.algolia.com/) records, the format the Docusaurus search modal reads:
 
@@ -80,7 +80,7 @@ Optional environment variables:
 | `ALGOLIA_APP_ID` | Overrides the app ID from the script default. |
 | `ALGOLIA_INDEX_NAME` | Overrides the default `devdocify` index name. |
 
-If `ALGOLIA_ADMIN_API_KEY` is absent, the push job exits successfully without updating Algolia. This keeps forks and local preview branches from failing because they do not have production secrets.
+If `ALGOLIA_ADMIN_API_KEY` is absent, the push job exits successfully without updating Algolia. Forks and local preview branches don't have production secrets, so this behavior stops them from failing.
 
 ## 5. Verify contextual results
 
@@ -88,9 +88,10 @@ After deployment, test search from at least two docsets:
 
 1. Open `/docs` and search for a DevDocify topic.
 2. Open `/tfl/getting-started` and search for a TfL topic.
-3. Confirm that results are grouped under the docset name and that selecting a heading result opens the page at that heading.
+3. Confirm that results appear under the docset name.
+4. Select a heading result. Confirm that the page opens at that heading.
 
-Contextual search limits results to the current locale and to the active version of each docset. It does not limit results to the docset you are viewing, so results from every docset can appear.
+Contextual search limits results to the current locale and to the active version of each docset. It doesn't limit results to the docset you're viewing, so results from every docset can appear.
 
 ## Troubleshooting
 

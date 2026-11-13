@@ -7,14 +7,13 @@ description: "How to protect a DevDocify portal or selected docsets with SAML SS
 
 # Configure SAML access
 
-Use SAML SSO when your documentation site, or some of its docsets, should only be readable after signing in with your identity provider.
+Use SAML single sign-on (SSO) to make readers sign in with your identity provider before they read your docs, or selected docsets.
 
 ## Prerequisites
 
-- You are in the project root.
-- You can create uncommitted local config files.
-- You have Node.js installed and dependencies available.
-- You know whether access control should apply to the whole portal or only selected docsets.
+- A terminal open at the project root
+- Node.js, with project dependencies installed (`npm install --legacy-peer-deps`)
+- A decision on scope: access control for the whole portal, or only for selected docsets
 
 ## 1. Configure SAML SSO
 
@@ -38,7 +37,7 @@ Validate the config:
 npm run validate-saml
 ```
 
-Do not commit `saml.config.json`. It can contain environment-specific values.
+Don't commit `saml.config.json`. It can contain environment-specific values.
 
 ## 2. Generate nginx auth configuration
 
@@ -54,7 +53,7 @@ To inspect the output without writing a generated file, pass `--stdout`:
 npm run generate-nginx-auth-config -- --stdout
 ```
 
-The generated config is intended for Docker or nginx deployments. For Vercel Pro or Enterprise projects, use Vercel Authentication instead of nginx `auth_request`.
+Use the generated config for Docker or nginx deployments. For Vercel Pro or Enterprise projects, use Vercel Authentication instead of nginx `auth_request`.
 
 ## 3. Verify before release
 

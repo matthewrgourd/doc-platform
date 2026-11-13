@@ -22,7 +22,7 @@ For the three playground **GET** operations, see response codes in **[tfl-playgr
 
 ## Authentication errors
 
-This demo uses public, unauthenticated **GET** requests only. A `401` response would mean the upstream service changed policy for your request path; it isn't expected for the three playground operations documented on this site.
+This demo uses public, unauthenticated **GET** requests only. A `401` response means that the upstream service changed its policy for your request path. The playground operations on this site don't normally return it.
 
 ## Rate limiting
 

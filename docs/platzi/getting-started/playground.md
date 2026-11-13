@@ -21,7 +21,7 @@ The Platzi playground is a curated subset of the live API for predictable demos.
 
 ## Scope notes
 
-- Data is shared and mutable on the public demo backend.
+- All users share the data on the public demo backend, and anyone can change it.
 - IDs and content can change between requests.
 - Use list/search endpoints for the most stable demos.
 

@@ -15,9 +15,9 @@ The Petstore playground demonstrates a low-friction "try API now" flow with no-a
 
 ## Scope and limits
 
-- The playground and its OpenAPI file describe **three GET operations** only.
-- The page is designed to return successful responses quickly.
-- Behavior is intentionally optimized for onboarding and documentation evaluation.
+- The playground and its OpenAPI file describe **six operations** only: three `GET` operations, plus `POST`, `PUT`, and `DELETE` for pets.
+- The page returns successful responses quickly.
+- Use the demo for onboarding and documentation evaluation.
 
 ## OpenAPI description
 
@@ -40,7 +40,7 @@ Defaults are pre-filled to reduce setup time:
 
 ## Expected response behavior
 
-Requests should return valid responses without reader-managed authentication setup.
+Requests return valid responses. You don't need to set up authentication.
 
 ## Related routes
 

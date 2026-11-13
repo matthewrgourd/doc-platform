@@ -41,7 +41,7 @@ sequenceDiagram
 
 ## Base URL
 
-All API requests are made to:
+Send all API requests to:
 
 ```
 https://petstore3.swagger.io/api/v3
@@ -51,13 +51,16 @@ The API accepts JSON and XML request bodies and returns JSON or XML responses. S
 
 ## API playground
 
-Use the [API playground](/petstore/api-playground) to run three curated demo endpoints in the browser:
+Use the [API playground](/petstore/api-playground) to run six curated demo operations in the browser:
 
 - `GET /pet/findByStatus`
+- `POST /pet`
+- `PUT /pet`
+- `DELETE /pet/{petId}`
 - `GET /user/login`
 - `GET /user/logout`
 
-These playground examples are configured with sample values and don't require authentication.
+These playground examples use sample values and don't require authentication.
 
 ## Downloadable OpenAPI (playground only)
 

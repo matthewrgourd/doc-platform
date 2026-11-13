@@ -11,9 +11,9 @@ Follow these steps to add a new product docset to your DevDocify site.
 
 ## Prerequisites
 
-- You are in the project root.
-- You can edit `docusaurus.config.ts`.
-- You have the `docify` CLI installed.
+- A terminal open at the project root
+- Write access to `docusaurus.config.ts`
+- The `docify` CLI, installed
 
 ## 1. Create the docs directory
 

@@ -47,7 +47,7 @@ sequenceDiagram
 
 ## Base URL
 
-All API requests are made to:
+Send all API requests to:
 
 ```
 https://api.tfl.gov.uk
@@ -65,7 +65,7 @@ Use the [API playground](/tfl/api-playground) to run curated demo endpoints in t
 - `GET /AirQuality`
 - `GET /Journey/JourneyResults/{from}/to/{to}`
 
-These playground examples are configured with sample values and don't require authentication.
+These playground examples use sample values and don't require authentication.
 
 ## Downloadable OpenAPI (playground only)
 

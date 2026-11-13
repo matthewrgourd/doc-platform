@@ -10,7 +10,7 @@ description: "How to add PlantUML diagrams to DevDocify docs with fenced code bl
 Use PlantUML when you need sequence, component, or deployment diagrams that are easier to maintain as text than as static images.
 
 :::tip Mermaid is built in
-For flowcharts, sequence diagrams, and state machines, [Mermaid](#mermaid-diagrams-built-in) renders natively in Docusaurus without an external service. Use PlantUML when you need diagram types that Mermaid does not support.
+For flowcharts, sequence diagrams, and state machines, [Mermaid](#mermaid-diagrams-built-in) renders natively in Docusaurus without an external service. Use PlantUML when you need diagram types that Mermaid doesn't support.
 :::
 
 ## Live example
@@ -55,7 +55,7 @@ The text after `plantuml` becomes the image alt text. Use short, descriptive tex
 
 ## 2. Keep diagrams close to the explanation
 
-Place the diagram near the section that explains it. Follow the diagram with the main takeaway in prose so readers do not need to interpret the image alone.
+Place the diagram near the section that explains it. Follow the diagram with the main takeaway in prose so readers don't need to interpret the image alone.
 
 ## 3. Verify rendering
 
@@ -81,7 +81,7 @@ By default, rendering uses `https://www.plantuml.com/plantuml/svg`. If you need 
 
 ## Troubleshooting
 
-- Diagram does not appear: confirm the page uses a docset configured with `remarkPlantuml`.
+- Diagram doesn't appear: confirm the page uses a docset configured with `remarkPlantuml`.
 - Image request fails: confirm the rendering endpoint is reachable from the browser.
 - Alt text is too generic: add concise text after `plantuml` in the opening fence.
 
@@ -99,4 +99,4 @@ sequenceDiagram
     Algolia-->>Browser: Faceted results
 ```
 
-Add a Mermaid diagram using a `mermaid` fenced block. No plugin or external endpoint is needed.
+To add a Mermaid diagram, use a `mermaid` fenced code block. You don't need a plugin or an external endpoint.

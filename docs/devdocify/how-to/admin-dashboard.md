@@ -29,7 +29,7 @@ Set these values in `admin/.env.local`, and in your hosting provider for product
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes | Supabase project **Settings > API > Project URL** |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Supabase project **Settings > API > anon public** key |
-| `ADMIN_ALLOWED_EMAILS` | Yes | Comma-separated emails allowed into the dashboard. Anyone else is signed out. If it is empty, nobody can get in. |
+| `ADMIN_ALLOWED_EMAILS` | Yes | Comma-separated emails allowed into the dashboard. Anyone else is signed out. If it's empty, nobody can get in. |
 | `CRON_SECRET` | Production on Vercel | Any long random string, for example from `openssl rand -hex 32`. See [Keep the Supabase project awake](#6-keep-the-supabase-project-awake). |
 
 Do not commit `.env.local`. It is already in `.gitignore`.
@@ -52,7 +52,7 @@ The dashboard runs at `http://localhost:3100`. The docs site runs on port 3000, 
 
 ## 4. Dashboard pages
 
-Apart from sign-in, the dashboard pages show hard-coded **sample data**. They are not connected to live deployments, analytics or user records, and changes are not saved. Each page shows a notice saying so.
+Apart from sign-in, the dashboard pages show hard-coded **sample data**. They aren't connected to live deployments, analytics, or user records, and the dashboard doesn't save changes. Each page shows a notice saying so.
 
 ### Dashboard
 
@@ -115,6 +115,8 @@ Free Supabase projects pause after 7 days without activity, and a paused project
 
 2. Set `CRON_SECRET` for the Production environment of the Vercel project. Vercel sends it with each cron request, and the route rejects requests without it.
 
-3. After deploying, open the project's **Settings > Cron Jobs** in Vercel and click **Run** to check that `/api/keepalive` returns 200.
+3. After you deploy, open **Settings > Cron Jobs** for the project in Vercel.
+
+4. Click **Run**. Confirm that `/api/keepalive` returns `200`.
 
 Self-hosted deployments have no Vercel Cron. Call `/api/keepalive` daily with the `Authorization: Bearer <CRON_SECRET>` header from any scheduler instead.

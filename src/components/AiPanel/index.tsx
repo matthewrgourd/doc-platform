@@ -319,7 +319,7 @@ function ChatWidget() {
                 fill="currentColor"
               />
             </svg>
-            <p>Ask about setting up, writing or deploying DevDocify docs</p>
+            <p>Ask about setting up, writing, or deploying DevDocify docs</p>
             <div className={styles.suggestions}>
               {SUGGESTED_QUESTIONS.map((question) => (
                 <button

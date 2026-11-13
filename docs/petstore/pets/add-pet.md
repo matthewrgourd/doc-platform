@@ -17,7 +17,7 @@ Create a new pet in the store with a POST request to `/pet`.
 }
 ```
 
-`name` and `photoUrls` are required. `status` can be `available`, `pending`, or `sold`.
+You must send `name` and `photoUrls`. `status` can be `available`, `pending`, or `sold`.
 
 ## Full request with category and tags
 
