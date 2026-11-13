@@ -11,3 +11,13 @@
 :global(.navbar__items--right) > :last-child {
   padding-right: 0;
 }
+
+/*
+ * Docusaurus absolutely positions the search button at the right edge on
+ * small screens, which overlaps the Ask AI button. Keep it in the flex row.
+ */
+@media (max-width: 996px) {
+  :global(.navbar__items--right) > [class*='navbarSearchContainer'] {
+    position: static;
+  }
+}
