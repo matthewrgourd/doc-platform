@@ -53,6 +53,8 @@ Demo API docsets live alongside this at:
 
 ## Quick start
 
+Requires Node.js 24.x (pinned in `package.json` `engines`; CI, Docker, and Vercel all build on 24).
+
 ```bash
 npm install --legacy-peer-deps
 npm start
