@@ -22,6 +22,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import {CONTENT_EXTENSIONS, INCLUDE_RE, loadSnippetRegistry} from './content-scope.js';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -41,10 +42,6 @@ type IncludeError = {
 const DOCS_ROOT = path.resolve(process.cwd(), 'docs');
 const SNIPPETS_DIR = path.join(DOCS_ROOT, '_snippets');
 const OUTPUT_ROOT = path.resolve(process.cwd(), 'build', 'processed');
-const CONTENT_EXTENSIONS = new Set(['.md', '.mdx']);
-
-/** Matches <!-- include: path/to/snippet.md --> with optional whitespace */
-const INCLUDE_RE = /<!--\s*include:\s*([^\s>]+)\s*-->/g;
 
 // ---------------------------------------------------------------------------
 // CLI
@@ -65,32 +62,6 @@ function parseArgs(): {dryRun: boolean; docsRoot: string; outputRoot: string} {
     : OUTPUT_ROOT;
 
   return {dryRun, docsRoot, outputRoot};
-}
-
-// ---------------------------------------------------------------------------
-// Snippet registry
-// ---------------------------------------------------------------------------
-
-function loadSnippetRegistry(snippetsDir: string): Map<string, string> {
-  const registry = new Map<string, string>();
-
-  if (!fs.existsSync(snippetsDir)) return registry;
-
-  function walk(dir: string, prefix: string): void {
-    for (const entry of fs.readdirSync(dir, {withFileTypes: true})) {
-      const fullPath = path.join(dir, entry.name);
-      const relPath = prefix ? `${prefix}/${entry.name}` : entry.name;
-
-      if (entry.isDirectory()) {
-        walk(fullPath, relPath);
-      } else if (CONTENT_EXTENSIONS.has(path.extname(entry.name))) {
-        registry.set(`snippets/${relPath}`, fs.readFileSync(fullPath, 'utf8'));
-      }
-    }
-  }
-
-  walk(snippetsDir, '');
-  return registry;
 }
 
 // ---------------------------------------------------------------------------
