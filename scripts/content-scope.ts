@@ -67,13 +67,13 @@ export function loadJsonScope(filePath: string, onWarn?: (message: string) => vo
 
 /** Extracts variables from frontmatter (simple YAML parser for the variables: block only). */
 export function extractPageVariables(content: string): VariableScope {
-  const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
+  const fmMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!fmMatch) return {};
 
   const scope: VariableScope = {};
   let inVariables = false;
 
-  for (const line of fmMatch[1].split('\n')) {
+  for (const line of fmMatch[1].split(/\r?\n/)) {
     if (line.trim() === 'variables:') {
       inVariables = true;
       continue;

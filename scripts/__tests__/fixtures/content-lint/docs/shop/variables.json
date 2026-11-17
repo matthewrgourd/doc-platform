@@ -1,0 +1,6 @@
+{
+  "docset_name": "Shop",
+  "bad_object": {"a": 1},
+  "bad_list": [1, 2],
+  "bad_flag": true
+}

@@ -47,6 +47,11 @@ describe('extractPageVariables', () => {
     assert.deepEqual(extractPageVariables(md), {a: 'one'});
   });
 
+  it('reads frontmatter with CRLF line endings', () => {
+    const md = '---\r\ntitle: T\r\nvariables:\r\n  a: "one"\r\n  b: two\r\n---\r\n# Body\r\n';
+    assert.deepEqual(extractPageVariables(md), {a: 'one', b: 'two'});
+  });
+
   it('returns nothing without frontmatter or a variables block', () => {
     assert.deepEqual(extractPageVariables('# No frontmatter\nvariables:\n  a: one\n'), {});
     assert.deepEqual(extractPageVariables('---\ntitle: T\n---\n'), {});
